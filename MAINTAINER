@@ -1,0 +1,83 @@
+# ===========================================================================
+# 
+# MAINTAINER --
+# notes for maintainer
+# 
+# This file is part of the following software:
+# 
+#    - the low-level C++ template SIMD library
+#    - the SIMD implementation of the MinWarping and the 2D-Warping methods 
+#      for local visual homing.
+# 
+# The software is provided based on the accompanying license agreement
+# in the file LICENSE or LICENSE.doc. The software is provided "as is"
+# without any warranty by the licensor and without any liability of the
+# licensor, and the software may not be distributed by the licensee; see
+# the license agreement for details.
+# 
+# (C) Ralf Möller
+#     Computer Engineering
+#     Faculty of Technology
+#     Bielefeld University
+#     www.ti.uni-bielefeld.de
+# 
+# ===========================================================================
+
+External source files come from the CEG PROG tree (SIMDImage,
+SIMDImageTest).
+
+If external source files are removed or added, change
+
+   simdimage.files
+   simdimagetest.files
+   tsimd.files
+   tsimdtest.files
+
+If the external source directory is changing, change the files
+
+   simdimage.dir
+   simdimagetest.dir
+   tsimd.dir
+   tsimdtest.dir
+
+Files only present in this distribution (but not in the CEG PROG tree)
+are listed in
+
+   standalone.files
+
+but no standalone.dir exists.
+
+To establish links to the external source directory, use
+
+   ./linkit link
+
+To remove the links or copied files from the external source
+directory, use
+
+   ./linkit remove
+
+To copy the files from the external source directory (e.g. if you want
+to freeze a version before changing the external source files), use
+
+   ./linkit copy
+
+The file tarfile.list is created by linkit. Run
+
+   ./linkit list
+
+to just list all files and to generate tarfile.list without any
+further changes.
+
+To remember which svn revisions the external source files have, run
+
+   ./linkit revision
+
+which generates a file revision containing information from svn info.
+
+One level above, the scripts
+
+    tar_code
+    tar_data
+
+create the tgz files of code and data, respectively. The code / data
+version to be tared has to be specified in the files.

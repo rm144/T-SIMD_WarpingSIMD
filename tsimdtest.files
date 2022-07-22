@@ -1,0 +1,8 @@
+nativetest.C
+simdRadixSortGeneric.C
+simdmasktest.C
+simdvecautotest0.C
+simdvecautotest1.C
+simdvectest.C
+styleExamples.C
+tsimdtest.C

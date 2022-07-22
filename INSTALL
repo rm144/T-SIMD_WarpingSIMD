@@ -1,0 +1,73 @@
+# ===========================================================================
+# 
+# INSTALL --
+# description of steps for installation and test
+# 
+# This file is part of the following software:
+# 
+#    - the low-level C++ template SIMD library
+#    - the SIMD implementation of the MinWarping and the 2D-Warping methods 
+#      for local visual homing.
+# 
+# The software is provided based on the accompanying license agreement
+# in the file LICENSE or LICENSE.doc. The software is provided "as is"
+# without any warranty by the licensor and without any liability of the
+# licensor, and the software may not be distributed by the licensee; see
+# the license agreement for details.
+# 
+# (C) Ralf Möller
+#     Computer Engineering
+#     Faculty of Technology
+#     Bielefeld University
+#     www.ti.uni-bielefeld.de
+# 
+# ===========================================================================
+
+You should have two compressed tar balls:
+
+    WarpingSIMDStandAloneCode<version#>_<date>.tgz
+    WarpingSIMDStandAloneData<version#>_<date>.tgz
+
+Create a directory, e.g.
+
+    mkdir WarpingSIMDStandAlone
+
+Change into this directory
+
+    cd WarpingSIMDStandAlone
+
+Move the compressed tar balls into this directory and unpack:
+
+    tar xvfz WarpingSIMDStandAloneCode<version#>_<date>.tgz
+    tar xvfz WarpingSIMDStandAloneData<version#>_<date>.tgz
+
+This generates two subdirectories
+
+    CODE<version#>
+    DATA<version#>
+
+Change into CODE<version#>. 
+
+If don't use g++, you have to provide definitions suitable for your
+compiler in SIMDDefs.H, otherwise the code won't compile.
+
+Change into the CODE<version#> directory and do
+
+    make dep
+    make
+
+Note that simdvecautotest takes long to compile.
+
+If you want to enforce a re-built, run 
+
+    make clean
+
+You can now start the test (gnuplot needs to be installed to visualize
+the home vector fields):
+
+    ./runWarpingSIMDTest
+
+Two home vector plots should appear.
+
+Study the example codes in the *.C files and read the PDF manuals
+(templateSIMD.pdf, warpingSIMD.pdf).
