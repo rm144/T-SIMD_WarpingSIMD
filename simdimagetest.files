@@ -1,0 +1,9 @@
+runPlaceRecognitionTest
+runWarpingSIMDTest
+runWarpingSIMDTestAll
+runWarpingSIMDTestBW
+runWarpingSIMDTestPar
+runWarpingSIMDTestVis
+warpingSIMDSmallTest.C
+warpingSIMDTest.C
+catchment.tcl
