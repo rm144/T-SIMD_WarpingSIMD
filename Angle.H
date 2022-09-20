@@ -6,6 +6,12 @@
 // Used to overload stream insertion operator
 #include <ostream>
 
+// 20. Sep 22 (Jonas Keller): on Windows M_PI is not defined, so we
+// define it here
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 /**
  * @brief Radian angular Unit tag to use with strong type Angle<Unit>
  */

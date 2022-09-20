@@ -31,6 +31,12 @@
 #include "SIMDVecAll.H"
 #include "SIMDException.H"
 
+// 20. Sep 22 (Jonas Keller): on Windows M_PI is not defined, so we
+// define it here
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 namespace ns_simd {
 
   // we need SPSType (type of scale-plane stack elements) and the vector
