@@ -375,9 +375,12 @@ namespace ns_simd {
 	  throw SIMDException("SharedSIMDPtr::allocate",
 			      "alignment must be smaller than "
 			      "or multiple of sizeof(void*)");
-	if (posix_memalign((void**) &origData, align, allocSize * sizeof(T)))
+  // 20. Sep 22 (Jonas Keller): use simd_aligned_malloc instead of
+  // posix_memalign
+  origData = (T*) simd_aligned_malloc(align, allocSize * sizeof(T));
+	if (origData == NULL)
 	  throw SIMDException("SharedSIMDPtr::allocate",
-			      "posix_memalign failed");
+			      "simd_aligned_malloc failed");
 	SHARED_SIMD_PTR_DEBUG(printf("SharedSIMDPtr::allocate(): "
 				     "created data %p\n", (void*) origData));
 #ifdef SHARED_SIMD_PTR_HEAP_COUNT
@@ -396,7 +399,8 @@ namespace ns_simd {
       // delete shared data
       assert(!desc || desc->unique());
       if (origData) {
-	free(origData);
+  // 20. Sep 22 (Jonas Keller): use simd_aligned_free instead of free
+	simd_aligned_free(origData);
 	SHARED_SIMD_PTR_DEBUG(printf("SharedSIMDPtr::deallocate(): "
 				     "destroyed data %p\n", (void*) origData));
 #ifdef SHARED_SIMD_PTR_HEAP_COUNT
