@@ -70,7 +70,11 @@ template <class TYPE>
 void randomImage(TYPE *data, size_t size)
 {
     for (unsigned int i = 0; i < size; ++i)
-      data[i] = (TYPE) (drand48() * 255);
+	  // 20. Sep 22 (Jonas Keller): use rand instead of drand48, since drand48
+	  // is not available on Windows
+      // data[i] = (TYPE) (drand48() * 255);
+	  // + 1.0f since drand48() returns a value in [0,1)
+	  data[i] = (TYPE) (((float)rand() / (RAND_MAX + 1.0f)) * 255);
 }
 
 // ===========================================================================
@@ -368,7 +372,10 @@ main(int argc, char *argv[])
   printf("SW = %d\n", SW);
   printf("__cplusplus = %ld\n", (long int) __cplusplus);
   // initialize random number generator (fixed seed) 3513581345
-  srand48(351358);
+  // 20. Sep 22 (Jonas Keller): use srand instead of srand48, since
+  // srand48 is not available on Windows
+  // srand48(351358);
+  srand(351358);
   // check if minimal number of arguments is available
   if (argc < 2) {
     fprintf(stderr, 
@@ -443,7 +450,12 @@ main(int argc, char *argv[])
 	assert(loadPGM(cvFile, cvOrig, Panorama(vertRes, horizon)));
 	if (rotateImages) {
 	  // randomly rotate images to make task more demanding for min-warping
-	  int rotIndex = (int) (drand48() * w);
+	  
+	  // 20. Sep 22 (Jonas Keller): use rand instead of drand48, since drand48
+	  // is not available on Windows
+	  // int rotIndex = (int) (drand48() * w);
+	  // + 1.0f since drand48 returns values in [0,1)
+	  int rotIndex = (int) (((float)rand() / (RAND_MAX + 1.0f)) * w);
 	  rotAngle[x][y] = rotIndex * (2.0 * M_PI) / w;
 	  // we use the same rotAngle field for both databases
 	  rotateHor(ssOrig, rotIndex, ss[x][y]);
