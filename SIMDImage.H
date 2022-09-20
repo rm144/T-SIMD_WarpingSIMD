@@ -31,6 +31,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <vector>
+#include "SIMD.H"
 #include "SIMDException.H"
 #include "SharedSIMDPtr.H"
 
