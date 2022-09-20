@@ -66,7 +66,10 @@ namespace ns_simd {
   typedef min_templt_col_entry_t* lp_min_templt_col_entry_t;
 
   // Structure which represents a single column.
-  typedef SIMD_ATTR_PACKED_STRUCT {
+  // 20. Sep 22 (Jonas Keler):
+  // used struct name {...}; instead of typedef struct {...} name;
+  // because compiler warns that type is not C-compatible for linkage
+  SIMD_ATTR_PACKED_STRUCT min_templt_col_t {
     // 19. Jun 15 (rm)
     // uint32_t was slower than uint16_t, but with new pointer-based
     // loop, int was better (22500 -> 22000), int32_t even better?
@@ -78,7 +81,7 @@ namespace ns_simd {
     SIMD_INLINE min_templt_col_entry_t* entries() {
       return (min_templt_col_entry_t*)((uint8_t*)(this) + sizeof(len));
     }
-  } min_templt_col_t;
+  };
   
   // Pointer type for the structure above
   typedef min_templt_col_t* lp_min_templt_col_t;
