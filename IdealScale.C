@@ -19,9 +19,9 @@
 #include "Image.H"
 
 // Run program in verbose mode, configured by environment
-BOOL(verbose, false);
+ENV_BOOL(verbose, false);
 // Dump default options if verbose?
-BOOL(dump_default, true);
+ENV_BOOL(dump_default, true);
 
 /**
  * @brief Output stream insertion of generic std::vector of Type

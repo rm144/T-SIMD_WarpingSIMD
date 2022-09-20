@@ -101,34 +101,34 @@ template<class Type>
  */
 auto make_warping(const int width) {
     // Number of alpha and psi search steps
-    INT(nAlpha, 128);
-    INT(nPsi, 128);
+    ENV_INT(nAlpha, 128);
+    ENV_INT(nPsi, 128);
     // Number of scale planes
-    INT(nScalePlanes, 9);
+    ENV_INT(nScalePlanes, 9);
     // Maximal scale factor
-    DOUBLE(maxScaleFactor, 2.0);
+    ENV_DOUBLE(maxScaleFactor, 2.0);
     // Maximal threshold
-    DOUBLE(maxThresholdMinWarping, 2.5);
+    ENV_DOUBLE(maxThresholdMinWarping, 2.5);
     // Number of rho steps
-    INT(nRhoWarping, 20);
+    ENV_INT(nRhoWarping, 20);
     // Restriction of min-warping template to certain values of rho; (0.0, 100.0)
     // means that there is no restriction.
-    DOUBLE(rhoMinMinWarping, 0.0);
-    DOUBLE(rhoMaxMinWarping, 100.0);
-    DOUBLE(rhoMinWarping, 0.0);
-    DOUBLE(rhoMaxWarping, 1.0);
+    ENV_DOUBLE(rhoMinMinWarping, 0.0);
+    ENV_DOUBLE(rhoMaxMinWarping, 100.0);
+    ENV_DOUBLE(rhoMinWarping, 0.0);
+    ENV_DOUBLE(rhoMaxWarping, 1.0);
     // First phase method selector
-    INT(firstPhase, 23);
+    ENV_INT(firstPhase, 23);
     // Harris Parameters
-    DOUBLE(harrisK, 0.04);
-    INT(harrisBinomialFilterCount, 1);
+    ENV_DOUBLE(harrisK, 0.04);
+    ENV_INT(harrisBinomialFilterCount, 1);
     // Sigmoid weights
-    DOUBLE_VEC(sigmoidW,);
-    DOUBLE_VEC(sigmoidW0,);
+    ENV_DOUBLE_VEC(sigmoidW,);
+    ENV_DOUBLE_VEC(sigmoidW0,);
     // MinWarping search method (search loop order)
-    INT(searchMethodMinWarping, 0);
+    ENV_INT(searchMethodMinWarping, 0);
     // Warping search method (search loop order)
-    INT(searchMethodWarping, 0);
+    ENV_INT(searchMethodWarping, 0);
     // Construct an instance of WarpingBundle
     return RunStatistics<WarpingBundle>{
         width, nAlpha, nPsi,
@@ -151,35 +151,35 @@ auto make_warping(const int width) {
  */
 auto make_warping_params() {
     // First phase interpolation method
-    INT(firstPhaseInterpolation, 0);
+    ENV_INT(firstPhaseInterpolation, 0);
     // Pixel scale parameters
-    DOUBLE_VEC(pixelScale, 15.427);
+    ENV_DOUBLE_VEC(pixelScale, 15.427);
     // Post scale parameter
-    DOUBLE(postScale, 170.664);
+    ENV_DOUBLE(postScale, 170.664);
     // Warping (1) or MinWarping (0)?
-    INT(searcher, 0);
+    ENV_INT(searcher, 0);
     // Switch for compass acceleration (1=sum, 2=quantil)
-    INT(compassAcceleration, 1);
+    ENV_INT(compassAcceleration, 1);
     // Quantil fraction for quantil-based compass acceleration
-    DOUBLE(quantilCompassFraction, 0.2);
+    ENV_DOUBLE(quantilCompassFraction, 0.2);
     // Parameter for compass acceleration
-    DOUBLE(psiFraction, 0.3);
+    ENV_DOUBLE(psiFraction, 0.3);
     // Switch for partial search (otherwise full search)
-    INT(partialSearch, 0);
+    ENV_INT(partialSearch, 0);
     // Partial searcher, but full search range (tests only)
-    INT(partialFullSearch, 0);
+    ENV_INT(partialFullSearch, 0);
     // Search radii for partial search
-    DOUBLE(alphaRad, M_PI / 4);
-    DOUBLE(psiRad, M_PI / 4);
+    ENV_DOUBLE(alphaRad, M_PI / 4);
+    ENV_DOUBLE(psiRad, M_PI / 4);
     // Switch for double search (second run with exchanged snapshot/current view)
     // affects both partial and full search
-    INT(doubleSearch, 1);
+    ENV_INT(doubleSearch, 1);
     // Fine search is executed
-    INT(fineSearch, 0);
+    ENV_INT(fineSearch, 0);
     // Fine search uses double search
-    INT(doubleSearchFine, 1);
+    ENV_INT(doubleSearchFine, 1);
     // Fine search only uses immediate surroundings
-    INT(fineSearchSurround, 0);
+    ENV_INT(fineSearchSurround, 0);
     // Construct an instance of WarpingBundle::Parameters
     return WarpingBundle::Parameters{
         firstPhaseInterpolation, pixelScale,

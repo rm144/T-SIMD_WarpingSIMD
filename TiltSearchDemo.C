@@ -35,9 +35,9 @@
 #include "Image.H"
 
 // Run program in verbose mode, configured by environment
-BOOL(verbose, false);
+ENV_BOOL(verbose, false);
 // Dump default options if verbose?
-BOOL(dump_default, true);
+ENV_BOOL(dump_default, true);
 
 // Search strategy selectors
 enum Strategy : int {
@@ -213,7 +213,7 @@ int main(int argc, char **argv) {
     DERIVE_ENV(Interpolation, int, interpolation, Interpolation::NEAREST);
 
     // Environment variable for enabling logging of the search process
-    BOOL(logging, false);
+    ENV_BOOL(logging, false);
     // Logging of search (states) string representation
     std::list<std::string> log;
     // Set up the tilt search wrapping the warping instance

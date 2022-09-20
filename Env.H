@@ -132,6 +132,10 @@ template<class Type>
     }
 }
 
+// 20. Sep 22 (Jonas Keller): prefix VEC, BOOL, INT, DOUBLE and DOUBLE_VEC
+// with ENV_ to avoid name conflicts with other libraries
+// (e.g. windows.h defines BOOL too)
+
 /**
  * @brief Creates a named Type environment variable configuration option
  */
@@ -148,29 +152,29 @@ template<class Type>
 /**
  * @brief Creates a named Type environment variable vector configuration option
  */
-#define VEC(Type, Name, ...)     \
+#define ENV_VEC(Type, Name, ...)     \
     const std::vector<Type> Name \
         = env_config::get<std::vector<Type>>(#Name, {__VA_ARGS__})
 
 /**
  * @brief Creates a named bool environment variable configuration option
  */
-#define BOOL(Name, Default) ENV(bool, Name, Default)
+#define ENV_BOOL(Name, Default) ENV(bool, Name, Default)
 
 /**
  * @brief Creates a named int environment variable configuration option
  */
-#define INT(Name, Default) ENV(int, Name, Default)
+#define ENV_INT(Name, Default) ENV(int, Name, Default)
 
 /**
  * @brief Creates a named double environment variable configuration option
  */
-#define DOUBLE(Name, Default) ENV(double, Name, Default)
+#define ENV_DOUBLE(Name, Default) ENV(double, Name, Default)
 
 /**
  * @brief Creates a named vector of double environment variable configuration
  * option
  */
-#define DOUBLE_VEC(Name, ...) VEC(double, Name, __VA_ARGS__)
+#define ENV_DOUBLE_VEC(Name, ...) ENV_VEC(double, Name, __VA_ARGS__)
 
 #endif /*EXP_ENV_H*/
