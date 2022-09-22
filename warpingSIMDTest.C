@@ -74,7 +74,7 @@ void randomImage(TYPE *data, size_t size)
 	  // is not available on Windows
       // data[i] = (TYPE) (drand48() * 255);
 	  // + 1.0f since drand48() returns a value in [0,1)
-	  data[i] = (TYPE) (((float)rand() / (RAND_MAX + 1.0f)) * 255);
+	  data[i] = (TYPE) (((float)rand() / ((float)RAND_MAX + 1.0f)) * 255);
 }
 
 // ===========================================================================
@@ -455,7 +455,7 @@ main(int argc, char *argv[])
 	  // is not available on Windows
 	  // int rotIndex = (int) (drand48() * w);
 	  // + 1.0f since drand48 returns values in [0,1)
-	  int rotIndex = (int) (((float)rand() / (RAND_MAX + 1.0f)) * w);
+	  int rotIndex = (int) (((float)rand() / ((float)RAND_MAX + 1.0f)) * w);
 	  rotAngle[x][y] = rotIndex * (2.0 * M_PI) / w;
 	  // we use the same rotAngle field for both databases
 	  rotateHor(ssOrig, rotIndex, ss[x][y]);
