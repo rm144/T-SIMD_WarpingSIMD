@@ -66,7 +66,7 @@ namespace ns_simd {
   typedef min_templt_col_entry_t* lp_min_templt_col_entry_t;
 
   // Structure which represents a single column.
-  // 20. Sep 22 (Jonas Keler):
+  // 20. Sep 22 (Jonas Keller):
   // used struct name {...}; instead of typedef struct {...} name;
   // because compiler warns that type is not C-compatible for linkage
   SIMD_ATTR_PACKED_STRUCT min_templt_col_t {
