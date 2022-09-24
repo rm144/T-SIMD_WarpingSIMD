@@ -24,9 +24,6 @@ namespace search {
  */
 template<class... Types>
     class NelderMead {
-        // Number of dimensions/axes
-        static constexpr auto N = std::tuple_size_v<std::tuple<Types...>>;
-
         /**
          * @brief Nelder-Mead search (simplex) state
          * @tparam Type Type of the output value of the objective function
@@ -35,6 +32,9 @@ template<class... Types>
             class State {
                 // Wrapping search strategy needs access
                 friend NelderMead;
+
+                // Number of dimensions/axes
+                static constexpr auto N = sizeof...(Types);
 
                 // Vertices of the simplex
                 std::array<std::tuple<Types...>, N + 1> xs;
@@ -195,8 +195,11 @@ template<class... Types>
                 }
             };
 
+        // Number of dimensions/axes
+        static constexpr auto N = sizeof...(Types);
+
         // (Initial) Vertices of the simplex
-        std::array<std::tuple<Types...>, N + 1> xs{};
+        std::array<std::tuple<Types...>, sizeof...(Types) + 1> xs{};
         // Reflection, expansion, contraction, shrink coefficient and
         // convergence threshold
         double alpha = 1.0, gamma = 2.0, ro = 0.5, sigma = 0.5, t = 1.0;
@@ -221,7 +224,7 @@ template<class... Types>
          * @param t Convergence threshold
          * @param max_steps Fail-safe condition: stop after exceeding max_steps
          */
-        NelderMead(const std::array<std::tuple<Types...>, N + 1> &xs,
+        NelderMead(const std::array<std::tuple<Types...>, sizeof...(Types) + 1> &xs,
                    const double alpha, const double gamma, const double ro,
                    const double sigma, const double t,
                    const std::size_t max_steps)
