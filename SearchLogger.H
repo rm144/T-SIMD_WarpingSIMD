@@ -126,13 +126,11 @@ template<class Objective, class... Types>
                 // Tracked (min,argmin) is now properly initialized
                 uninitialized = false;
             }
-            // Stream insertion operator overload operating on std::tuple
-            using tuple_operators::operator<<;
             // Build string representation by inserting into output string
             // stream
             std::ostringstream repr;
             // Build string representation of the objective function values
-            repr << std::tuple{xs...} << " " << y << " ";
+            tuple_operators::operator<<(repr, std::tuple{xs...}) << " " << y << " ";
             // Add objective function input+output to log
             searcher.log.push_back(repr.str());
         });
