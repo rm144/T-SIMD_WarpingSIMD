@@ -53,7 +53,6 @@ compiler in SIMDDefs.H, otherwise the code won't compile.
 
 Change into the CODE<version#> directory and do
 
-    make dep
     make
 
 Note that simdvecautotest takes long to compile.
