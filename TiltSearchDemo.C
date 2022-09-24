@@ -310,7 +310,7 @@ int main(int argc, char **argv) {
     );
     // Print count of warping runs
     printf(
-        "# COUNT: warping=%ld\n", warping.count()
+        "# COUNT: warping=%zu\n", warping.count()
     );
 
     // If no errors so far, experiment is done - exit with success code
