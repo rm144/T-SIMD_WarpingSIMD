@@ -3,6 +3,7 @@ simdRadixSortGeneric.C
 simdmasktest.C
 simdvecautotest0.C
 simdvecautotest1.C
+simdvecautotestM.C
 simdvectest.C
 styleExamples.C
 tsimdtest.C

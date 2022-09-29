@@ -1,9 +1,9 @@
-runPlaceRecognitionTest
-runWarpingSIMDTest
-runWarpingSIMDTestAll
-runWarpingSIMDTestBW
-runWarpingSIMDTestPar
-runWarpingSIMDTestVis
+runPlaceRecognitionTest.sh
+runWarpingSIMDTest.sh
+runWarpingSIMDTestAll.sh
+runWarpingSIMDTestBW.sh
+runWarpingSIMDTestPar.sh
+runWarpingSIMDTestVis.sh
 warpingSIMDSmallTest.C
 warpingSIMDTest.C
 catchment.tcl

@@ -10,7 +10,12 @@ tsimd.dir
 tsimd.files
 tsimdtest.dir
 tsimdtest.files
+tiltsearch.dir
+tiltsearch.files
+tiltsearchtest.dir
+tiltsearchtest.files
 linkit
 tarfile.list
 revision
+integrate
 homevectors.gp

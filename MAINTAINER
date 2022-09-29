@@ -32,19 +32,24 @@ If external source files are removed or added, change
    simdimagetest.files
    tsimd.files
    tsimdtest.files
-
+   tiltsearch.file
+   tiltsearchtest.files
+   
 If the external source directory is changing, change the files
 
    simdimage.dir
    simdimagetest.dir
    tsimd.dir
    tsimdtest.dir
-
+   tiltsearch.dir
+   tiltsearchtest.dir
+   
 Files only present in this distribution (but not in the CEG PROG tree)
 are listed in
 
    standalone.files
-
+   standalone_tsimd.files
+   
 but no standalone.dir exists.
 
 To establish links to the external source directory, use

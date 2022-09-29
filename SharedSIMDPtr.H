@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "SIMD.H"
 #include "SIMDException.H"
 
 #ifdef SHARED_SIMD_PTR_DEBUG_ON

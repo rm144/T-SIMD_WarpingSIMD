@@ -2,7 +2,7 @@
 # -f means: don't read .tcshrc (resets search path)
 # ===========================================================================
 # 
-# runPlaceRecognitionTest --
+# runPlaceRecognitionTest.sh --
 # runs warpingSIMDTest and visualizes two compass match plots
 # 
 # This file is part of the following software:
@@ -36,9 +36,14 @@ set ss = "day"
 # database suffix
 # set suffix = "Hh1152sh"
 # set suffix = "Hh576sh"
-# set suffix = "Hh384sh"
-set suffix = "Hh288sh"
+set suffix = "Hh384sh"
+# set suffix = "Hh288sh"
 # set suffix = "Hh144sh"
+
+# for Hh384sh on AVX512
+setenv nAlpha 128
+setenv nPsi 128
+
 # relative cutoff frequency of Butterworth filter
 set bw = "0.10"
 # set bw = "0.05"

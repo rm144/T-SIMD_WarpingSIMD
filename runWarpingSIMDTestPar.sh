@@ -2,7 +2,7 @@
 # -f means: don't  read .tcshrc (resets search path)
 # ===========================================================================
 # 
-# runWarpingSIMDTestPar --
+# runWarpingSIMDTestPar.sh --
 # runs warpingSIMDTest in p mode (compute scale parameters)
 # 
 # This file is part of the following software:
@@ -35,7 +35,7 @@ set suffix = "Hh384sh"
 # relative cutoff frequency of Butterworth filter
 set bw = "0.10"
 
-# for Hh384sh
+# for Hh384sh on AVX512
 setenv nAlpha 128
 setenv nPsi 128
 

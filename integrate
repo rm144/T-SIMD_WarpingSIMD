@@ -1,0 +1,60 @@
+#!/usr/bin/tcsh
+# ===========================================================================
+# 
+# integrate --
+# integrate code into the PROG path (only needed by maintainer)
+# 
+# This file is part of the following software:
+# 
+#    - the low-level C++ template SIMD library
+#    - the SIMD implementation of the MinWarping and the 2D-Warping methods 
+#      for local visual homing.
+# 
+# The software is provided based on the accompanying license agreement
+# in the file LICENSE or LICENSE.doc. The software is provided "as is"
+# without any warranty by the licensor and without any liability of the
+# licensor, and the software may not be distributed by the licensee; see
+# the license agreement for details.
+# 
+# (C) Ralf Möller
+#     Computer Engineering
+#     Faculty of Technology
+#     Bielefeld University
+#     www.ti.uni-bielefeld.de
+# 
+# ===========================================================================
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# if the files should go to new PROG directories,
+# change the .dir files beforehand!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# just overwrites existing files, make sure that
+# they don't contain changes not contained in the
+# new file
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+foreach destStubs (tsimd tsimdtest \
+		   simdimage simdimagetest \
+		   tiltsearch tiltsearchtest)
+  set destDirFN = ${destStubs}.dir
+  set destFilesFN = ${destStubs}.files
+  echo "----- $destDirFN $destFilesFN -----"
+  if (-e $destDirFN && -e $destFilesFN) then
+    set destDir = `cat $destDirFN`
+    foreach destFN (`cat $destFilesFN`)
+      set fullDestFN = ${HOME}/${destDir}/${destFN}
+      echo "$destFN -> $fullDestFN"
+      if (! -e $fullDestFN) then
+	echo "\t$destFN did not exist, is copied"
+	/bin/cp $destFN $fullDestFN
+      else
+	if (`cmp $destFN $fullDestFN` != "") then
+	  echo "\t$destFN has changed, is replaced"
+	  /bin/cp -f $destFN $fullDestFN
+	endif
+      endif
+    end
+  endif
+end

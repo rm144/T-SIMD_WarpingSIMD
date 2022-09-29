@@ -2,7 +2,7 @@
 # -f means: don't read .tcshrc (resets search path)
 # ===========================================================================
 # 
-# runWarpingSIMDTestAll --
+# runWarpingSIMDTestAll.sh --
 # runs warpingSIMDTest in 'a' mode
 # 
 # This file is part of the following software:
@@ -33,8 +33,8 @@ set dryRun = 0
 # allMode: a or A
 set allMode = "A"
 # database base names list
-set baseList = "living1"
-# set baseList = "living1 living2 living3 living4"
+# set baseList = "living1"
+set baseList = "living1 living2 living3 living4"
 # sscvList
 set sscvList = "day night"
 # for autoscaling
@@ -56,7 +56,7 @@ set boxRad = 1000
 # setenv firstPhase 1
 # setenv partialSearch 1
 #
-# for Hh384sh
+# for Hh384sh on AVX512
 setenv nAlpha 128
 setenv nPsi 128
 

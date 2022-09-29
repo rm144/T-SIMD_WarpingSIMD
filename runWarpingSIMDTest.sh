@@ -2,7 +2,7 @@
 # -f means: don't read .tcshrc (resets search path)
 # ===========================================================================
 # 
-# runWarpingSIMDTest --
+# runWarpingSIMDTest.sh --
 # runs warpingSIMDTest and visualizes two home-vector plots
 # 
 # This file is part of the following software:

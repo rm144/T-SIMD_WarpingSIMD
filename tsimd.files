@@ -3,6 +3,7 @@ LICENSE
 LICENSE.doc
 README.SIMDMask
 SIMD.H
+SIMDAlloc.H
 SIMDDefs.H
 SIMDExperimental.H
 SIMDMaskEmu.H
@@ -10,8 +11,11 @@ SIMDMaskIntel16.H
 SIMDMaskIntel32.H
 SIMDMaskIntel64.H
 SIMDMaskNEON16.H
+SIMDMaskVecAutoTest.H
+SIMDMaskVecWrapper.H
 SIMDRadixSortGeneric.H
 SIMDRadixSortGenericThreads.H
+SIMDSerialMaskVec.H
 SIMDSerialVec.H
 SIMDTypes.H
 SIMDVec.H

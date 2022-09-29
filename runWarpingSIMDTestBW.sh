@@ -2,7 +2,7 @@
 # -f means: don't read .tcshrc (resets search path)
 # ===========================================================================
 # 
-# runWarpingSIMDTestBW --
+# runWarpingSIMDTestBW.sh --
 # runs warpingSIMDTest in 'a' mode for varying bw
 # 
 # This file is part of the following software:
@@ -44,7 +44,9 @@ set cvAuto = "night"
 set suffix = "Hh384sh"
 # butterworth parameter
 # set bwList = (0.01 0.02 0.03 0.04 0.05 0.07 0.10 0.14 0.19) 
-set bwList = (0.05 0.07 0.10 0.14 0.19) 
+# set bwList = (0.05 0.07 0.10 0.14 0.19)
+# reduced preprocessed files for Hh384sh
+set bwList = (0.05 0.10 0.20 0.40)
 # grid step (1 for each ss/cv)
 set gridStep = 2
 # set gridStep = 1
@@ -56,12 +58,11 @@ set boxRad = 1000
 # setenv firstPhase 1
 # setenv partialSearch 1
 #
-# for Hh384sh
+# for Hh384sh on AVX512
 setenv nAlpha 128
 setenv nPsi 128
 
 mkdir -p TEST
-
 
 # go through list of database extensions for current views
 foreach cv ($cvList)
