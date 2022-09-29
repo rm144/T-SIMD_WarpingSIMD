@@ -212,7 +212,7 @@ template<class... Types>
                     if (y < state.min) {
                         // Update tracked minimum
                         state.min = y;
-                        state.argmin_prev = state.argmin_prev;
+                        state.argmin_prev = state.argmin;
                         state.argmin = x;
                         // The pattern moved - not need to shrink this step
                         need_shrink = false;

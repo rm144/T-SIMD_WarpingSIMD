@@ -202,7 +202,7 @@ template<class... Types>
         std::array<std::tuple<Types...>, sizeof...(Types) + 1> xs{};
         // Reflection, expansion, contraction, shrink coefficient and
         // convergence threshold
-        double alpha = 1.0, gamma = 2.0, ro = 0.5, sigma = 0.5, t = 1.0;
+        double alpha = 1.0, gamma = 2.0, rho = 0.5, sigma = 0.5, t = 1.0;
         // Maximum number of steps before forcing termination
         std::size_t max_steps = 0;
 
@@ -225,10 +225,10 @@ template<class... Types>
          * @param max_steps Fail-safe condition: stop after exceeding max_steps
          */
         NelderMead(const std::array<std::tuple<Types...>, sizeof...(Types) + 1> &xs,
-                   const double alpha, const double gamma, const double ro,
+                   const double alpha, const double gamma, const double rho,
                    const double sigma, const double t,
                    const std::size_t max_steps)
-            : xs{xs}, alpha{alpha}, gamma{gamma}, ro{ro}, sigma{sigma}, t{t},
+            : xs{xs}, alpha{alpha}, gamma{gamma}, rho{rho}, sigma{sigma}, t{t},
               max_steps{max_steps} {}
 
         /**
@@ -303,7 +303,7 @@ template<class... Types>
                     }
                 }
                 // 5. Compute the contracted point
-                std::tuple<Types...> xc = x0 + ro * (state.xs[N] - x0);
+                std::tuple<Types...> xc = x0 + rho * (state.xs[N] - x0);
                 // Evaluate the function at the contracted point
                 auto yc = std::apply(std::forward<decltype(f)>(f), xc);
                 // Compare the contracted to the worst point

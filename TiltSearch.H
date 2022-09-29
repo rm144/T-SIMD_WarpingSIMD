@@ -217,4 +217,4 @@ template<class Model, class Warping>
     };
 }
 
-#endif /*TILT_ERASED_SEARCH_H*/
+#endif /*TILT_SEARCH_H*/

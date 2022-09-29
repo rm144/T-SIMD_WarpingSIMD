@@ -3400,6 +3400,12 @@ template<int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
 // contributed by Christoph Berganski
 // ---------------------------------------------------------------------------
 
+// Substitute for apparently slow std::lround used by NEAREST interpolation
+//  Rounds double to long via type-cast
+static inline long fast_round(const double x) {
+    return static_cast<long>(x + std::copysign(0.5, x));
+}
+
 /**
  * @brief Interpolates pixel value of SIMDImage
  * @tparam Type Value type of the SIMDImage
@@ -3428,12 +3434,12 @@ template<class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
             // Nearest neighbor interpolation
             case Interpolation::NEAREST: {
                 // If the pixel is out of the src after rounding...
-                if (std::lround(i) >= src.h || std::lround(j) >= src.w) {
+                if (fast_round(i) >= src.h || fast_round(j) >= src.w) {
                     // Fill with border value
                     return border;
                 }
                 // Copy pixels from source to destination
-                return src[std::lround(i)][std::lround(j)];
+                return src[fast_round(i)][fast_round(j)];
             }
                 // (Bi-)Linear interpolation
             case Interpolation::LINEAR: {
@@ -3441,7 +3447,7 @@ template<class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
                 int i0 = std::floor(i), i1 = (int) (std::floor(i) + 1),
                     j0 = std::floor(j), j1 = (int) (std::floor(j) + 1);
                 // If the pixel is out of the src after rounding...
-                if (i1 >= src.h || i1 >= src.w) {
+                if (i1 >= src.h || j1 >= src.w) {
                     // Fill with border value
                     return border;
                 }
@@ -3491,14 +3497,14 @@ template<class Type, int SIMD_WIDTH, int SIMD_ALIGN>
             // Nearest neighbor interpolation
             case Interpolation::NEAREST: {
                 // If the pixel is out of the src after rounding...
-                if (std::lround(i) >= src.h) {
+                if (fast_round(i) >= src.h) {
                     // Fill with border value
                     return border;
                 }
                 // Wrap around horizontal index, avoid % operation
                 j = (j >= src.w) ? (j - src.w) : ((j < 0) ? (j + src.w) : j);
                 // Copy pixels from source to destination
-                return src[std::lround(i)][std::lround(j)];
+                return src[fast_round(i)][fast_round(j)];
             }
                 // (Bi-)Linear interpolation
             case Interpolation::LINEAR: {

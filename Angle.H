@@ -368,6 +368,29 @@ Angle<Radian, long double> operator "" _rad(long double x) {
 /**
  * @brief Constructs a strong typed angle in degree from long double literal
  * @param x Angle value in degree
+// Trig. function overload taking an angle of arbitrary angular unit and type
+template<class Unit, class Type>
+    static auto sin(const Angle<Unit, Type> &angle) {
+        // Standard library trig. functions require arguments in terms of radian
+        return std::sin((Type) (Angle<Radian, Type>(angle)));
+    }
+
+// Trig. function overload taking an angle of arbitrary angular unit and type
+template<class Unit, class Type>
+    static auto cos(const Angle<Unit, Type> &angle) {
+        // Standard library trig. functions require arguments in terms of radian
+        return std::cos((Type) (Angle<Radian, Type>(angle)));
+    }
+
+// Trig. function overload taking an angle of arbitrary angular unit and type
+template<class Unit, class Type>
+    static auto tan(const Angle<Unit, Type> &angle) {
+        // Standard library trig. functions require arguments in terms of radian
+        return std::tan((Type) (Angle<Radian, Type>(angle)));
+    }
+
+// TODO: Consider overloading other trig. function if required
+
  * @return Strong typed degree angle with base type long double of x
  */
 Angle<Degree, long double> operator "" _deg(long double x) {

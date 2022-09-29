@@ -240,9 +240,9 @@ template<>
     AxisAngle<Radian>::operator RollPitch<Radian>() const {
         return RollPitch<Radian>{
             // Roll angle delta_X
-            Angle<Radian>(sin((double) phi) * cos((double) theta_R)),
+            Angle<Radian>((double) phi * cos((double) theta_R)),
             // Pitch angle delta_Y
-            Angle<Radian>(sin((double) phi) * sin((double) theta_R))
+            Angle<Radian>((double) phi * sin((double) theta_R))
         };
     }
 }

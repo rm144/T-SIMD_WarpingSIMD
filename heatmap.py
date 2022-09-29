@@ -3,12 +3,13 @@ import matplotlib.pyplot as plt
 # Arrays and images
 import numpy as np
 
+
 # This is to be able to edit text in SVG files later
-plt.rcParams['svg.fonttype'] = 'none'
+# plt.rcParams['svg.fonttype'] = 'none'
 
 
 # Creates a color mesh heatmap plot
-def heatmap(data: np.array, title: str = 'Heatmap', argmin=None):
+def heatmap(data: np.array, title: str = 'Heatmap', argmin=None, estmin=False):
     # Decompose columns of the search log
     x, y, alpha, psi, d = data.T
     # Width and height of the x-y range
@@ -22,7 +23,15 @@ def heatmap(data: np.array, title: str = 'Heatmap', argmin=None):
     plt.pcolormesh(x, y, d, cmap='gray')
     # Mark the true minimum
     if argmin is not None:
-        plt.scatter(argmin[0], argmin[1], color='green', s=100, marker='+')
+        plt.scatter(argmin[0], argmin[1], color='green', s=500, marker='+')
+    # Plot a blue marker at the search minimum
+    if estmin:
+        # Find the location of the estimated minimum
+        estmin = [
+            x[np.unravel_index(d.argmin(), (height, width))],
+            y[np.unravel_index(d.argmin(), (height, width))]
+        ]
+        plt.scatter(*estmin, edgecolors='red', facecolors='blue', s=75)
     # Limit the plotting range
     plt.xlim(x.min(), x.max())
     plt.ylim(y.min(), y.max())
@@ -36,11 +45,15 @@ def heatmap(data: np.array, title: str = 'Heatmap', argmin=None):
 
 
 # Main function to not have all the code in global scope
-def main(filename: str, output: str, argmin=None):
+def main(filename: str, output: str, title: str = None, argmin=None):
     # Load the grid search log file
     log = np.loadtxt(filename)
+    # Fix the figure size
+    # plt.figure(figsize=(5, 5))
     # Create the heatmap plot
-    heatmap(log, filename, argmin)
+    heatmap(log, filename if title is None else title, argmin, estmin=True)
+    # Put some space between the subplots to improve readability
+    plt.tight_layout()
     # Save the plot to the output file
     plt.savefig(output)
 
@@ -56,6 +69,7 @@ if __name__ == '__main__':
     parser.add_argument('filename', type=str)
     parser.add_argument('output', type=str)
     parser.add_argument('--argmin', type=float, nargs=2)
+    parser.add_argument('--title', type=str)
     # Parse supplied arguments using the parser
     args = parser.parse_args().__dict__
 

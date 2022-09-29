@@ -91,7 +91,7 @@ auto load_image(const std::string &root, const std::string &filename,
     // Build the full path to the image file including directory and suffix
     std::string image_path = root + "/" + filename + ".pgm";
     // Load the image from file and insert the panorama addon
-    if(!ns_simd::loadPGM(image_path, image, panorama)) {
+    if (!ns_simd::loadPGM(image_path, image, panorama)) {
         // Loading the image failed (probably the file does not exist)
         throw ns_simd::SIMDException{
             __FUNCTION__, "Failed to load the image file: " + image_path
@@ -100,28 +100,25 @@ auto load_image(const std::string &root, const std::string &filename,
     // If specified, rotate the image
     if (rotate != 0.0_rad) {
         // Compute shift in pixels from angle and panorama image resolution
-        int shift = (double) (rotate / image.addOn.verticalResolution);
+        int shift = (int) ((double) rotate / image.addOn.verticalResolution);
         // Image to write the rotated into
         ns_simd::SIMDImage<ns_simd::SIMDByte, SW, SA, ns_simd::Panorama> rot;
         // Rotate image horizontally by shift pixels
         ns_simd::rotateHor(image, shift, rot);
         // Add rotation to the image descriptor
-        descriptor.delta_R += (double)rotate;
-        // Convert tilt parameters to axis-angle representation
-        //  NOTE: It is easier to adapt tilt to orientation change in axis angle
-        //  representation. Axis-angle decouples magnitude and direction of
-        //  tilt with only the latter changing.
-        tilt::AxisAngle<Radian> tilt = tilt::RollPitch<Radian> {
-            descriptor.delta_X, descriptor.delta_Y
-        };
-        // Add changed rotation to tilt in axis-angle representation
-        //  NOTE: Adapt tilt in opposite direction of rotation
-        tilt.theta_R -= rotate;
-        // Extract modified roll-pitch parameters
-        auto [delta_X, delta_Y] = tilt::RollPitch<Radian>{tilt};
-        // Adapt the tilt parameters to change of orientation
-        descriptor.delta_X = (double)delta_X;
-        descriptor.delta_Y = (double)delta_Y;
+        descriptor.delta_R += (double) rotate;
+        // Extract roll-pitch parameters
+        double delta_X = descriptor.delta_X, delta_Y = descriptor.delta_Y;
+        // Adapt the tilt parameters to change of orientation:
+        //  NOTE: This approximates the effect of the similarity transform
+        //  describing the change of coordinate system due to rotating the
+        //  view (reference) direction:
+        //      Rz(-rotate) * Rx(delta_X) * Ry(delta_Y) * Rz(+rotate)
+        //  Note: This essentially is a rotation of the tilt parameters
+        //  represented as a vector (delta_X, delta_Y) in 2d:
+        //      (delta_X', delta_Y') = Rz(-rotate) * (delta_X, delta_Y)
+        descriptor.delta_X = cos(rotate) * delta_X + sin(rotate) * delta_Y;
+        descriptor.delta_Y = cos(rotate) * delta_Y - sin(rotate) * delta_X;
         // Return the rotated image
         return std::pair{rot, descriptor};
     }
