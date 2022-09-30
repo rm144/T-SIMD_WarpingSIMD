@@ -130,6 +130,9 @@ template<class Objective, class... Types>
             // stream
             std::ostringstream repr;
             // Build string representation of the objective function values
+            // 24. Sep 22 (Jonas Keller): use tuple_operators::operator<< as
+            // normal function call instead of using infix notation to avoid
+            // compiler error with gcc on windows
             tuple_operators::operator<<(repr, std::tuple{xs...}) << " " << y << " ";
             // Add objective function input+output to log
             searcher.log.push_back(repr.str());
