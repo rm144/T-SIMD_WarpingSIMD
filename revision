@@ -533,14 +533,14 @@ URL: file:///mnt/PROG/libraries/TiltSearch-8-1/src/Angle.H
 Relative URL: ^/libraries/TiltSearch-8-1/src/Angle.H
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7273
-Last Changed Date: 2022-09-30 09:11:23 +0200 (Fr, 30 Sep 2022)
-Text Last Updated: 2022-09-30 09:10:28 +0200 (Fr, 30 Sep 2022)
-Checksum: 14801309332d59e5d788aa19697dac4ca0aa0b53
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: ce43431ae795b6a98c76c65852a679af5afc158f
 
 Path: /home/moeller/PROG/libraries/TiltSearch-8-1/src/Search.H
 Name: Search.H
@@ -581,14 +581,14 @@ URL: file:///mnt/PROG/libraries/TiltSearch-8-1/src/SearchLogger.H
 Relative URL: ^/libraries/TiltSearch-8-1/src/SearchLogger.H
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7065
-Last Changed Date: 2022-02-08 18:09:16 +0100 (Di, 08 Feb 2022)
-Text Last Updated: 2022-09-30 09:10:28 +0200 (Fr, 30 Sep 2022)
-Checksum: 6e9513b5735b8c25edfbec36588f27c5d6e9cea9
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: d827652c55e3ad27e7882f920e86b2bf06d3f7ab
 
 Path: /home/moeller/PROG/libraries/TiltSearch-8-1/src/SearchNelderMead.H
 Name: SearchNelderMead.H
@@ -597,14 +597,14 @@ URL: file:///mnt/PROG/libraries/TiltSearch-8-1/src/SearchNelderMead.H
 Relative URL: ^/libraries/TiltSearch-8-1/src/SearchNelderMead.H
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7273
-Last Changed Date: 2022-09-30 09:11:23 +0200 (Fr, 30 Sep 2022)
-Text Last Updated: 2022-09-30 09:10:28 +0200 (Fr, 30 Sep 2022)
-Checksum: f47e01ed6fd2db02a509f4867ba5436d607865e3
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: b6d36a928fc40cfff01f56ac0f8760d37a8753a8
 
 Path: /home/moeller/PROG/libraries/TiltSearch-8-1/src/SearchPattern.H
 Name: SearchPattern.H
@@ -709,14 +709,14 @@ URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/BaselineDemo.C
 Relative URL: ^/applications/TiltSearchTest-8-1/src/BaselineDemo.C
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7091
-Last Changed Date: 2022-02-17 09:30:57 +0100 (Do, 17 Feb 2022)
-Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
-Checksum: a1386de36bdc7c059c61f09d074633b31548ce09
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: edd2014cc9ed07c0aeca09d7ea8b9f76f6c28a99
 
 Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/Env.H
 Name: Env.H
@@ -725,14 +725,14 @@ URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/Env.H
 Relative URL: ^/applications/TiltSearchTest-8-1/src/Env.H
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7066
-Last Changed Date: 2022-02-08 18:12:50 +0100 (Di, 08 Feb 2022)
-Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
-Checksum: a14ea550ee8c8e3fffe898a6b49b366f8f034222
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: 44b2d8957ad3cdcfeec50b3e10961c068db1677e
 
 Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/IdealScale.C
 Name: IdealScale.C
@@ -741,14 +741,14 @@ URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/IdealScale.C
 Relative URL: ^/applications/TiltSearchTest-8-1/src/IdealScale.C
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7086
-Last Changed Date: 2022-02-14 19:36:25 +0100 (Mo, 14 Feb 2022)
-Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
-Checksum: 9554bde50ceac46cceda260ae86a62dff248abfe
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: 0292c9284f3f1455744a1962a5573ea63085f259
 
 Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/Image.H
 Name: Image.H
@@ -773,14 +773,14 @@ URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/Setup.H
 Relative URL: ^/applications/TiltSearchTest-8-1/src/Setup.H
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7091
-Last Changed Date: 2022-02-17 09:30:57 +0100 (Do, 17 Feb 2022)
-Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
-Checksum: 71936f5ee1b105ab5632683b6b9695329831c5e2
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: f8079ef6a8409f0a2ac354300162e3dce9d70062
 
 Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/Tilt.C
 Name: Tilt.C
@@ -789,14 +789,14 @@ URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/Tilt.C
 Relative URL: ^/applications/TiltSearchTest-8-1/src/Tilt.C
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7098
-Last Changed Date: 2022-02-23 07:38:14 +0100 (Mi, 23 Feb 2022)
-Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
-Checksum: 382f1d46e09371f6431511910771bb3e85aaf80b
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: 9b822c9612cc9fb4a4cec9aaa8c978c46f5d1391
 
 Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/TiltSearchDemo.C
 Name: TiltSearchDemo.C
@@ -805,14 +805,14 @@ URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/TiltSearchDemo.C
 Relative URL: ^/applications/TiltSearchTest-8-1/src/TiltSearchDemo.C
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7091
-Last Changed Date: 2022-02-17 09:30:57 +0100 (Do, 17 Feb 2022)
-Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
-Checksum: 3aefd52a63f9462b89d60637b5dcc7363a160835
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
+Text Last Updated: 2022-10-01 20:20:15 +0200 (Sa, 01 Okt 2022)
+Checksum: b6823e49b1d1bf96a7e142134ab6aeb72bf86275
 
 Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/README.TiltSearchApps.md
 Name: README.TiltSearchApps.md
@@ -830,19 +830,19 @@ Last Changed Date: 2022-02-23 07:44:28 +0100 (Mi, 23 Feb 2022)
 Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
 Checksum: f6c658fa91ce3657db97dd12cfc5d9ea37d0b1d2
 
-Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/searchplot
-Name: searchplot
+Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/searchplot.sh
+Name: searchplot.sh
 Working Copy Root Path: /home/moeller/PROG
-URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/searchplot
-Relative URL: ^/applications/TiltSearchTest-8-1/src/searchplot
+URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/searchplot.sh
+Relative URL: ^/applications/TiltSearchTest-8-1/src/searchplot.sh
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7091
-Last Changed Date: 2022-02-17 09:30:57 +0100 (Do, 17 Feb 2022)
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
 Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
 Checksum: 75a025bd0fdf02fe3531af2724610638ddaade6d
 
@@ -894,19 +894,19 @@ Last Changed Date: 2022-09-30 09:11:23 +0200 (Fr, 30 Sep 2022)
 Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
 Checksum: a6f33c5e1212bab4b5774b2676d0ef0606677ffc
 
-Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/idealscale
-Name: idealscale
+Path: /home/moeller/PROG/applications/TiltSearchTest-8-1/src/idealscale.sh
+Name: idealscale.sh
 Working Copy Root Path: /home/moeller/PROG
-URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/idealscale
-Relative URL: ^/applications/TiltSearchTest-8-1/src/idealscale
+URL: file:///mnt/PROG/applications/TiltSearchTest-8-1/src/idealscale.sh
+Relative URL: ^/applications/TiltSearchTest-8-1/src/idealscale.sh
 Repository Root: file:///mnt/PROG
 Repository UUID: 573c69e8-c1bb-4813-9607-403d63ca4202
-Revision: 7273
+Revision: 7281
 Node Kind: file
 Schedule: normal
 Last Changed Author: moeller
-Last Changed Rev: 7099
-Last Changed Date: 2022-02-23 07:39:11 +0100 (Mi, 23 Feb 2022)
+Last Changed Rev: 7281
+Last Changed Date: 2022-10-01 20:26:51 +0200 (Sa, 01 Okt 2022)
 Text Last Updated: 2022-09-30 09:09:46 +0200 (Fr, 30 Sep 2022)
 Checksum: 2fd19812478ae7759aafb6b8a4d2be299dcfce9c
 

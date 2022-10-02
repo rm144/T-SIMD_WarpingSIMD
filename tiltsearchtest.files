@@ -6,8 +6,8 @@ Setup.H
 Tilt.C
 TiltSearchDemo.C
 README.TiltSearchApps.md
-searchplot
+searchplot.sh
 heatmap.py
 pattern.py
 simplex.py
-idealscale
+idealscale.sh
