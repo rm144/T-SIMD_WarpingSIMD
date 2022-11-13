@@ -26,17 +26,13 @@
 #ifndef _SIMD_IMAGE_FUNCTIONS_H_
 #define _SIMD_IMAGE_FUNCTIONS_H_
 
-#include <cmath>
-#include <algorithm>
-#include <bitset>
-#include <vector>
-#include "SIMDTypes.H"
-#include "SIMDException.H"
-#include "SIMDImage.H"
-#include "SIMDVec.H"
-#include "SIMDVecAll.H"
-// Saturate type casts of SIMD types
 #include "saturate_cast.H"
+#include "SIMDImage.H"
+#include "SIMDVecAll.H"
+
+#include <algorithm>
+#include <math.h>
+#include <vector>
 
 
 /**

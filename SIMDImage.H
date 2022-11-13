@@ -26,14 +26,11 @@
 #ifndef _SIMD_IMAGE_H_
 #define _SIMD_IMAGE_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <vector>
-#include "SIMD.H"
-#include "SIMDException.H"
 #include "SharedSIMDPtr.H"
+#include "SIMDException.H"
+
+#include <stdio.h>
+#include <vector>
 
 #ifdef SIMD_IMAGE_DEBUG_ON
 #define SIMD_IMAGE_DEBUG(ACTION) ACTION

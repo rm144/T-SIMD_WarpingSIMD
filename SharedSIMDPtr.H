@@ -26,11 +26,12 @@
 #ifndef _SHARED_SIMD_PTR_H_
 #define _SHARED_SIMD_PTR_H_
 
+#include "SIMDAlloc.H"
+#include "SIMDException.H"
+
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
-#include "SIMD.H"
-#include "SIMDException.H"
 
 #ifdef SHARED_SIMD_PTR_DEBUG_ON
 #define SHARED_SIMD_PTR_DEBUG(ACTION) ACTION
