@@ -131,7 +131,10 @@ template<class Warping, class Log = search::NoLog>
                 // Construct Nelder-Mead searcher
             case NELDER_MEAD: {
                 // Hardcoded initial search simplex
-                auto searcher = search::NelderMead{
+                // 14. Nov 22 (Jonas Keller): specified template parameters
+                // explicitly; icc can't deduce them
+                auto searcher = search::NelderMead<Angle<Radian, long double>,
+                                                   Angle<Radian, long double>>{
                     std::array{
                         std::tuple{-0.07_rad, -0.07_rad},
                         std::tuple{+0.14_rad, +0.00_rad},
