@@ -62,7 +62,7 @@ template<class Tuple, std::size_t... Is>
     }
 
 // Adds const Tuple &to left-hand side.
-template<class... Types, std::size_t... Is>
+template<class... Types>
     auto &add_to(std::tuple<Types...> &t1, const std::tuple<Types...> &t2) {
         return add_to(t1, t2, std::index_sequence_for<Types...>{});
     }
