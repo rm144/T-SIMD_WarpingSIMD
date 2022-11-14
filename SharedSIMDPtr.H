@@ -32,6 +32,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef SHARED_SIMD_PTR_DEBUG_ON
 #define SHARED_SIMD_PTR_DEBUG(ACTION) ACTION
