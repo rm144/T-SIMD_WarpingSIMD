@@ -18,6 +18,7 @@ SIMDMaskVecAutoTest.H
 SIMDMaskVecWrapper.H
 SIMDRadixSortGeneric.H
 SIMDRadixSortGenericThreads.H
+SIMDRandom.H
 SIMDSerialMaskVec.H
 SIMDSerialVec.H
 SIMDTypes.H
