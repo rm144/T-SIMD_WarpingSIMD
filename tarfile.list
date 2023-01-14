@@ -31,6 +31,7 @@ runWarpingSIMDTestVis.sh
 warpingSIMDSmallTest.C
 warpingSIMDTest.C
 catchment.tcl
+Compare2Type.H
 LICENSE
 LICENSE.doc
 README.SIMDMask
@@ -106,6 +107,7 @@ INSTALL
 MAINTAINER
 Makefile
 standalone.files
+standalone_tsimd.files
 tsimd.dir
 tsimd.files
 tsimdtest.dir
@@ -122,4 +124,5 @@ linkit
 tarfile.list
 revision
 integrate
+svncopy
 homevectors.gp

@@ -2,6 +2,7 @@ INSTALL
 MAINTAINER
 Makefile
 standalone.files
+standalone_tsimd.files
 tsimd.dir
 tsimd.files
 tsimdtest.dir
@@ -18,4 +19,5 @@ linkit
 tarfile.list
 revision
 integrate
+svncopy
 homevectors.gp
