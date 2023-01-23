@@ -59,6 +59,7 @@ SIMDVecBaseImplIntel64.H
 SIMDVecBaseImplNEON16.H
 SIMDVecBaseImplSandbox.H
 SIMDVecExt.H
+SIMDVecMask.H
 SIMDVecMaskImplArchSpec.H
 SIMDVecMaskImplEmu.H
 SIMDVecMaskImplIntel16.H
