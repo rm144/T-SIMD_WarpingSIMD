@@ -26,6 +26,7 @@
 #ifndef _WARPING_SEARCH_COLLECTION_H_
 #define _WARPING_SEARCH_COLLECTION_H_
 
+#include "SIMDTypes.H"
 #include "WarpingSearch.H"
 
 namespace ns_simd {
@@ -54,7 +55,7 @@ namespace ns_simd {
       // we assume that sizeof(SPSType) <= sizeof(MatchType)
       // (since we add up SPSType elements in MatchType sum)
       // (just to provide the user with a clear compiler message)
-      typeSizeLEQ<SPSType,MatchType>();
+      SIMD_STATIC_ASSERT(sizeof(SPSType) <= sizeof(MatchType));
       
       // 30. Sep 14 (rm): local copies (somewhat faster, surprisingly)
       //  1. Jun 15 (rm): now const
@@ -214,7 +215,7 @@ namespace ns_simd {
       // we assume that sizeof(SPSType) <= sizeof(MatchType)
       // (since we add up SPSType elements in MatchType sum)
       // (just to provide the user with a clear compiler message)
-      typeSizeLEQ<SPSType,MatchType>();
+      SIMD_STATIC_ASSERT(sizeof(SPSType) <= sizeof(MatchType));
 
       //  1. Oct 14 (rm): local copies (sometimes faster, not here though)
       //  3. Jun 15 (rm): now const

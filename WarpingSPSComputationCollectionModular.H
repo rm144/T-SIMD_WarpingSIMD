@@ -443,7 +443,7 @@ public:
   convertImage(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &in,
                SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &out) {
     // code assumes that ProcType is larger or equal in size then ImgType
-    typeSizeLEQ<ImgType, ProcType>();
+    SIMD_STATIC_ASSERT(sizeof(ImgType) <= sizeof(ProcType));
 
     const int numElems = NUM_SIMDVECS_ELEMENTS(ImgType, ProcType, SIMD_WIDTH);
     const size_t size = in.size;

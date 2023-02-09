@@ -31,6 +31,7 @@
 #include "MinWarpingSearch.H"
 #include "SIMDVecAll.H"
 #include "SIMDException.H"
+#include "SIMDTypes.H"
 
 namespace ns_simd {
 
@@ -62,7 +63,7 @@ namespace ns_simd {
       // we assume that sizeof(SPSType) <= sizeof(MatchType)
       // (since we add up SPSType elements in MatchType sum)
       // (just to provide the user with a clear compiler message)
-      typeSizeLEQ<SPSType,MatchType>();
+	  SIMD_STATIC_ASSERT(sizeof(SPSType) <= sizeof(MatchType));
 
       // 30. Sep 14 (rm): local copies (somewhat faster, surprisingly)
       //  1. Jun 15 (rm): now const
@@ -75,13 +76,13 @@ namespace ns_simd {
       MatchType *const _match = match.match.data;
       SPSType *const _stack = sps.stack.data;
       const int simd_sps_elems = sps.param.simd_sps_elems;
-      // numInVecs is always 1, see typeSizeLEQ above
+      // numInVecs is always 1, see assertion above
       const int numOutVecs 
 	= NUM_OUTPUT_SIMDVECS(MatchType,SPSType);
       const int numOutVecElems = 
 	// numOutputSIMDVecElements<MatchType,SPSType,SIMD_WIDTH>();
 	NUM_SIMDVEC_ELEMENTS(MatchType,SIMD_WIDTH);
-      // numElems is always simd_sps_elems, see typeSizeLEQ above
+      // numElems is always simd_sps_elems, see assertion above
       const SPSType maxSPS = SIMDTypeInfo<SPSType>::max();
       // SIMDVec<SPSType,SIMD_WIDTH> zero = setzero<SPSType,SIMD_WIDTH>();
       // faster if not defined inside loops?
@@ -293,7 +294,7 @@ namespace ns_simd {
       // we assume that sizeof(SPSType) <= sizeof(MatchType)
       // (since we add up SPSType elements in MatchType sum)
       // (just to provide the user with a clear compiler message)
-      typeSizeLEQ<SPSType,MatchType>();
+	  SIMD_STATIC_ASSERT(sizeof(SPSType) <= sizeof(MatchType));
 
       //  1. Oct 14 (rm): local copies (sometimes faster, not here though)
       //  3. Jun 15 (rm): now const
@@ -306,13 +307,13 @@ namespace ns_simd {
       MatchType *const _match = match.match.data;
       SPSType *const _stack = sps.stack.data;
       const int simd_sps_elems = sps.param.simd_sps_elems;
-      // numInVecs is always 1, see typeSizeLEQ above
+      // numInVecs is always 1, see assertion above
       const int numOutVecs 
 	= NUM_OUTPUT_SIMDVECS(MatchType,SPSType);
       const int numOutVecElems = 
 	// numOutputSIMDVecElements<MatchType,SPSType,SIMD_WIDTH>();
 	NUM_SIMDVEC_ELEMENTS(MatchType,SIMD_WIDTH);
-      // numElems is always simd_sps_elems, see typeSizeLEQ above
+      // numElems is always simd_sps_elems, see assertion above
       const SPSType maxSPS = SIMDTypeInfo<SPSType>::max();
       // faster if not defined inside loops
       SIMDVec<MatchType,SIMD_WIDTH> zero = setzero<MatchType,SIMD_WIDTH>();
