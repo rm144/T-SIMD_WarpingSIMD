@@ -171,7 +171,7 @@ namespace ns_simd {
 	   i += SIMDVec<MatchType,SIMD_WIDTH>::elements) {
 	vec1 = load<SIMD_WIDTH>(match1.match.data + i);
 	vec2 = load<SIMD_WIDTH>(match2.match.data + i);
-	resultIsInvalid = or(cmpeq(vec1, invalidVec), cmpeq(vec2, invalidVec));
+	resultIsInvalid = or_(cmpeq(vec1, invalidVec), cmpeq(vec2, invalidVec));
 	result = ifelse(resultIsInvalid, invalidVec, avgrd(vec1, vec2));
 	store(match.data + i, result);
       }
@@ -195,7 +195,7 @@ namespace ns_simd {
 	   i += SIMDVec<MatchType,SIMD_WIDTH>::elements) {
 	vec1 = load<SIMD_WIDTH>(row1 + i);
 	vec2 = load<SIMD_WIDTH>(row2 + i);
-	resultIsInvalid = or(cmpeq(vec1, invalidVec), cmpeq(vec2, invalidVec));
+	resultIsInvalid = or_(cmpeq(vec1, invalidVec), cmpeq(vec2, invalidVec));
 	result = ifelse(resultIsInvalid, invalidVec, avgrd(vec1, vec2));
 	store(row + i, result);
       }
