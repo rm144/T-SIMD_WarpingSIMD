@@ -29,6 +29,9 @@
 // SIMD typedefs and TypeInfo
 #include "SIMDTypes.H"
 
+// std::min and std::max
+#include <algorithm>
+
 // WarpingSIMD / SIMDImage namespace
 namespace ns_simd {
 /**

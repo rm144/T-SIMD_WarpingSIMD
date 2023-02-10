@@ -30,6 +30,8 @@
 #include <tuple>
 // Standard utility function (e.g. std::index_sequence)
 #include <utility>
+// Standard output stream
+#include <ostream>
 
 /**
  * @brief Custom operators operating on std::tuple

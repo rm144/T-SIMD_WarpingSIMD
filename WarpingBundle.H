@@ -29,6 +29,7 @@
 #ifndef _WARPING_BUNDLE_H_
 #define _WARPING_BUNDLE_H_
 
+#include <ostream>
 #include <vector>
 #include "WarpingCompound.H"
 #include "WarpingFactories.H"
