@@ -37,6 +37,8 @@
 
 // Custom tuple operators
 #include "TupleUtility.H"
+// Search Grid
+#include "SearchGrid.H"
 
 /**
  * @brief Namespace containing search strategies

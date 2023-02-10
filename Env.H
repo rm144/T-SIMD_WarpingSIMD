@@ -26,6 +26,9 @@
 #ifndef EXP_ENV_H
 #define EXP_ENV_H
 
+// Angle class
+#include "Angle.H"
+
 // C standard library header for C++ (contains std::getenv)
 #include <cstdlib>
 // C++ string stream input/output

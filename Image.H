@@ -50,6 +50,9 @@
 // Tilt parameter models
 #include "TiltModel.H"
 
+// for constant SW
+#include "Setup.H"
+
 /**
  * @brief Image descriptor parameters
  */

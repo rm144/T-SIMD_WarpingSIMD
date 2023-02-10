@@ -30,6 +30,8 @@
 #include <cmath>
 // General-purpose polymorphic function wrapper: std::function
 #include <functional>
+// operator>>
+#include <istream>
 
 // Strong type angular units
 #include "Angle.H"
