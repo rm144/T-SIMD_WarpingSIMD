@@ -1,26 +1,26 @@
 // ===========================================================================
-// 
+//
 // IdealScale.C --
 // Christoph Berganski
-// 
+//
 // This source code file is part of the following software:
-// 
+//
 //    - the low-level C++ template SIMD library
-//    - the SIMD implementation of the MinWarping and the 2D-Warping methods 
+//    - the SIMD implementation of the MinWarping and the 2D-Warping methods
 //      for local visual homing.
-// 
+//
 // The software is provided based on the accompanying license agreement
 // in the file LICENSE or LICENSE.doc. The software is provided "as is"
 // without any warranty by the licensor and without any liability of the
 // licensor, and the software may not be distributed by the licensee; see
 // the license agreement for details.
-// 
+//
 // (C) Ralf Möller
 //     Computer Engineering
 //     Faculty of Technology
 //     Bielefeld University
 //     www.ti.uni-bielefeld.de
-// 
+//
 // ===========================================================================
 
 // C standard library header for C++ (contains EXIT_SUCCESS)
@@ -55,81 +55,81 @@ ENV_BOOL(dump_default, true);
  * @param rhs Reference to the vector to get the values from
  * @return Reference to the modified output stream
  */
-template<class Type>
-    std::ostream &operator<<(std::ostream &lhs, const std::vector<Type> &rhs) {
-        // Iterate over all elements of the vector
-        for (const Type &value: rhs) {
-            // Insert element into output stream
-            lhs << value << ' ';
-        }
-        // Return reference to modified stream
-        return lhs;
-    }
+template <class Type>
+std::ostream &operator<<(std::ostream &lhs, const std::vector<Type> &rhs)
+{
+  // Iterate over all elements of the vector
+  for (const Type &value : rhs) {
+    // Insert element into output stream
+    lhs << value << ' ';
+  }
+  // Return reference to modified stream
+  return lhs;
+}
 
 /**
  * @brief Generates usage string referring to the program name
  * @param program_name Name of the program (argument) to use.
  * @return Usage instructions as std::string
  */
-std::string usage(const std::string &name) {
-    return "Usage: " + name + " root filename";
+std::string usage(const std::string &name)
+{
+  return "Usage: " + name + " root filename";
 }
 
 // Preprocessing tool entrypoint
-int main(int argc, char **argv) {
-    // Two arguments necessary: Directory root and filename
-    if (argc != 3) {
-        // Write error/usage message to standard error stream
-        std::cerr << argv[0] << ": Missing Arguments. " << usage(argv[0])
-                  << std::endl;
-        // Stop here with error code
-        exit(EXIT_FAILURE);
-    }
-    // Image directory (database) and image filename (basename without suffix)
-    std::string root = argv[1], filename = argv[2];
+int main(int argc, char **argv)
+{
+  // Two arguments necessary: Directory root and filename
+  if (argc != 3) {
+    // Write error/usage message to standard error stream
+    std::cerr << argv[0] << ": Missing Arguments. " << usage(argv[0])
+              << std::endl;
+    // Stop here with error code
+    exit(EXIT_FAILURE);
+  }
+  // Image directory (database) and image filename (basename without suffix)
+  std::string root = argv[1], filename = argv[2];
 
-    // Load the image
-    // auto[image, descriptor] = load_image(root, filename);
-    auto image = std::get<0>(load_image(root, filename));
-    
-    // Image cropping to remove invalid regions after tilt transforms
-    ENV(Angle<Radian>, crop_upper, 35.0_deg);
-    ENV(Angle<Radian>, crop_lower, 00.0_deg);
+  // Load the image
+  // auto[image, descriptor] = load_image(root, filename);
+  auto image = std::get<0>(load_image(root, filename));
 
-    // Target to write the cropped image into
-    decltype(image) cropped;
-    // Short name for vertical resolution of panoramic image
-    double vr = image.addOn.verticalResolution;
-    // Preprocessing: crop parts of the image
-    ns_simd::croppedView(
-        image, (int) (crop_upper / vr), (int) (crop_lower / vr), cropped
-    );
+  // Image cropping to remove invalid regions after tilt transforms
+  ENV(Angle<Radian>, crop_upper, 35.0_deg);
+  ENV(Angle<Radian>, crop_lower, 00.0_deg);
 
-    // Construct warping bundle instance to use for the experiment
-    auto warping = make_warping(cropped.w);
+  // Target to write the cropped image into
+  decltype(image) cropped;
+  // Short name for vertical resolution of panoramic image
+  double vr = image.addOn.verticalResolution;
+  // Preprocessing: crop parts of the image
+  ns_simd::croppedView(image, (int) (crop_upper / vr), (int) (crop_lower / vr),
+                       cropped);
 
-    // If configured verbose, print some more info
-    if (verbose) {
-        // Dump the environment configuration to standard output
-        env_config::dump(std::cout, dump_default);
-    }
+  // Construct warping bundle instance to use for the experiment
+  auto warping = make_warping(cropped.w);
 
-    // Compute the ideal pixel scales (vector) using the scale plane stack
-    // computation of the warping bundle
-    std::vector<double> pixel = warping.spsComp->idealPixelScale(
-        warping.spsComp->maxDenom(cropped)
-    );
-    // Get match type of constructed warping bundle instance
-    using MATCH_TYPE = decltype(warping)::MATCH_TYPE;
-    // Compute the post scale using the scale plane stack computation depending
-    // on image size and type used by the matching step
-    double post = warping.spsComp->idealPostScale(
-        double(ns_simd::SIMDTypeInfo<MATCH_TYPE>::max()) / cropped.w
-    );
+  // If configured verbose, print some more info
+  if (verbose) {
+    // Dump the environment configuration to standard output
+    env_config::dump(std::cout, dump_default);
+  }
 
-    // Print the scaling parameters
-    std::cout << pixel << " " << post << std::endl;
+  // Compute the ideal pixel scales (vector) using the scale plane stack
+  // computation of the warping bundle
+  std::vector<double> pixel =
+    warping.spsComp->idealPixelScale(warping.spsComp->maxDenom(cropped));
+  // Get match type of constructed warping bundle instance
+  using MATCH_TYPE = decltype(warping)::MATCH_TYPE;
+  // Compute the post scale using the scale plane stack computation depending
+  // on image size and type used by the matching step
+  double post = warping.spsComp->idealPostScale(
+    double(ns_simd::SIMDTypeInfo<MATCH_TYPE>::max()) / cropped.w);
 
-    // If no errors so far, computing scales is done - exit with success code
-    return EXIT_SUCCESS;
+  // Print the scaling parameters
+  std::cout << pixel << " " << post << std::endl;
+
+  // If no errors so far, computing scales is done - exit with success code
+  return EXIT_SUCCESS;
 }

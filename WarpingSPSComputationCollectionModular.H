@@ -6,17 +6,17 @@
 // Year of creation: 2020
 //
 // This source code file is part of the following software:
-// 
+//
 //    - the low-level C++ template SIMD library
-//    - the SIMD implementation of the MinWarping and the 2D-Warping methods 
+//    - the SIMD implementation of the MinWarping and the 2D-Warping methods
 //      for local visual homing.
-// 
+//
 // The software is provided based on the accompanying license agreement
 // in the file LICENSE or LICENSE.doc. The software is provided "as is"
 // without any warranty by the licensor and without any liability of the
 // licensor, and the software may not be distributed by the licensee; see
 // the license agreement for details.
-// 
+//
 // (C) Benedikt Volkmer, Ralf Möller
 //     Computer Engineering
 //     Faculty of Technology
@@ -34,8 +34,12 @@
 namespace ns_simd {
 namespace modular_sps_computation {
 
-template <bool B> struct Rearranged {};
-template <bool B> struct ConsidersInvalid {};
+template <bool B>
+struct Rearranged
+{};
+template <bool B>
+struct ConsidersInvalid
+{};
 
 // ============================================================================
 // Single
@@ -93,7 +97,7 @@ template <bool B> struct ConsidersInvalid {};
 // TODO: example is outdated, please consult WarpingFactories.H
 #define SPS_COMPUTATION_TEMPLATE_PARAMETER                                     \
   typename ImgType, typename ProcType, typename MeasType, typename SPSType,    \
-      int SIMD_WIDTH, int SIMD_ALIGN
+    int SIMD_WIDTH, int SIMD_ALIGN
 #define SPS_COMPUTATION_TEMPLATE_ARGUMENTS                                     \
   ImgType, ProcType, MeasType, SPSType, SIMD_WIDTH, SIMD_ALIGN
 
@@ -101,24 +105,24 @@ template <SPS_COMPUTATION_TEMPLATE_PARAMETER, bool MAGNIFY_FIRST,
           class ImageOpsPolicy, class SinglePreprocessingPolicy,
           class SingleNormalizePolicy, class SingleMeasurePolicy,
           class SingleColumnMeasurePolicy>
-class Single
-    : public WarpingSPSComputation<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> {
-
+class Single : public WarpingSPSComputation<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>
+{
 protected:
   // computeSPS should store input images
   bool storeSPSInput;
   // input images in sps computation
   std::vector<SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> > ssInputs,
-      cvInputs;
+    cvInputs;
 
   // compute SPS and intermediate input images
   // 27. Feb 18 (rm): vert.res. and horizon taken from images
   void computeSPSInput(
-      const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
-      const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
-      const std::vector<double> &scaleFactors, int interpolation,
-      const std::vector<double> &pixelScale, double postScale,
-      WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps) {
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
+    const std::vector<double> &scaleFactors, int interpolation,
+    const std::vector<double> &pixelScale, double postScale,
+    WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps)
+  {
     storeSPSInput = true;
     ssInputs.resize(scaleFactors.size());
     cvInputs.resize(scaleFactors.size());
@@ -131,19 +135,21 @@ public:
   // ======================== ctor, dtor =========================
 
   Single(typename SinglePreprocessingPolicy::Parameter preproc_param)
-      : WarpingSPSComputation<ImgType, ProcType, MeasType, SPSType, SIMD_WIDTH,
-                              SIMD_ALIGN>(),
-        storeSPSInput(false),
-        singlePreprocessingPolicy(SinglePreprocessingPolicy(preproc_param)) {}
+    : WarpingSPSComputation<ImgType, ProcType, MeasType, SPSType, SIMD_WIDTH,
+                            SIMD_ALIGN>(),
+      storeSPSInput(false),
+      singlePreprocessingPolicy(SinglePreprocessingPolicy(preproc_param))
+  {}
 
   virtual ~Single() {}
 
-  virtual void
-  computeSPS(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
-             const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
-             const std::vector<double> &scaleFactors, int interpolation,
-             const std::vector<double> &pixelScale, double postScale,
-             WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps) {
+  virtual void computeSPS(
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
+    const std::vector<double> &scaleFactors, int interpolation,
+    const std::vector<double> &pixelScale, double postScale,
+    WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps)
+  {
     if (pixelScale.size() != 1)
       throw SIMDException("WarpingSPSComputation1Alt::computeSPS",
                           "invalid size of pixelScale");
@@ -182,10 +188,10 @@ public:
     // 2. Mar 18 (rm): *SR images are the re-arranged versions,
     // earlier in-place re-arrange required heap operations (width differs)
     SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> ssS, cvS, magS, ssSR,
-        cvSR, magSR, *cvSPtr, *ssSPtr;
+      cvSR, magSR, *cvSPtr, *ssSPtr;
     SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> ssMeasureS, cvMeasureS,
-        cvMeasFinal, ssMeasFinal, combMeas, magMeasureS, jointMeas,
-        *cvMeasureSPtr, *ssMeasureSPtr;
+      cvMeasFinal, ssMeasFinal, combMeas, magMeasureS, jointMeas,
+      *cvMeasureSPtr, *ssMeasureSPtr;
     ImageOpsPolicy::copyImage(cvF, pixelScale[0], cvS);
     SingleNormalizePolicy::reArrange(cvS, cvSR, sps.param);
     SingleColumnMeasurePolicy::columnMeasure(considersInvalid, cvSR,
@@ -196,13 +202,11 @@ public:
                                              ssMeasureS);
     // create all scale plane images
     for (unsigned int spIndex = 0; spIndex < scaleFactors.size(); spIndex++) {
-
       // edge images are scaled
       double scale = scaleFactors[spIndex];
 
       // printf("spIndex %u, scale %g\n", spIndex, scale);
       if (scale > 1.0) {
-
         // ===== magnify cv by 1/scale and use unmodified ss =====
         if (MAGNIFY_FIRST) {
           SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> magF, magFPre;
@@ -219,13 +223,12 @@ public:
         SingleColumnMeasurePolicy::columnMeasure(considersInvalid, magSR,
                                                  magMeasureS);
         cvMeasureSPtr = &magMeasureS;
-        ssSPtr = &ssSR;
+        ssSPtr        = &ssSR;
         ssMeasureSPtr = &ssMeasureS;
 
       } else if (scale < 1.0) {
-
         // ===== magnify ss by scale and use unmodified cv =====
-        cvSPtr = &cvSR;
+        cvSPtr        = &cvSR;
         cvMeasureSPtr = &cvMeasureS;
         if (MAGNIFY_FIRST) {
           SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> magF, magFPre;
@@ -244,11 +247,10 @@ public:
         ssMeasureSPtr = &magMeasureS;
 
       } else {
-
         // ===== scale = 1.0: use unmodified ss and cv =====
-        cvSPtr = &cvSR;
+        cvSPtr        = &cvSR;
         cvMeasureSPtr = &cvMeasureS;
-        ssSPtr = &ssSR;
+        ssSPtr        = &ssSR;
         ssMeasureSPtr = &ssMeasureS;
       }
       // store input images if requested
@@ -268,14 +270,15 @@ public:
                                         combMeas, sps.param);
       // compute normalized measure
       SingleNormalizePolicy::normalization(
-          considersInvalid, jointMeas, ssMeasFinal, cvMeasFinal, combMeas,
-          postScale, sps.stack[spIndex], sps.param);
+        considersInvalid, jointMeas, ssMeasFinal, cvMeasFinal, combMeas,
+        postScale, sps.stack[spIndex], sps.param);
     }
     sps.complement();
   }
 
-  std::vector<double>
-  maxDenom(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img) {
+  std::vector<double> maxDenom(
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img)
+  {
     std::vector<double> md(1);
     // all processing is done in SIMDFloat to avoid overflow
     SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> inputImg, preprocImg;
@@ -293,21 +296,23 @@ public:
 
   // if computed with real numbers, maximal value of the normalized measure
   // (used for WarpingSPSComputation::idealPostScale())
-  virtual double measureMax() const {
+  virtual double measureMax() const
+  {
     return SingleMeasurePolicy::measureMax();
   };
 
   // compute a diagram showing all intermediate input images for SPS
   // 27. Feb 18 (rm): vert.res. and hor. taken from images
   virtual void computeSPSInputDiagram(
-      const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
-      const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
-      const std::vector<double> &scaleFactors, int interpolation,
-      const std::vector<double> &pixelScale, double postScale,
-      WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps,
-      // outputs:
-      MeasType &allMax, MeasType &allMin, MeasType &allRange,
-      SIMDImage<SIMDByte, SIMD_WIDTH, SIMD_ALIGN> &spsInput) {
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
+    const std::vector<double> &scaleFactors, int interpolation,
+    const std::vector<double> &pixelScale, double postScale,
+    WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps,
+    // outputs:
+    MeasType &allMax, MeasType &allMin, MeasType &allRange,
+    SIMDImage<SIMDByte, SIMD_WIDTH, SIMD_ALIGN> &spsInput)
+  {
     computeSPSInput(ss, cv, scaleFactors, interpolation, pixelScale, postScale,
                     sps);
     unsigned nPlanes = scaleFactors.size();
@@ -317,16 +322,16 @@ public:
     allMin = SIMDTypeInfo<MeasType>::max();
     for (unsigned planeIdx = 0; planeIdx < nPlanes; planeIdx++) {
       MeasType _min, _max;
-      _max = ImageOpsPolicy::considersInvalidPixels
-                 ? maxExcept(ssInputs[planeIdx], invalid)
-                 : max(ssInputs[planeIdx]);
-      _min = min(ssInputs[planeIdx]);
+      _max   = ImageOpsPolicy::considersInvalidPixels ?
+                 maxExcept(ssInputs[planeIdx], invalid) :
+                 max(ssInputs[planeIdx]);
+      _min   = min(ssInputs[planeIdx]);
       allMax = std::max(allMax, _max);
       allMin = std::min(allMin, _min);
-      _max = ImageOpsPolicy::considersInvalidPixels
-                 ? maxExcept(cvInputs[planeIdx], invalid)
-                 : max(cvInputs[planeIdx]);
-      _min = min(cvInputs[planeIdx]);
+      _max   = ImageOpsPolicy::considersInvalidPixels ?
+                 maxExcept(cvInputs[planeIdx], invalid) :
+                 max(cvInputs[planeIdx]);
+      _min   = min(cvInputs[planeIdx]);
       allMax = std::max(allMax, _max);
       allMin = std::max(allMin, _min);
     }
@@ -359,17 +364,18 @@ private:
 
   // check whether input images with given width could be processed
   // this definition should be useful for many cases:
-  virtual bool validForWidth(int width) const {
+  virtual bool validForWidth(int width) const
+  {
     return
-        // ProcType->MeasType: uses magnifyImage, copyImage:
-        ((width % NUM_SIMDVECS_ELEMENTS(MeasType, ProcType, SIMD_WIDTH) == 0) &&
-         // MeasType->SPSType: uses computeScalePlaneNormalizedAdd:
-         (width % NUM_SIMDVECS_ELEMENTS(SPSType, MeasType, SIMD_WIDTH) == 0));
+      // ProcType->MeasType: uses magnifyImage, copyImage:
+      ((width % NUM_SIMDVECS_ELEMENTS(MeasType, ProcType, SIMD_WIDTH) == 0) &&
+       // MeasType->SPSType: uses computeScalePlaneNormalizedAdd:
+       (width % NUM_SIMDVECS_ELEMENTS(SPSType, MeasType, SIMD_WIDTH) == 0));
   }
 
   static const Rearranged<SingleNormalizePolicy::isRearranged> rearranged;
   static const ConsidersInvalid<ImageOpsPolicy::considersInvalidPixels>
-      considersInvalid;
+    considersInvalid;
 };
 
 // To prevent clang++ warning for c++98 (no instantiation of variable). Can't be
@@ -381,56 +387,63 @@ template <SPS_COMPUTATION_TEMPLATE_PARAMETER, bool MAGNIFY_FIRST,
           class SingleNormalizePolicy, class SingleMeasurePolicy,
           class SingleColumnMeasurePolicy>
 const Rearranged<SingleNormalizePolicy::isRearranged>
-    Single<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, MAGNIFY_FIRST, ImageOpsPolicy,
-           SinglePreprocessingPolicy, SingleNormalizePolicy,
-           SingleMeasurePolicy, SingleColumnMeasurePolicy>::rearranged = {};
+  Single<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, MAGNIFY_FIRST, ImageOpsPolicy,
+         SinglePreprocessingPolicy, SingleNormalizePolicy, SingleMeasurePolicy,
+         SingleColumnMeasurePolicy>::rearranged = {};
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER, bool MAGNIFY_FIRST,
           class ImageOpsPolicy, class SinglePreprocessingPolicy,
           class SingleNormalizePolicy, class SingleMeasurePolicy,
           class SingleColumnMeasurePolicy>
-const ConsidersInvalid<ImageOpsPolicy::considersInvalidPixels> Single<
-    SPS_COMPUTATION_TEMPLATE_ARGUMENTS, MAGNIFY_FIRST, ImageOpsPolicy,
-    SinglePreprocessingPolicy, SingleNormalizePolicy, SingleMeasurePolicy,
-    SingleColumnMeasurePolicy>::considersInvalid = {};
+const ConsidersInvalid<ImageOpsPolicy::considersInvalidPixels>
+  Single<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, MAGNIFY_FIRST, ImageOpsPolicy,
+         SinglePreprocessingPolicy, SingleNormalizePolicy, SingleMeasurePolicy,
+         SingleColumnMeasurePolicy>::considersInvalid = {};
 
-template <SPS_COMPUTATION_TEMPLATE_PARAMETER> class ImageOpsPolicySimple {
+template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
+class ImageOpsPolicySimple
+{
 public:
   static const bool considersInvalidPixels = false;
 
-  static void
-  convertImage(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &in,
-               SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &out) {
+  static void convertImage(
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &in,
+    SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &out)
+  {
     // TODO: this assignment is based on type casts, is that always ok?
     // TODO: what is actually happening between signed/unsigned types and
     // TODO: between integer/float types?
     out = in;
   }
 
-  static void
-  magnifyImage(const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
-               int interpolation, double magnifyScale, double multiplyScale,
-               SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outImg) {
+  static void magnifyImage(
+    const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
+    int interpolation, double magnifyScale, double multiplyScale,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outImg)
+  {
     magnifyAndScale(img, interpolation, magnifyScale, multiplyScale, outImg);
   }
 
-  static void
-  copyImage(const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
-            double multiplyScale,
-            SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outImg) {
+  static void copyImage(
+    const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
+    double multiplyScale,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outImg)
+  {
     copyAndScale(img, multiplyScale, outImg);
   }
 
-  static void
-  copyStack(const SIMDStack<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stk,
-            const std::vector<double> &multiplyScale,
-            SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outStk) {
+  static void copyStack(
+    const SIMDStack<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stk,
+    const std::vector<double> &multiplyScale,
+    SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outStk)
+  {
     copyAndScale(stk, multiplyScale, outStk);
   }
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class SingleImageOpsPolicyInvalid {
+class SingleImageOpsPolicyInvalid
+{
 public:
   static const bool considersInvalidPixels = true;
 
@@ -439,16 +452,17 @@ public:
   // if value is invalid (max(ImgType)) in input image, then this
   // value is set to max(ProcType)
 
-  static void
-  convertImage(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &in,
-               SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &out) {
+  static void convertImage(
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &in,
+    SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &out)
+  {
     // code assumes that ProcType is larger or equal in size then ImgType
     SIMD_STATIC_ASSERT(sizeof(ImgType) <= sizeof(ProcType));
 
     const int numElems = NUM_SIMDVECS_ELEMENTS(ImgType, ProcType, SIMD_WIDTH);
-    const size_t size = in.size;
+    const size_t size  = in.size;
 
-    const int numInVecs = NUM_INPUT_SIMDVECS(ProcType, ImgType);
+    const int numInVecs  = NUM_INPUT_SIMDVECS(ProcType, ImgType);
     const int numOutVecs = NUM_OUTPUT_SIMDVECS(ProcType, ImgType);
 
     SIMDVec<ImgType, SIMD_WIDTH> inVecs[numInVecs];
@@ -460,7 +474,7 @@ public:
     SIMDVec<ProcType, SIMD_WIDTH> cmp;
 
     maxVecIn =
-        set1<ProcType, SIMD_WIDTH>((ProcType)(SIMDTypeInfo<ImgType>::max()));
+      set1<ProcType, SIMD_WIDTH>((ProcType) (SIMDTypeInfo<ImgType>::max()));
     maxVecOut = set1<ProcType, SIMD_WIDTH>(SIMDTypeInfo<ProcType>::max());
     out.resize(in.w, in.h, in.addOn);
 
@@ -470,7 +484,7 @@ public:
       inVecs[0] = load<SIMD_WIDTH>(in.data + i);
       convert(inVecs, convertedInVecs);
       for (int j = 0; j < numOutVecs; j++) {
-        cmp = cmpeq(convertedInVecs[j], maxVecIn);
+        cmp        = cmpeq(convertedInVecs[j], maxVecIn);
         outVecs[j] = ifelse(cmp, maxVecOut, convertedInVecs[j]);
       }
       store(dst, outVecs, numOutVecs);
@@ -479,59 +493,68 @@ public:
   }
 
   // magnify and scale image
-  static void
-  magnifyImage(const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
-               int interpolation, double magnifyScale, double multiplyScale,
-               SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outImg) {
+  static void magnifyImage(
+    const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
+    int interpolation, double magnifyScale, double multiplyScale,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outImg)
+  {
     magnifyAndScaleTilt(img, interpolation, magnifyScale, multiplyScale,
                         outImg);
   }
 
   // copy and scale image
-  static void
-  copyImage(const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
-            double multiplyScale,
-            SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outImg) {
+  static void copyImage(
+    const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
+    double multiplyScale,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &outImg)
+  {
     copyAndScaleTilt(img, multiplyScale, outImg);
   }
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class SinglePreprocessingPolicyEdge {
+class SinglePreprocessingPolicyEdge
+{
 public:
-  class Parameter {};
+  class Parameter
+  {};
 
   // ctor
-  SinglePreprocessingPolicyEdge(SinglePreprocessingPolicyEdge::Parameter){};
+  SinglePreprocessingPolicyEdge(SinglePreprocessingPolicyEdge::Parameter) {};
 
   static void preprocessing(
-      ConsidersInvalid<false>,
-      const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
-      SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &preprocessed) {
+    ConsidersInvalid<false>,
+    const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
+    SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &preprocessed)
+  {
     verticalEdgeFilter(input, preprocessed);
   }
 
   static void preprocessing(
-      ConsidersInvalid<true>,
-      const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
-      SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &output) {
+    ConsidersInvalid<true>,
+    const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
+    SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &output)
+  {
     verticalEdgeFilterTilt(input, output);
   }
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class SinglePreprocessingPolicyNon {
+class SinglePreprocessingPolicyNon
+{
 public:
-  class Parameter {};
+  class Parameter
+  {};
 
   // ctor
-  SinglePreprocessingPolicyNon(SinglePreprocessingPolicyNon::Parameter){};
+  SinglePreprocessingPolicyNon(SinglePreprocessingPolicyNon::Parameter) {};
 
   template <bool REARRANGED>
   static void preprocessing(
-      ConsidersInvalid<REARRANGED>,
-      const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
-      SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &output) {
+    ConsidersInvalid<REARRANGED>,
+    const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
+    SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &output)
+  {
     //  verticalEdgeFilter(input, output);
     // we use the original images here:
     // images are edge-filtered in advance!
@@ -541,27 +564,31 @@ public:
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER, int NORMALIZE, bool VARIANT,
           HarrisOutputSelector HOS>
-class SinglePreprocessingPolicyHarris {
+class SinglePreprocessingPolicyHarris
+{
 public:
-  class Parameter {
+  class Parameter
+  {
   public:
     Parameter(double k, int binomialFilterCount)
-        : k(k), binomialFilterCount(binomialFilterCount) {}
+      : k(k), binomialFilterCount(binomialFilterCount)
+    {}
     double k;
     int binomialFilterCount;
   };
 
   // ctor
   SinglePreprocessingPolicyHarris(
-      SinglePreprocessingPolicyHarris::Parameter param)
-      : k(param.k), binomialFilterCount(param.binomialFilterCount){};
+    SinglePreprocessingPolicyHarris::Parameter param)
+    : k(param.k), binomialFilterCount(param.binomialFilterCount) {};
 
   void preprocessing(
-      ConsidersInvalid<false>,
-      const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
-      SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &jointMeas) {
+    ConsidersInvalid<false>,
+    const SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
+    SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &jointMeas)
+  {
     SIMDStack<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, Panorama> jointMeasStk(
-        1, input.w, input.h);
+      1, input.w, input.h);
     harrisFilterCyclic<NORMALIZE, VARIANT, HOS>(input, jointMeasStk, this->k,
                                                 this->binomialFilterCount);
     jointMeas.view(jointMeasStk[0]);
@@ -573,39 +600,45 @@ private:
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class SingleColumnMeasurePolicyAbs {
+class SingleColumnMeasurePolicyAbs
+{
 public:
   template <typename T>
-  static void
-  columnMeasure(ConsidersInvalid<false>,
-                const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
-                SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &colMeas) {
+  static void columnMeasure(
+    ConsidersInvalid<false>,
+    const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
+    SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &colMeas)
+  {
     sumOfAbs(input, colMeas);
   }
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class SingleColumnMeasurePolicyAbsAccu {
+class SingleColumnMeasurePolicyAbsAccu
+{
 public:
   template <typename T>
-  static void
-  columnMeasure(ConsidersInvalid<true>,
-                const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
-                SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &colMeas) {
+  static void columnMeasure(
+    ConsidersInvalid<true>,
+    const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
+    SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &colMeas)
+  {
     sumOfAbsAccuInvalid(input, colMeas);
   }
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class NormalizePolicyNonRearranged {
+class NormalizePolicyNonRearranged
+{
 public:
   static const bool isRearranged = false;
 
   // re-arrange image (makeView instead of pure virtual)
-  static void
-  reArrange(const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
-            SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
-            const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+  static void reArrange(
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // TODO: this is fast but may be dangerous, true copy may be advisable
     imgR.view(img);
     // imgR = img;
@@ -613,20 +646,22 @@ public:
 
   // un-re-arrange image (copy instead of pure virtual)
   // typically used for visualization, may be slow
-  static void
-  unReArrange(const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
-              SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
-              const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+  static void unReArrange(
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // this doesn't work, true copy is needed
     // img.view(imgR);
     img = imgR;
   }
 
   // re-arrange image (makeView instead of pure virtual)
-  static void
-  reArrange(const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stk,
-            SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stkR,
-            const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+  static void reArrange(
+    const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stk,
+    SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stkR,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // TODO: this is fast but may be dangerous, true copy may be advisable
     // TODO: bv: enable following when SIMDStack has view function
     // stkR.view(stk);
@@ -635,10 +670,11 @@ public:
 
   // un-re-arrange image (copy instead of pure virtual)
   // typically used for visualization, may be slow
-  static void
-  unReArrange(const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stkR,
-              SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stk,
-              const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+  static void unReArrange(
+    const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stkR,
+    SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &stk,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // this doesn't work, true copy is needed
     // stk.view(stkR);
     stk = stkR;
@@ -647,88 +683,96 @@ public:
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
 class SingleNormalizePolicyAbs
-    : public NormalizePolicyNonRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> {
+  : public NormalizePolicyNonRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>
+{
 public:
-  static void
-  normalization(ConsidersInvalid<false>,
-                const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
-                const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &ssMeasure,
-                const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &cvMeasure,
-                const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-                double postScale,
-                SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> &scalePlane,
-                const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+  static void normalization(
+    ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &ssMeasure,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &cvMeasure,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &, double postScale,
+    SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> &scalePlane,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     computeScalePlaneNormalizedAdd1<false>(jointMeasure, ssMeasure, cvMeasure,
                                            par.wSPS, par.modulo2wpw,
                                            par.shuffle, postScale, scalePlane);
   }
 
   static void normalization(
-      ConsidersInvalid<true>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &combinedMeasure,
-      double postScale, SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> &scalePlane,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+    ConsidersInvalid<true>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &combinedMeasure,
+    double postScale, SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> &scalePlane,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     // here we only use the combined measure
     computeScalePlaneNormalizedAdd1Tilt<false>(
-        jointMeasure, combinedMeasure, par.wSPS, par.modulo2wpw, par.shuffle,
-        postScale, scalePlane);
+      jointMeasure, combinedMeasure, par.wSPS, par.modulo2wpw, par.shuffle,
+      postScale, scalePlane);
   }
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class SingleNormalizePolicyAbsRearranged {
+class SingleNormalizePolicyAbsRearranged
+{
 public:
   static const bool isRearranged = true;
 
-  static void
-  normalization(ConsidersInvalid<false>,
-                const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
-                const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &ssMeasure,
-                const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &cvMeasure,
-                const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-                double postScale,
-                SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> &scalePlane,
-                const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+  static void normalization(
+    ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &ssMeasure,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &cvMeasure,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &, double postScale,
+    SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> &scalePlane,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     computeScalePlaneNormalizedAdd2<false>(
-        jointMeasure, ssMeasure, cvMeasure, par.w, par.wSPS, par.stepAlpha,
-        par.nAlpha, par.blkSize, par.modNAlpha, par.shuffleModulo,
-        par.unshuffle, postScale, scalePlane);
+      jointMeasure, ssMeasure, cvMeasure, par.w, par.wSPS, par.stepAlpha,
+      par.nAlpha, par.blkSize, par.modNAlpha, par.shuffleModulo, par.unshuffle,
+      postScale, scalePlane);
   }
 
-  static void
-  reArrange(const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
-            SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
-            const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+  static void reArrange(
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     swizzleCyclic(img, par.stepAlpha, NUM_INPUT_SIMDVECS(SPSType, MeasType),
                   imgR);
   }
 
-  static void
-  unReArrange(const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
-              SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
-              const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+  static void unReArrange(
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     // serial, slow!
     unSwizzleCyclic(imgR, par.stepAlpha, NUM_INPUT_SIMDVECS(SPSType, MeasType),
                     img);
   }
 };
 
-template <SPS_COMPUTATION_TEMPLATE_PARAMETER> class SingleMeasurePolicyNSADA {
+template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
+class SingleMeasurePolicyNSADA
+{
 public:
   static void jointMeasure(
-      Rearranged<false>, ConsidersInvalid<false>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+    Rearranged<false>, ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // puts("NSADA");
     normSumAbsDiffAbsTerm1(input1, input2, jointMeas);
     colMeas1.view(colMeasRaw1);
@@ -736,16 +780,17 @@ public:
   }
 
   static void jointMeasure(
-      Rearranged<true>, ConsidersInvalid<false>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+    Rearranged<true>, ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     // puts("NSADA");
     normSumAbsDiffAbsTerm2(input1, input2, par.w, par.wSPS, par.stepAlpha,
                            par.nAlpha, par.blkSize, par.modNAlpha, jointMeas);
@@ -758,19 +803,21 @@ public:
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class SingleMeasurePolicyNSADNSADA {
+class SingleMeasurePolicyNSADNSADA
+{
 public:
   static void jointMeasure(
-      Rearranged<false>, ConsidersInvalid<false>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+    Rearranged<false>, ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // puts("NSAD-NSADA");
     normSumAvgAbsDiffAbsDiffAbsTerm1(input1, input2, jointMeas);
     colMeas1.view(colMeasRaw1);
@@ -778,16 +825,17 @@ public:
   }
 
   static void jointMeasure(
-      Rearranged<true>, ConsidersInvalid<false>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+    Rearranged<true>, ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     // puts("NSAD-NSADA");
     normSumAvgAbsDiffAbsDiffAbsTerm2(input1, input2, par.w, par.wSPS,
                                      par.stepAlpha, par.nAlpha, par.blkSize,
@@ -801,19 +849,21 @@ public:
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
-class SingleMeasurePolicyASCDirect {
+class SingleMeasurePolicyASCDirect
+{
 public:
   static void jointMeasure(
-      Rearranged<true>, ConsidersInvalid<false>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+    Rearranged<true>, ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     ascDirectTerm(input1, input2, par.w, par.wSPS, par.stepAlpha, par.nAlpha,
                   par.blkSize, par.modNAlpha, jointMeas);
     // colMeas1 = colMeasRaw1;
@@ -841,24 +891,26 @@ template <SPS_COMPUTATION_TEMPLATE_PARAMETER, int NPREPROCS,
           class ImageOpsPolicy, class StackPreprocessingPolicy,
           class StackNormalizePolicy, class MeasurePolicy,
           class StackColumnMeasurePolicy>
-class Stack : public WarpingSPSComputation<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> {
+class Stack : public WarpingSPSComputation<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>
+{
 protected:
   // computeSPS should store input images
   bool storeSPSInput;
   // input images in sps computation
   std::vector<SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> > ssInputs,
-      cvInputs;
+    cvInputs;
 
   // ===================== non-virtual methods ===========================
 
   // compute SPS and intermediate input images
   // 27. Feb 18 (rm): vert.res. and horizon taken from images
   void computeSPSInput(
-      const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
-      const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
-      const std::vector<double> &scaleFactors, int interpolation,
-      const std::vector<double> &pixelScale, double postScale,
-      WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps) {
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
+    const std::vector<double> &scaleFactors, int interpolation,
+    const std::vector<double> &pixelScale, double postScale,
+    WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps)
+  {
     storeSPSInput = true;
     ssInputs.resize(scaleFactors.size());
     cvInputs.resize(scaleFactors.size());
@@ -872,24 +924,26 @@ public:
 
   Stack(typename StackPreprocessingPolicy::Parameter preproc_param,
         typename StackNormalizePolicy::Parameter normalize_param)
-      : WarpingSPSComputation<ImgType, ProcType, MeasType, SPSType, SIMD_WIDTH,
-                              SIMD_ALIGN>(),
-        storeSPSInput(false),
-        stackPreprocessingPolicy(StackPreprocessingPolicy(preproc_param)),
-        stackNormalizePolicy(StackNormalizePolicy(normalize_param)) {}
+    : WarpingSPSComputation<ImgType, ProcType, MeasType, SPSType, SIMD_WIDTH,
+                            SIMD_ALIGN>(),
+      storeSPSInput(false),
+      stackPreprocessingPolicy(StackPreprocessingPolicy(preproc_param)),
+      stackNormalizePolicy(StackNormalizePolicy(normalize_param))
+  {}
 
   virtual ~Stack() {}
 
   // computation of scale-plane stack
   // (not possible to restrict ImgType to this function since
   // templates may not be virtual)
-  void
-  computeSPS(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
-             const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
-             const std::vector<double> &scaleFactors, int interpolation,
-             const std::vector<double> &pixelScale, double postScale,
-             WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps) {
-    if (pixelScale.size() != (size_t)NPREPROCS)
+  void computeSPS(
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
+    const std::vector<double> &scaleFactors, int interpolation,
+    const std::vector<double> &pixelScale, double postScale,
+    WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps)
+  {
+    if (pixelScale.size() != (size_t) NPREPROCS)
       throw SIMDException("WarpingSPSComputationSNSAD::computeSPS",
                           "pixelScale array has wrong size");
     const int w = sps.param.w, h = ss.h;
@@ -927,10 +981,10 @@ public:
     // 2. Mar 18 (rm): *SR images are the re-arranged versions,
     // earlier in-place re-arrange required heap operations (width differs)
     SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> ssS, cvS, magS, ssSR,
-        cvSR, magSR, *cvSPtr, *ssSPtr;
+      cvSR, magSR, *cvSPtr, *ssSPtr;
     SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> ssMeasureS, cvMeasureS,
-        cvMeasFinal, ssMeasFinal, combMeas, magMeasureS, jointMeas,
-        *cvMeasureSPtr, *ssMeasureSPtr;
+      cvMeasFinal, ssMeasFinal, combMeas, magMeasureS, jointMeas,
+      *cvMeasureSPtr, *ssMeasureSPtr;
     ImageOpsPolicy::copyStack(cvF, pixelScale, cvS);
     StackNormalizePolicy::reArrange(cvS, cvSR, sps.param);
     StackColumnMeasurePolicy::columnMeasure(considersInvalid, cvSR, cvMeasureS);
@@ -940,7 +994,6 @@ public:
 
     // create all scale plane images
     for (unsigned int spIndex = 0; spIndex < scaleFactors.size(); spIndex++) {
-
       // edge images are scaled
       double scale = scaleFactors[spIndex];
 
@@ -957,13 +1010,12 @@ public:
         StackColumnMeasurePolicy::columnMeasure(considersInvalid, magSR,
                                                 magMeasureS);
         cvMeasureSPtr = &magMeasureS;
-        ssSPtr = &ssSR;
+        ssSPtr        = &ssSR;
         ssMeasureSPtr = &ssMeasureS;
 
       } else if (scale < 1.0) {
-
         // ===== magnify ss by scale and use unmodified cv =====
-        cvSPtr = &cvSR;
+        cvSPtr        = &cvSR;
         cvMeasureSPtr = &cvMeasureS;
         SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> magF;
         SIMDStack<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> magFPre;
@@ -977,11 +1029,10 @@ public:
         ssMeasureSPtr = &magMeasureS;
 
       } else {
-
         // ===== scale = 1.0: use unmodified ss and cv =====
-        cvSPtr = &cvSR;
+        cvSPtr        = &cvSR;
         cvMeasureSPtr = &cvMeasureS;
-        ssSPtr = &ssSR;
+        ssSPtr        = &ssSR;
         ssMeasureSPtr = &ssMeasureS;
       }
       // store input images if requested
@@ -999,8 +1050,8 @@ public:
                                   *ssSPtr, jointMeas, sps.param);
       // compute normalized measure
       stackNormalizePolicy.normalization(
-          considersInvalid, jointMeas, *ssMeasureSPtr, *cvMeasureSPtr, combMeas,
-          postScale, sps.stack[spIndex], sps.param);
+        considersInvalid, jointMeas, *ssMeasureSPtr, *cvMeasureSPtr, combMeas,
+        postScale, sps.stack[spIndex], sps.param);
     }
     sps.complement();
   }
@@ -1008,14 +1059,15 @@ public:
   // compute a diagram showing all intermediate input images for SPS
   // 27. Feb 18 (rm): vert.res. and hor. taken from images
   void computeSPSInputDiagram(
-      const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
-      const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
-      const std::vector<double> &scaleFactors, int interpolation,
-      const std::vector<double> &pixelScale, double postScale,
-      WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps,
-      // outputs:
-      MeasType &allMax, MeasType &allMin, MeasType &allRange,
-      SIMDImage<SIMDByte, SIMD_WIDTH, SIMD_ALIGN> &spsInput) {
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &ss,
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &cv,
+    const std::vector<double> &scaleFactors, int interpolation,
+    const std::vector<double> &pixelScale, double postScale,
+    WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps,
+    // outputs:
+    MeasType &allMax, MeasType &allMin, MeasType &allRange,
+    SIMDImage<SIMDByte, SIMD_WIDTH, SIMD_ALIGN> &spsInput)
+  {
     // TODO: this always shows only the following preprocessing image
     computeSPSInput(ss, cv, scaleFactors, interpolation, pixelScale, postScale,
                     sps);
@@ -1026,12 +1078,12 @@ public:
     for (unsigned planeIdx = 0; planeIdx < nPlanes; planeIdx++) {
       for (int d = 0; d < this->numPreprocs(); d++) {
         MeasType _min, _max;
-        _max = max(ssInputs[planeIdx][d]);
-        _min = min(ssInputs[planeIdx][d]);
+        _max   = max(ssInputs[planeIdx][d]);
+        _min   = min(ssInputs[planeIdx][d]);
         allMax = std::max(allMax, _max);
         allMin = std::min(allMin, _min);
-        _max = max(cvInputs[planeIdx][d]);
-        _min = min(cvInputs[planeIdx][d]);
+        _max   = max(cvInputs[planeIdx][d]);
+        _min   = min(cvInputs[planeIdx][d]);
         allMax = std::max(allMax, _max);
         allMin = std::max(allMin, _min);
       }
@@ -1063,8 +1115,9 @@ public:
 
   int numPreprocs() const { return NPREPROCS; }
 
-  std::vector<double>
-  maxDenom(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img) {
+  std::vector<double> maxDenom(
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img)
+  {
     return stackPreprocessingPolicy.maxDenom(img);
   };
 
@@ -1075,17 +1128,18 @@ public:
 private:
   // check whether input images with given width could be processed
   // this definition should be useful for many cases:
-  virtual bool validForWidth(int width) const {
+  virtual bool validForWidth(int width) const
+  {
     return
-        // ProcType->MeasType: uses magnifyImage, copyImage:
-        ((width % NUM_SIMDVECS_ELEMENTS(MeasType, ProcType, SIMD_WIDTH) == 0) &&
-         // MeasType->SPSType: uses computeScalePlaneNormalizedAdd:
-         (width % NUM_SIMDVECS_ELEMENTS(SPSType, MeasType, SIMD_WIDTH) == 0));
+      // ProcType->MeasType: uses magnifyImage, copyImage:
+      ((width % NUM_SIMDVECS_ELEMENTS(MeasType, ProcType, SIMD_WIDTH) == 0) &&
+       // MeasType->SPSType: uses computeScalePlaneNormalizedAdd:
+       (width % NUM_SIMDVECS_ELEMENTS(SPSType, MeasType, SIMD_WIDTH) == 0));
   }
 
   static const Rearranged<StackNormalizePolicy::isRearranged> rearranged;
   static const ConsidersInvalid<ImageOpsPolicy::considersInvalidPixels>
-      considersInvalid;
+    considersInvalid;
 
   StackPreprocessingPolicy stackPreprocessingPolicy;
   StackNormalizePolicy stackNormalizePolicy;
@@ -1100,46 +1154,51 @@ template <SPS_COMPUTATION_TEMPLATE_PARAMETER, int NPREPROCS,
           class StackNormalizePolicy, class MeasurePolicy,
           class StackColumnMeasurePolicy>
 const Rearranged<StackNormalizePolicy::isRearranged>
-    Stack<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, NPREPROCS, ImageOpsPolicy,
-          StackPreprocessingPolicy, StackNormalizePolicy, MeasurePolicy,
-          StackColumnMeasurePolicy>::rearranged = {};
+  Stack<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, NPREPROCS, ImageOpsPolicy,
+        StackPreprocessingPolicy, StackNormalizePolicy, MeasurePolicy,
+        StackColumnMeasurePolicy>::rearranged = {};
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER, int NPREPROCS,
           class ImageOpsPolicy, class StackPreprocessingPolicy,
           class StackNormalizePolicy, class MeasurePolicy,
           class StackColumnMeasurePolicy>
 const ConsidersInvalid<ImageOpsPolicy::considersInvalidPixels>
-    Stack<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, NPREPROCS, ImageOpsPolicy,
-          StackPreprocessingPolicy, StackNormalizePolicy, MeasurePolicy,
-          StackColumnMeasurePolicy>::considersInvalid = {};
+  Stack<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, NPREPROCS, ImageOpsPolicy,
+        StackPreprocessingPolicy, StackNormalizePolicy, MeasurePolicy,
+        StackColumnMeasurePolicy>::considersInvalid = {};
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER, int NPREPROCS,
           HarrisOutputSelector HOS>
-class StackPreprocessingPolicyHarris {
+class StackPreprocessingPolicyHarris
+{
 public:
-  class Parameter {
+  class Parameter
+  {
   public:
     Parameter(double k, int binomialFilterCount)
-        : k(k), binomialFilterCount(binomialFilterCount) {}
+      : k(k), binomialFilterCount(binomialFilterCount)
+    {}
     double k;
     int binomialFilterCount;
   };
 
   // ctor
   StackPreprocessingPolicyHarris(
-      StackPreprocessingPolicyHarris::Parameter param)
-      : k(param.k), binomialFilterCount(param.binomialFilterCount){};
+    StackPreprocessingPolicyHarris::Parameter param)
+    : k(param.k), binomialFilterCount(param.binomialFilterCount) {};
 
   // preprocessing applied to the input images
   void preprocessing(
-      ConsidersInvalid<false>,
-      const SIMDImage<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
-      SIMDStack<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, Panorama> &output) {
+    ConsidersInvalid<false>,
+    const SIMDImage<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input,
+    SIMDStack<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, Panorama> &output)
+  {
     harrisFilterCyclic<2, 0, HOS>(input, output, k, binomialFilterCount);
   }
 
-  std::vector<double>
-  maxDenom(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img) {
+  std::vector<double> maxDenom(
+    const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img)
+  {
     std::vector<double> md(NPREPROCS);
     // all processing is done in SIMDFloat to avoid overflow
     SIMDImage<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, Panorama> inputImg;
@@ -1161,27 +1220,29 @@ private:
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER, int NPREPROCS>
-class StackColumnMeasurePolicyAbs {
+class StackColumnMeasurePolicyAbs
+{
 public:
   template <typename T>
-  static void
-  columnMeasure(ConsidersInvalid<false>,
-                const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &in,
-                SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN> &jointMeas) {
+  static void columnMeasure(
+    ConsidersInvalid<false>,
+    const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &in,
+    SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN> &jointMeas)
+  {
     // jointMeas.h == 1 i.e. one value for each column
     jointMeas.resize(in.numPlanes, in.w, 1);
     // TODO: replace loop with own functions
-    for (int i = 0; i < in.numPlanes; i++) {
-      sumOfAbs(in[i], jointMeas[i]);
-    }
+    for (int i = 0; i < in.numPlanes; i++) { sumOfAbs(in[i], jointMeas[i]); }
   }
 };
 
 template <SPS_COMPUTATION_TEMPLATE_PARAMETER, int NPREPROCS>
 class StackNormalizePolicySigmoid
-    : public NormalizePolicyNonRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> {
+  : public NormalizePolicyNonRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>
+{
 public:
-  class Parameter {
+  class Parameter
+  {
   public:
     Parameter(std::vector<double> w0, std::vector<double> w) : w0(w0), w(w) {}
     std::vector<double> w0;
@@ -1189,22 +1250,23 @@ public:
   };
 
   StackNormalizePolicySigmoid(Parameter param)
-      : NormalizePolicyNonRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>(),
-        w0(param.w0), w(param.w) {}
+    : NormalizePolicyNonRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>(),
+      w0(param.w0), w(param.w)
+  {}
 
   // normalization of jointMeasure and ssMeasure/cvMeasure
-  void
-  normalization(ConsidersInvalid<false>,
-                const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
-                const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &ssMeasure,
-                const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &cvMeasure,
-                const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-                double postScale,
-                SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> &scalePlane,
-                const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+  void normalization(
+    ConsidersInvalid<false>,
+    const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
+    const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &ssMeasure,
+    const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &cvMeasure,
+    const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &, double postScale,
+    SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> &scalePlane,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     computeScalePlaneSigmoidNormalizedAdd1<false, NPREPROCS>(
-        jointMeasure, ssMeasure, cvMeasure, par.wSPS, par.modulo2wpw,
-        par.shuffle, this->w, this->w0, postScale, scalePlane);
+      jointMeasure, ssMeasure, cvMeasure, par.wSPS, par.modulo2wpw, par.shuffle,
+      this->w, this->w0, postScale, scalePlane);
   }
 
 private:
@@ -1212,19 +1274,22 @@ private:
   const std::vector<double> w;
 };
 
-template <SPS_COMPUTATION_TEMPLATE_PARAMETER> class MeasurePolicyNSAD {
+template <SPS_COMPUTATION_TEMPLATE_PARAMETER>
+class MeasurePolicyNSAD
+{
 public:
   static void jointMeasure(
-      Rearranged<false>, ConsidersInvalid<false>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+    Rearranged<false>, ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // puts("NSAD");
     normSumAbsDiffTerm1(input1, input2, jointMeas);
     colMeas1.view(colMeasRaw1);
@@ -1232,16 +1297,17 @@ public:
   }
 
   static void jointMeasure(
-      Rearranged<true>, ConsidersInvalid<false>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &par) {
+    Rearranged<true>, ConsidersInvalid<false>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeas,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &par)
+  {
     // puts("NSAD");
     normSumAbsDiffTerm2(input1, input2, par.w, par.wSPS, par.stepAlpha,
                         par.nAlpha, par.blkSize, par.modNAlpha, jointMeas);
@@ -1250,30 +1316,32 @@ public:
   }
 
   static void jointMeasure(
-      Rearranged<false>, ConsidersInvalid<true>,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
-      const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &output,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
-      SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas12,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+    Rearranged<false>, ConsidersInvalid<true>,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &input2,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw1,
+    const SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeasRaw2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &output,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas1,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas2,
+    SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN> &colMeas12,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // with NSAD match operator
     columnPairMatchingTilt1<MeasType, SIMD_WIDTH, SIMD_ALIGN,
                             MatchAbsDiff<MeasType, SIMD_WIDTH> >(
-        input1, input2, output, colMeasRaw1, colMeasRaw2, colMeas1, colMeas2,
-        colMeas12);
+      input1, input2, output, colMeasRaw1, colMeasRaw2, colMeas1, colMeas2,
+      colMeas12);
   }
 
   // Stack variant
   static void jointMeasure(
-      Rearranged<false>, ConsidersInvalid<false>,
-      const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &inputStk1,
-      const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &inputStk2,
-      SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasStk,
-      const WarpingParameter<SPSType, SIMD_WIDTH> &) {
+    Rearranged<false>, ConsidersInvalid<false>,
+    const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &inputStk1,
+    const SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &inputStk2,
+    SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN> &jointMeasStk,
+    const WarpingParameter<SPSType, SIMD_WIDTH> &)
+  {
     // jointMeasStk.h == input.w
     jointMeasStk.resize(inputStk1.numPlanes, inputStk1.w, inputStk1.w);
     // TODO: remove next line?
