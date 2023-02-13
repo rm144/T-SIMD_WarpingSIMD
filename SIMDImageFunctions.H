@@ -2314,7 +2314,6 @@ namespace ns_simd {
      int nAuxVecCols,
      SIMDImage<T,SIMD_WIDTH,SIMD_ALIGN,AnyAddOn2> &outImg)
   {
-    SwizzleTable<N, T, SIMD_WIDTH> swizzleTable;
     if (overlap(inImg, outImg))
       throw SIMDException("swizzleCyclic",
 			  "input and output image overlap");
@@ -2346,7 +2345,7 @@ namespace ns_simd {
 	// load n vectors
 	load(idp, vecs, n);
 	// swizzle vectors
-	swizzle(swizzleTable, vecs);
+	swizzle<N>(vecs);
 	// store n vectors to different blocks (with same offset
 	// relative to block, contained in odp)
 	for (int k = 0; k < n; k++)
