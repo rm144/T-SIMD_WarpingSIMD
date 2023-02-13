@@ -160,7 +160,7 @@ class Search
   template <class Searcher, class Constraint>
   auto wrap(Correction c, Searcher s, Warping &w, Constraint g)
   {
-    return std::make_shared<Wrapper<Searcher, Constraint> >(c, s, w, g);
+    return std::make_shared<Wrapper<Searcher, Constraint>>(c, s, w, g);
   }
 
   /**

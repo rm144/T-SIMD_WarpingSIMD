@@ -94,7 +94,7 @@ public:
    * @param angles Tilt about X- and Y-Axis in [Unit] packed in
    * std::tuple {delta_X, delta_Y}
    */
-  explicit RollPitch(const std::tuple<Angle<Unit>, Angle<Unit> > &angles)
+  explicit RollPitch(const std::tuple<Angle<Unit>, Angle<Unit>> &angles)
     : delta_X {std::get<0>(angles)}, delta_Y {std::get<1>(angles)}
   {}
 
@@ -199,7 +199,7 @@ public:
    * @param angles Angle to tilt axis and tilt angle in [Unit] packed in
    * std::tuple {theta_R, phi}
    */
-  explicit AxisAngle(const std::tuple<Angle<Unit>, Angle<Unit> > &angles)
+  explicit AxisAngle(const std::tuple<Angle<Unit>, Angle<Unit>> &angles)
     : theta_R {std::get<0>(angles)}, phi {std::get<1>(angles)}
   {}
 

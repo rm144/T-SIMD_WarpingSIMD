@@ -54,11 +54,11 @@
 // ===========================================================================
 
 template <class TYPE>
-class Array : public std::vector<std::vector<TYPE> >
+class Array : public std::vector<std::vector<TYPE>>
 {
 public:
   Array(int nx, int ny)
-    : std::vector<std::vector<TYPE> >(nx, std::vector<TYPE>(ny))
+    : std::vector<std::vector<TYPE>>(nx, std::vector<TYPE>(ny))
   {}
 };
 
@@ -418,7 +418,7 @@ int main(int argc, char *argv[])
     // SIMDImage<IMGTYPE,SW,SA,Panorama> ss[nx][ny], cv[nx][ny];
     // double rotAngle[nx][ny];
     HEAP_INFO("before ss, cv creation");
-    Array<SIMDImage<IMGTYPE, SW, SA, Panorama> > ss(nx, ny), cv(nx, ny);
+    Array<SIMDImage<IMGTYPE, SW, SA, Panorama>> ss(nx, ny), cv(nx, ny);
     HEAP_INFO("after ss, cv creation");
     // array contains rotations in mathematically negative angles
     Array<double> rotAngle(nx, ny);

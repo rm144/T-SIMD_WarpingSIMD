@@ -123,7 +123,7 @@ auto make_search(Warping &warping, Log &&log = Log {})
     // 14. Nov 22 (Jonas Keller): specified template parameters
     // explicitly; icc can't deduce them
     auto searcher = search::NelderMead<Angle<Radian, long double>,
-                                       Angle<Radian, long double> > {
+                                       Angle<Radian, long double>> {
       std::array {std::tuple {-0.07_rad, -0.07_rad},
                   std::tuple {+0.14_rad, +0.00_rad},
                   std::tuple {+0.00_rad, +0.14_rad}},

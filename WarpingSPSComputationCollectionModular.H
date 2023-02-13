@@ -111,7 +111,7 @@ protected:
   // computeSPS should store input images
   bool storeSPSInput;
   // input images in sps computation
-  std::vector<SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> > ssInputs,
+  std::vector<SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama>> ssInputs,
     cvInputs;
 
   // compute SPS and intermediate input images
@@ -368,9 +368,9 @@ private:
   {
     return
       // ProcType->MeasType: uses magnifyImage, copyImage:
-      ((width % NUM_SIMDVECS_ELEMENTS(MeasType, ProcType, SIMD_WIDTH) == 0) &&
+      ((width % numSIMDVecsElements<MeasType, ProcType, SIMD_WIDTH>() == 0) &&
        // MeasType->SPSType: uses computeScalePlaneNormalizedAdd:
-       (width % NUM_SIMDVECS_ELEMENTS(SPSType, MeasType, SIMD_WIDTH) == 0));
+       (width % numSIMDVecsElements<SPSType, MeasType, SIMD_WIDTH>() == 0));
   }
 
   static const Rearranged<SingleNormalizePolicy::isRearranged> rearranged;
@@ -459,11 +459,11 @@ public:
     // code assumes that ProcType is larger or equal in size then ImgType
     SIMD_STATIC_ASSERT(sizeof(ImgType) <= sizeof(ProcType));
 
-    const int numElems = NUM_SIMDVECS_ELEMENTS(ImgType, ProcType, SIMD_WIDTH);
+    const int numElems = numSIMDVecsElements<ImgType, ProcType, SIMD_WIDTH>();
     const size_t size  = in.size;
 
-    const int numInVecs  = NUM_INPUT_SIMDVECS(ProcType, ImgType);
-    const int numOutVecs = NUM_OUTPUT_SIMDVECS(ProcType, ImgType);
+    const int numInVecs  = numInputSIMDVecs<ProcType, ImgType>();
+    const int numOutVecs = numOutputSIMDVecs<ProcType, ImgType>();
 
     SIMDVec<ImgType, SIMD_WIDTH> inVecs[numInVecs];
     SIMDVec<ProcType, SIMD_WIDTH> convertedInVecs[numOutVecs];
@@ -742,7 +742,7 @@ public:
     SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgR,
     const WarpingParameter<SPSType, SIMD_WIDTH> &par)
   {
-    swizzleCyclic(img, par.stepAlpha, NUM_INPUT_SIMDVECS(SPSType, MeasType),
+    swizzleCyclic(img, par.stepAlpha, numInputSIMDVecs<SPSType, MeasType>(),
                   imgR);
   }
 
@@ -752,7 +752,7 @@ public:
     const WarpingParameter<SPSType, SIMD_WIDTH> &par)
   {
     // serial, slow!
-    unSwizzleCyclic(imgR, par.stepAlpha, NUM_INPUT_SIMDVECS(SPSType, MeasType),
+    unSwizzleCyclic(imgR, par.stepAlpha, numInputSIMDVecs<SPSType, MeasType>(),
                     img);
   }
 };
@@ -897,7 +897,7 @@ protected:
   // computeSPS should store input images
   bool storeSPSInput;
   // input images in sps computation
-  std::vector<SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> > ssInputs,
+  std::vector<SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama>> ssInputs,
     cvInputs;
 
   // ===================== non-virtual methods ===========================
@@ -1132,9 +1132,9 @@ private:
   {
     return
       // ProcType->MeasType: uses magnifyImage, copyImage:
-      ((width % NUM_SIMDVECS_ELEMENTS(MeasType, ProcType, SIMD_WIDTH) == 0) &&
+      ((width % numSIMDVecsElements<MeasType, ProcType, SIMD_WIDTH>() == 0) &&
        // MeasType->SPSType: uses computeScalePlaneNormalizedAdd:
-       (width % NUM_SIMDVECS_ELEMENTS(SPSType, MeasType, SIMD_WIDTH) == 0));
+       (width % numSIMDVecsElements<SPSType, MeasType, SIMD_WIDTH>() == 0));
   }
 
   static const Rearranged<StackNormalizePolicy::isRearranged> rearranged;
@@ -1329,7 +1329,7 @@ public:
   {
     // with NSAD match operator
     columnPairMatchingTilt1<MeasType, SIMD_WIDTH, SIMD_ALIGN,
-                            MatchAbsDiff<MeasType, SIMD_WIDTH> >(
+                            MatchAbsDiff<MeasType, SIMD_WIDTH>>(
       input1, input2, output, colMeasRaw1, colMeasRaw2, colMeas1, colMeas2,
       colMeas12);
   }

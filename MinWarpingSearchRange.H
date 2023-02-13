@@ -56,7 +56,7 @@ public:
 
   MinWarpingSearchRange(int nAlpha, int nPsi)
     : // simd_sps_elems(SIMD_WIDTH / sizeof(SPSType)),
-      simd_sps_elems(NUM_SIMDVEC_ELEMENTS(SPSType, SIMD_WIDTH)), nAlpha(nAlpha),
+      simd_sps_elems(numSIMDVecElements<SPSType, SIMD_WIDTH>()), nAlpha(nAlpha),
       nPsi(nPsi)
   {}
 

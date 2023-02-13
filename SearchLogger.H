@@ -98,7 +98,7 @@ struct Logger : public Searcher
 // Grid search logging requires special treatment as there is no step method
 // which can be hooked
 template <class... Types>
-struct Logger<search::Grid<Types...> > : public search::Grid<Types...>
+struct Logger<search::Grid<Types...>> : public search::Grid<Types...>
 {
   // Hold reference to list writing the state log into
   std::list<std::string> &log;
@@ -140,7 +140,7 @@ auto maybe_log(Searcher &&searcher, NoLog = NoLog {})
 
 // Exhaustive search minimizer function overload with logging
 template <class Objective, class... Types>
-auto minimize(Objective &&f, Logger<Grid<Types...> > searcher)
+auto minimize(Objective &&f, Logger<Grid<Types...>> searcher)
 {
   // Setup (uninitialized) minimum to track
   //  NOTE: Initialization depends on default constructor

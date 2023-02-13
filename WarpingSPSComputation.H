@@ -164,7 +164,7 @@ protected:
   // computeSPS should store input images
   bool storeSPSInput;
   // input images in sps computation
-  std::vector<SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> > ssInputs,
+  std::vector<SIMDImage<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama>> ssInputs,
     cvInputs;
 
   // ===================== non-virtual methods ===========================
@@ -283,9 +283,9 @@ public:
   {
     return
       // ProcType->MeasType: uses magnifyImage, copyImage:
-      ((width % NUM_SIMDVECS_ELEMENTS(MeasType, ProcType, SIMD_WIDTH) == 0) &&
+      ((width % numSIMDVecsElements<MeasType, ProcType, SIMD_WIDTH>() == 0) &&
        // MeasType->SPSType: uses computeScalePlaneNormalizedAdd:
-       (width % NUM_SIMDVECS_ELEMENTS(SPSType, MeasType, SIMD_WIDTH) == 0));
+       (width % numSIMDVecsElements<SPSType, MeasType, SIMD_WIDTH>() == 0));
   }
 
   // compute a diagram showing all intermediate input images for SPS
@@ -370,7 +370,7 @@ protected:
   // computeSPS should store input images
   bool storeSPSInput;
   // input images in sps computation
-  std::vector<SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama> > ssInputs,
+  std::vector<SIMDStack<MeasType, SIMD_WIDTH, SIMD_ALIGN, Panorama>> ssInputs,
     cvInputs;
 
   // ===================== non-virtual methods ===========================
@@ -508,9 +508,9 @@ public:
   {
     return
       // ProcType->MeasType: uses magnifyImage, copyImage:
-      ((width % NUM_SIMDVECS_ELEMENTS(MeasType, ProcType, SIMD_WIDTH) == 0) &&
+      ((width % numSIMDVecsElements<MeasType, ProcType, SIMD_WIDTH>() == 0) &&
        // MeasType->SPSType: uses computeScalePlaneNormalizedAdd:
-       (width % NUM_SIMDVECS_ELEMENTS(SPSType, MeasType, SIMD_WIDTH) == 0));
+       (width % numSIMDVecsElements<SPSType, MeasType, SIMD_WIDTH>() == 0));
   }
 
   // compute a diagram showing all intermediate input images for SPS

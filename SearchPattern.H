@@ -45,7 +45,7 @@ template <class... Types>
 class Pattern
 {
   // Number of dimensions/axes
-  static constexpr auto N = std::tuple_size_v<std::tuple<Types...> >;
+  static constexpr auto N = std::tuple_size_v<std::tuple<Types...>>;
 
   /**
    * @brief Pattern search state
@@ -88,7 +88,7 @@ class Pattern
      *
      * @return std::pair of {min,argmin}
      */
-    std::pair<Type, std::tuple<Types...> > min_argmin() const
+    std::pair<Type, std::tuple<Types...>> min_argmin() const
     {
       return std::pair {min, argmin};
     }

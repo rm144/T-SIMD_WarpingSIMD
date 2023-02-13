@@ -261,7 +261,7 @@ public:
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         SingleNormalizePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         MeasurePolicyNSAD<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -275,7 +275,7 @@ public:
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         SingleNormalizePolicyAbsRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         MeasurePolicyNSAD<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -289,7 +289,7 @@ public:
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         SingleNormalizePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         SingleMeasurePolicyNSADA<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -303,7 +303,7 @@ public:
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         SingleNormalizePolicyAbsRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         SingleMeasurePolicyNSADA<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -317,7 +317,7 @@ public:
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         SingleNormalizePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         SingleMeasurePolicyNSADNSADA<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -331,7 +331,7 @@ public:
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         SingleNormalizePolicyAbsRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         SingleMeasurePolicyNSADNSADA<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -345,7 +345,7 @@ public:
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         SingleNormalizePolicyAbsRearranged<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         SingleMeasurePolicyASCDirect<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -360,7 +360,7 @@ public:
         PreprocPolicy,
         SingleNormalizePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         MeasurePolicyNSAD<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbsAccu<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbsAccu<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -375,7 +375,7 @@ public:
         PreprocPolicy,
         SingleNormalizePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         MeasurePolicyNSAD<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbsAccu<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbsAccu<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter());
       break;
     }
@@ -390,7 +390,7 @@ public:
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         SingleNormalizePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
         MeasurePolicyNSAD<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS> >(
+        SingleColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>>(
         typename PreprocPolicy::Parameter(harrisPar.k,
                                           harrisPar.binomialFilterCount));
       break;
@@ -412,7 +412,7 @@ public:
         SPS_COMPUTATION_TEMPLATE_ARGUMENTS, n,
         ImageOpsPolicySimple<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>, PreprocPolicy,
         NormalizePolicy, MeasurePolicyNSAD<SPS_COMPUTATION_TEMPLATE_ARGUMENTS>,
-        StackColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, n> >(
+        StackColumnMeasurePolicyAbs<SPS_COMPUTATION_TEMPLATE_ARGUMENTS, n>>(
         typename PreprocPolicy::Parameter(harrisPar.k,
                                           harrisPar.binomialFilterCount),
         typename NormalizePolicy::Parameter(sigmoidW0, sigmoidW));

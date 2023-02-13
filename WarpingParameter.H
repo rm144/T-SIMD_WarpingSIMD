@@ -98,7 +98,7 @@ public:
 
   WarpingParameter(int width, int nAlpha, int nPsi)
     : // simd_sps_elems(SIMD_WIDTH / sizeof(SPSType)),
-      simd_sps_elems(NUM_SIMDVEC_ELEMENTS(SPSType, SIMD_WIDTH)), w(width),
+      simd_sps_elems(numSIMDVecElements<SPSType, SIMD_WIDTH>()), w(width),
       dTheta((2.0 * M_PI) / w), nAlpha(nAlpha), nPsi(nPsi),
       stepAlpha(w / nAlpha), stepPsi(w / nPsi), dAlpha((2.0 * M_PI) / nAlpha),
       dPsi((2.0 * M_PI) / nPsi),

@@ -248,15 +248,15 @@ public:
     const int blkSize        = param.blkSize;
     const int simd_sps_elems = param.simd_sps_elems;
     const int simd_compass_elems =
-      NUM_SIMDVEC_ELEMENTS(CompassType, SIMD_WIDTH);
+      numSIMDVecElements<CompassType, SIMD_WIDTH>();
     // SIMD_WIDTH / sizeof(CompassType);
     const int nAlpha     = param.nAlpha;
     const int nPsi       = param.nPsi;
     const int numPlanes  = stack.numPlanes;
-    const int numInVecs  = NUM_INPUT_SIMDVECS(CompassType, SPSType);
-    const int numOutVecs = NUM_OUTPUT_SIMDVECS(CompassType, SPSType);
+    const int numInVecs  = numInputSIMDVecs<CompassType, SPSType>();
+    const int numOutVecs = numOutputSIMDVecs<CompassType, SPSType>();
     const int numElems =
-      NUM_SIMDVECS_ELEMENTS(CompassType, SPSType, SIMD_WIDTH);
+      numSIMDVecsElements<CompassType, SPSType, SIMD_WIDTH>();
     if (blkSize % numElems != 0)
       throw SIMDException("WarpingSPS:CompassEstimate",
                           "blkSize has to be a multiple of numElems");

@@ -256,7 +256,7 @@ void columnPairMatching1(
     throw SIMDException("columnPairMatching1",
                         "input images have different size");
   SIMDVec<T, SIMD_WIDTH> l1_Nx, l2_N;
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   // image size
   const int sz = l1.size, w = l1.w;
   dir.resize(w, w);
@@ -331,7 +331,7 @@ void normSumAbsDiffTerm1(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2,
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
-  columnPairMatching1<T, SIMD_WIDTH, SIMD_ALIGN, MatchAbsDiff<T, SIMD_WIDTH> >(
+  columnPairMatching1<T, SIMD_WIDTH, SIMD_ALIGN, MatchAbsDiff<T, SIMD_WIDTH>>(
     l1, l2, dir);
 }
 
@@ -342,8 +342,8 @@ void asc2Term1(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
                SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
   SIMDVec<T, SIMD_WIDTH> dirV;
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
-  columnPairMatching1<T, SIMD_WIDTH, SIMD_ALIGN, MatchAsc2<T, SIMD_WIDTH> >(
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
+  columnPairMatching1<T, SIMD_WIDTH, SIMD_ALIGN, MatchAsc2<T, SIMD_WIDTH>>(
     l1, l2, dir);
   // multiply result by 2 since the max-min expression is only half as
   // large as the one in ascDirTerm1
@@ -364,7 +364,7 @@ void normSumAbsDiffAbsTerm1(
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
   columnPairMatching1<T, SIMD_WIDTH, SIMD_ALIGN,
-                      MatchAbsDiffAbs<T, SIMD_WIDTH> >(l1, l2, dir);
+                      MatchAbsDiffAbs<T, SIMD_WIDTH>>(l1, l2, dir);
 }
 
 // NSAD-NSADA mix term
@@ -375,7 +375,7 @@ void normSumAvgAbsDiffAbsDiffAbsTerm1(
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
   columnPairMatching1<T, SIMD_WIDTH, SIMD_ALIGN,
-                      MatchAvgAbsDiffAbsDiffAbs<T, SIMD_WIDTH> >(l1, l2, dir);
+                      MatchAvgAbsDiffAbsDiffAbs<T, SIMD_WIDTH>>(l1, l2, dir);
 }
 
 // ---------------------------------------------------------------------------
@@ -428,7 +428,7 @@ void columnPairMatchingTilt1(
   colMeasure2.resize(w, w);
   colMeasure12.resize(w, w);
   SIMDVec<T, SIMD_WIDTH> l1_Nx, l2_N;
-  const int simd_elems  = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems  = numSIMDVecElements<T, SIMD_WIDTH>();
   const T *const l1data = l1.data, *const l2data = l2.data;
   SIMDVec<T, SIMD_WIDTH> zero, one, summand, s_N, colMeasA, colMeasB, colMeasAB;
   // zero-vector for zero-addition, if element is invalid
@@ -570,7 +570,7 @@ void columnPairMatching2(
   // image size (includes complementary columns)
   const int szImg = imgV.size;
   // complementary columns: number of elements
-  const int nElems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int nElems = numSIMDVecElements<T, SIMD_WIDTH>();
   // short-hands to image data
   const T *const dataV = imgV.data, *const dataH = imgH.data;
   // resize result array
@@ -680,7 +680,7 @@ void normSumAbsDiffTerm2(
   int step, int n, int blkSize, const int *const modn,
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
-  columnPairMatching2<T, SIMD_WIDTH, SIMD_ALIGN, MatchAbsDiff<T, SIMD_WIDTH> >(
+  columnPairMatching2<T, SIMD_WIDTH, SIMD_ALIGN, MatchAbsDiff<T, SIMD_WIDTH>>(
     l1, l2, w, wSPS, step, n, blkSize, modn, dir);
 }
 
@@ -692,8 +692,8 @@ void asc2Term2(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
                SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
   SIMDVec<T, SIMD_WIDTH> dirV;
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
-  columnPairMatching2<T, SIMD_WIDTH, SIMD_ALIGN, MatchAsc2<T, SIMD_WIDTH> >(
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
+  columnPairMatching2<T, SIMD_WIDTH, SIMD_ALIGN, MatchAsc2<T, SIMD_WIDTH>>(
     l1, l2, w, wSPS, step, n, blkSize, modn, dir);
   // multiply result by 2 since the max-min expression is only half as
   // large as the one in ascDirTerm1
@@ -714,9 +714,8 @@ void ascDirectTerm(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
                    const int *const modn,
                    SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
-  columnPairMatching2<T, SIMD_WIDTH, SIMD_ALIGN,
-                      MatchAscDirect<T, SIMD_WIDTH> >(l1, l2, w, wSPS, step, n,
-                                                      blkSize, modn, dir);
+  columnPairMatching2<T, SIMD_WIDTH, SIMD_ALIGN, MatchAscDirect<T, SIMD_WIDTH>>(
+    l1, l2, w, wSPS, step, n, blkSize, modn, dir);
 }
 
 // NSADA term
@@ -728,8 +727,8 @@ void normSumAbsDiffAbsTerm2(
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
   columnPairMatching2<T, SIMD_WIDTH, SIMD_ALIGN,
-                      MatchAbsDiffAbs<T, SIMD_WIDTH> >(l1, l2, w, wSPS, step, n,
-                                                       blkSize, modn, dir);
+                      MatchAbsDiffAbs<T, SIMD_WIDTH>>(l1, l2, w, wSPS, step, n,
+                                                      blkSize, modn, dir);
 }
 
 // NSAD-NSADA mix term
@@ -741,7 +740,7 @@ void normSumAvgAbsDiffAbsDiffAbsTerm2(
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
 {
   columnPairMatching2<T, SIMD_WIDTH, SIMD_ALIGN,
-                      MatchAvgAbsDiffAbsDiffAbs<T, SIMD_WIDTH> >(
+                      MatchAvgAbsDiffAbsDiffAbs<T, SIMD_WIDTH>>(
     l1, l2, w, wSPS, step, n, blkSize, modn, dir);
 }
 
@@ -774,13 +773,13 @@ void computeScalePlaneNormalizedAdd1(
                         "joint/ss measure differ in width");
   const int w = jointMeasure.w;
   // number of elements in a vector relating to the input SIMDImages
-  const int vecElemsIn = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int vecElemsIn = numSIMDVecElements<T, SIMD_WIDTH>();
   // number of input vectors required to fill single output vector
-  const int numInVecs = NUM_INPUT_SIMDVECS(SPSType, T);
+  const int numInVecs = numInputSIMDVecs<SPSType, T>();
   // number of output vectors required to take up single input vector
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(SPSType, T);
+  const int numOutVecs = numOutputSIMDVecs<SPSType, T>();
   // number of input and output elements
-  const int numElems = NUM_SIMDVECS_ELEMENTS(SPSType, T, SIMD_WIDTH);
+  const int numElems = numSIMDVecsElements<SPSType, T, SIMD_WIDTH>();
   // width must be multiple of numElems
   if (w % numElems != 0)
     throw SIMDException("computeScalePlaneNormalizedAdd1",
@@ -889,13 +888,13 @@ void computeScalePlaneSigmoidNormalizedAdd1(
                         "sigmoidW0 has wrong size");
   const int w = jointMeasureStk.w;
   // number of elements in a vector relating to the input SIMDImages
-  const int vecElemsIn = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int vecElemsIn = numSIMDVecElements<T, SIMD_WIDTH>();
   // number of input vectors required to fill single output vector
-  const int numInVecs = NUM_INPUT_SIMDVECS(SPSType, T);
+  const int numInVecs = numInputSIMDVecs<SPSType, T>();
   // number of output vectors required to take up single input vector
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(SPSType, T);
+  const int numOutVecs = numOutputSIMDVecs<SPSType, T>();
   // number of input and output elements
-  const int numElems = NUM_SIMDVECS_ELEMENTS(SPSType, T, SIMD_WIDTH);
+  const int numElems = numSIMDVecsElements<SPSType, T, SIMD_WIDTH>();
   // width must be multiple of numElems
   if (w % numElems != 0)
     throw SIMDException("computeScalePlaneSigmoidNormalizedAdd1",
@@ -1015,13 +1014,13 @@ void computeScalePlaneNormalizedAdd2(
     throw SIMDException("computeScalePlaneNormalizedAdd2",
                         "joint measure has invalid dimensions");
   // number of elements in a vector relating to the input SIMDImages
-  const int vecElemsIn = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int vecElemsIn = numSIMDVecElements<T, SIMD_WIDTH>();
   // number of input vectors required to fill single output vector
-  const int numInVecs = NUM_INPUT_SIMDVECS(SPSType, T);
+  const int numInVecs = numInputSIMDVecs<SPSType, T>();
   // number of output vectors required to take up single input vector
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(SPSType, T);
+  const int numOutVecs = numOutputSIMDVecs<SPSType, T>();
   // number of input and output elements
-  const int numElems = NUM_SIMDVECS_ELEMENTS(SPSType, T, SIMD_WIDTH);
+  const int numElems = numSIMDVecsElements<SPSType, T, SIMD_WIDTH>();
   // width must be multiple of numElems
   if (w % numElems != 0)
     throw SIMDException("computeScalePlaneNormalizedAdd2",
@@ -1168,13 +1167,13 @@ void computeScalePlaneNormalizedAdd1Tilt(
 
   const int w = jointMeasure.w;
   // number of elements in a vector relating to the input SIMDImages
-  const int vecElemsIn = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int vecElemsIn = numSIMDVecElements<T, SIMD_WIDTH>();
   // number of input vectors required to fill single output vector
-  const int numInVecs = NUM_INPUT_SIMDVECS(SPSType, T);
+  const int numInVecs = numInputSIMDVecs<SPSType, T>();
   // number of output vectors required to take up single input vector
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(SPSType, T);
+  const int numOutVecs = numOutputSIMDVecs<SPSType, T>();
   // number of input and output elements
-  const int numElems = NUM_SIMDVECS_ELEMENTS(SPSType, T, SIMD_WIDTH);
+  const int numElems = numSIMDVecsElements<SPSType, T, SIMD_WIDTH>();
   // width must be multiple of numElems
   if (w % numElems != 0)
     throw SIMDException("computeScalePlaneNormalizedAdd1Tilt",
@@ -1255,7 +1254,7 @@ void verticalEdgeFilter(
   T *pe0, *pe1;
   // SIMD registers for two pixels and their difference
   SIMDVec<T, SIMD_WIDTH> v0, v1, d;
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   const int w = orig.w, h = orig.h;
   // TODO: edge-filtering removes one row, but
   // TODO: which? isn't that a matter of interpretation? I think
@@ -1321,7 +1320,7 @@ void verticalEdgeFilterTilt(
   // SIMD registers for two pixels and their difference
   SIMDVec<T, SIMD_WIDTH> v0, v1, d, invvec, invpix;
 
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   const int w = orig.w, h = orig.h;
   // TODO: edge-filtering removes one row, but
   // TODO: which? isn't that a matter of interpretation? I think
@@ -1396,9 +1395,9 @@ void magnifyAndScale(
   double sourceRowDouble;
   const Tin *src;
   Tout *dst;
-  const int numInVecs  = NUM_INPUT_SIMDVECS(Tout, Tin);
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(Tout, Tin);
-  const int numElems   = NUM_SIMDVECS_ELEMENTS(Tout, Tin, SIMD_WIDTH);
+  const int numInVecs  = numInputSIMDVecs<Tout, Tin>();
+  const int numOutVecs = numOutputSIMDVecs<Tout, Tin>();
+  const int numElems   = numSIMDVecsElements<Tout, Tin, SIMD_WIDTH>();
   const int w = img.w, h = img.h;
   /*
   printf("magnifyImage: %d x %d, v = %.10g, h = %.10g\n",
@@ -1552,9 +1551,9 @@ void magnifyAndScaleTilt(
   double sourceRowDouble;
   const Tin *src;
   Tout *dst;
-  const int numInVecs  = NUM_INPUT_SIMDVECS(Tout, Tin);
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(Tout, Tin);
-  const int numElems   = NUM_SIMDVECS_ELEMENTS(Tout, Tin, SIMD_WIDTH);
+  const int numInVecs  = numInputSIMDVecs<Tout, Tin>();
+  const int numOutVecs = numOutputSIMDVecs<Tout, Tin>();
+  const int numElems   = numSIMDVecsElements<Tout, Tin, SIMD_WIDTH>();
   const int w = img.w, h = img.h;
 
   if ((magnifyScale < 0.0) || (magnifyScale > 1.0))
@@ -1673,9 +1672,9 @@ void copy(const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
     throw SIMDException("copy",
                         "input and output image are not identical but overlap");
   const size_t size    = img.size;
-  const int numInVecs  = NUM_INPUT_SIMDVECS(Tout, Tin);
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(Tout, Tin);
-  const int numElems   = NUM_SIMDVECS_ELEMENTS(Tout, Tin, SIMD_WIDTH);
+  const int numInVecs  = numInputSIMDVecs<Tout, Tin>();
+  const int numOutVecs = numOutputSIMDVecs<Tout, Tin>();
+  const int numElems   = numSIMDVecsElements<Tout, Tin, SIMD_WIDTH>();
   // size must be a multiple of numElems
   if (size % numElems != 0)
     throw SIMDException("copy", "size must be a multiple of numElems");
@@ -1713,9 +1712,9 @@ void copyAndScale(const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
     throw SIMDException("copyAndScale",
                         "input and output image are not identical but overlap");
   const size_t size    = img.size;
-  const int numInVecs  = NUM_INPUT_SIMDVECS(Tout, Tin);
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(Tout, Tin);
-  const int numElems   = NUM_SIMDVECS_ELEMENTS(Tout, Tin, SIMD_WIDTH);
+  const int numInVecs  = numInputSIMDVecs<Tout, Tin>();
+  const int numOutVecs = numOutputSIMDVecs<Tout, Tin>();
+  const int numElems   = numSIMDVecsElements<Tout, Tin, SIMD_WIDTH>();
   // size must be a multiple of numElems
   if (size % numElems != 0)
     throw SIMDException("copyAndScale", "size must be a multiple of numElems");
@@ -1774,9 +1773,9 @@ void copyAndScaleTilt(
     throw SIMDException("copyAndScaleTilt",
                         "input and output image are not identical but overlap");
   const size_t size    = img.size;
-  const int numInVecs  = NUM_INPUT_SIMDVECS(Tout, Tin);
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(Tout, Tin);
-  const int numElems   = NUM_SIMDVECS_ELEMENTS(Tout, Tin, SIMD_WIDTH);
+  const int numInVecs  = numInputSIMDVecs<Tout, Tin>();
+  const int numOutVecs = numOutputSIMDVecs<Tout, Tin>();
+  const int numElems   = numSIMDVecsElements<Tout, Tin, SIMD_WIDTH>();
   // size must be a multiple of numElems
   if (size % numElems != 0)
     throw SIMDException("copyAndScaleTilt",
@@ -1834,9 +1833,9 @@ void copyShiftAndScale(
     throw SIMDException("copyShiftAndScale",
                         "input and output image are not identical but overlap");
   const size_t size    = img.size;
-  const int numInVecs  = NUM_INPUT_SIMDVECS(Tout, Tin);
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(Tout, Tin);
-  const int numElems   = NUM_SIMDVECS_ELEMENTS(Tout, Tin, SIMD_WIDTH);
+  const int numInVecs  = numInputSIMDVecs<Tout, Tin>();
+  const int numOutVecs = numOutputSIMDVecs<Tout, Tin>();
+  const int numElems   = numSIMDVecsElements<Tout, Tin, SIMD_WIDTH>();
   // size must be a multiple of numElems
   if (size % numElems != 0)
     throw SIMDException("copyShiftAndScale",
@@ -1875,9 +1874,9 @@ void copyScaleAndShift(
     throw SIMDException("copyScaleAndShift",
                         "input and output image are not identical but overlap");
   const size_t size    = img.size;
-  const int numInVecs  = NUM_INPUT_SIMDVECS(Tout, Tin);
-  const int numOutVecs = NUM_OUTPUT_SIMDVECS(Tout, Tin);
-  const int numElems   = NUM_SIMDVECS_ELEMENTS(Tout, Tin, SIMD_WIDTH);
+  const int numInVecs  = numInputSIMDVecs<Tout, Tin>();
+  const int numOutVecs = numOutputSIMDVecs<Tout, Tin>();
+  const int numElems   = numSIMDVecsElements<Tout, Tin, SIMD_WIDTH>();
   // size must be a multiple of numElems
   if (size % numElems != 0)
     throw SIMDException("copyScaleAndShift",
@@ -1923,7 +1922,7 @@ template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
 T max(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
   SIMDVec<T, SIMD_WIDTH> maxv = set1<T, SIMD_WIDTH>(SIMDTypeInfo<T>::min());
-  const int nElems            = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int nElems            = numSIMDVecElements<T, SIMD_WIDTH>();
   for (T *d = img.data; d < img.data + img.size; d += nElems)
     maxv = max(maxv, load<SIMD_WIDTH>(d));
   return hmax(maxv);
@@ -1935,7 +1934,7 @@ T maxExcept(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img,
 {
   SIMDVec<T, SIMD_WIDTH> maxv = set1<T, SIMD_WIDTH>(SIMDTypeInfo<T>::min()),
                          excv = set1<T, SIMD_WIDTH>(exceptVal), v, isexcv;
-  const int nElems            = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int nElems            = numSIMDVecElements<T, SIMD_WIDTH>();
   for (T *d = img.data; d < img.data + img.size; d += nElems) {
     v      = load<SIMD_WIDTH>(d);
     isexcv = cmpeq(v, excv);
@@ -1952,7 +1951,7 @@ template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
 T min(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
   SIMDVec<T, SIMD_WIDTH> minv = set1<T, SIMD_WIDTH>(SIMDTypeInfo<T>::max());
-  const int nElems            = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int nElems            = numSIMDVecElements<T, SIMD_WIDTH>();
   for (T *d = img.data; d < img.data + img.size; d += nElems)
     minv = min(minv, load<SIMD_WIDTH>(d));
   return hmin(minv);
@@ -1962,7 +1961,7 @@ template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
 T maxAbs(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
   SIMDVec<T, SIMD_WIDTH> maxv = set1<T, SIMD_WIDTH>(SIMDTypeInfo<T>::min());
-  const int nElems            = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int nElems            = numSIMDVecElements<T, SIMD_WIDTH>();
   for (T *d = img.data; d < img.data + img.size; d += nElems)
     maxv = max(maxv, abs(load<SIMD_WIDTH>(d)));
   return hmax(maxv);
@@ -1980,7 +1979,7 @@ void replace(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img,
   SIMDVec<T, SIMD_WIDTH> oldv = set1<T, SIMD_WIDTH>(oldVal),
                          newv = set1<T, SIMD_WIDTH>(newVal), v;
   res                         = img;
-  const int nElems            = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int nElems            = numSIMDVecElements<T, SIMD_WIDTH>();
   for (T *d = res.data; d < res.data + res.size; d += nElems) {
     v = load<SIMD_WIDTH>(d);
     store(d, ifelse(cmpeq(oldv, v), newv, v));
@@ -2115,7 +2114,7 @@ void swizzleCyclic(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
   if (overlap(inImg, outImg))
     throw SIMDException("swizzleCyclic", "input and output image overlap");
   const int w = inImg.w, h = inImg.h;
-  const int elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int elems = numSIMDVecElements<T, SIMD_WIDTH>();
   const int n = N, n_x_elems = n * elems, blockSize = w / n;
   const int blockSizePlus = blockSize + nAuxVecCols * elems;
   const int wPlus         = w + nAuxVecCols * n_x_elems;
@@ -2183,7 +2182,7 @@ void unSwizzleCyclic(
   int nAuxVecCols, SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &outImg)
 {
   const int wPlus = inImg.w, h = inImg.h;
-  const int elems     = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int elems     = numSIMDVecElements<T, SIMD_WIDTH>();
   const int n_x_elems = n * elems, blockSizePlus = wPlus / n;
   // const int blockSize = blockSizePlus - nAuxVecCols * elems;
   const int w = wPlus - nAuxVecCols * n_x_elems;
@@ -2217,7 +2216,7 @@ void adds(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
                         "input and output image are not identical but overlap");
   SIMDVec<ImgType, SIMD_WIDTH> valVec = set1<ImgType, SIMD_WIDTH>(val);
   outImg                              = inImg;
-  const int elems = NUM_SIMDVEC_ELEMENTS(ImgType, SIMD_WIDTH);
+  const int elems = numSIMDVecElements<ImgType, SIMD_WIDTH>();
   for (ImgType *dp = outImg.data; dp < outImg.data + outImg.size; dp += elems)
     store(dp, adds(load<SIMD_WIDTH>(dp), valVec));
 }
@@ -2236,7 +2235,7 @@ void subs(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
                         "input and output image are not identical but overlap");
   SIMDVec<ImgType, SIMD_WIDTH> valVec = set1<ImgType, SIMD_WIDTH>(val);
   outImg                              = inImg;
-  const int elems = NUM_SIMDVEC_ELEMENTS(ImgType, SIMD_WIDTH);
+  const int elems = numSIMDVecElements<ImgType, SIMD_WIDTH>();
   for (ImgType *dp = outImg.data; dp < outImg.data + outImg.size; dp += elems)
     store(dp, subs(load<SIMD_WIDTH>(dp), valVec));
 }
@@ -2255,7 +2254,7 @@ void mul(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
                         "input and output image are not identical but overlap");
   SIMDVec<ImgType, SIMD_WIDTH> valVec = set1<ImgType, SIMD_WIDTH>(val);
   outImg                              = inImg;
-  const int elems = NUM_SIMDVEC_ELEMENTS(ImgType, SIMD_WIDTH);
+  const int elems = numSIMDVecElements<ImgType, SIMD_WIDTH>();
   for (ImgType *dp = outImg.data; dp < outImg.data + outImg.size; dp += elems)
     store(dp, mul(load<SIMD_WIDTH>(dp), valVec));
 }
@@ -2270,7 +2269,7 @@ void mul(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn> &a,
   if (!a.sameSize(b))
     throw SIMDException("mul", "input images have different size");
   c.resize(a.w, a.h, a.addOn);
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   for (size_t p = 0; p < c.size; p += simd_elems) {
     SIMDVec<T, SIMD_WIDTH> a_v = load<SIMD_WIDTH>(a.data + p);
     SIMDVec<T, SIMD_WIDTH> b_v = load<SIMD_WIDTH>(b.data + p);
@@ -2305,7 +2304,7 @@ void binomialHorCyclic(
   const int w = inImg.w, h = inImg.h;
   inImg.addOn.isInvariantToHorizontalReorganization();
   outImg.resize(w, h, inImg.addOn);
-  const int elems = NUM_SIMDVEC_ELEMENTS(ImgType, SIMD_WIDTH);
+  const int elems = numSIMDVecElements<ImgType, SIMD_WIDTH>();
   // ImgType rowBuf[w + elems] SIMD_ATTR_ALIGNED(SIMD_WIDTH);
   SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN> rowBuf(w + elems, 1);
   const ImgType *inRowPtr = inImg.data;
@@ -2487,7 +2486,7 @@ void verticalEdgeFilter2(
   //             "input and output image overlap");
   const int w = orig.w, h = orig.h;
   edge.resize(w, h, orig.addOn);
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   SIMDVec<T, SIMD_WIDTH> top_v, bottom_v, lastBottom_v, diff_v;
   for (int p = 0; p < w; p += simd_elems) {
     // special handling of first row [+1,-1]
@@ -2538,7 +2537,7 @@ void verticalBinomialFilter(
   //             "input and output image overlap");
   const int w = orig.w, h = orig.h;
   binom.resize(w, h, orig.addOn);
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   SIMDVec<T, SIMD_WIDTH> top_v, center_v, bottom_v, avg_v;
   for (int p = 0; p < w; p += simd_elems) {
     // special handling of first row [1/2,1/2], i.e. mirroring second row
@@ -2588,7 +2587,7 @@ void horizontalEdgeFilterCyclic2(
   //             "input and output image overlap");
   const int w = orig.w, h = orig.h;
   edge.resize(w, h, orig.addOn);
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   for (size_t row = 0; row < edge.size; row += w) {
     SIMDVec<T, SIMD_WIDTH> next_v, left_v, right_v, previousResult_v,
       tmpResult_v, result_v;
@@ -2638,7 +2637,7 @@ void horizontalBinomialFilterCyclic(
   //             "input and output image overlap");
   const int w = orig.w, h = orig.h;
   edge.resize(w, h, orig.addOn);
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(T, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   for (size_t row = 0; row < edge.size; row += w) {
     SIMDVec<T, SIMD_WIDTH> next_v, left_v, right_v, center_v, previousResult_v,
       tmpResult_v, result_v;
@@ -2707,7 +2706,7 @@ void harrisFilterCyclic(
     verticalBinomialFilter(C, C);
   }
   corner.resize(orig.w, orig.h, orig.addOn);
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(SIMDFloat, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<SIMDFloat, SIMD_WIDTH>();
   // for variant:
   SIMDVec<SIMDFloat, SIMD_WIDTH> km1_v = set1<SIMDFloat, SIMD_WIDTH>(1.0 - k);
   SIMDVec<SIMDFloat, SIMD_WIDTH> k_v   = set1<SIMDFloat, SIMD_WIDTH>(k);
@@ -2836,7 +2835,7 @@ void harrisFilterCyclic(
     horizontalBinomialFilterCyclic(C, C);
     verticalBinomialFilter(C, C);
   }
-  const int simd_elems = NUM_SIMDVEC_ELEMENTS(SIMDFloat, SIMD_WIDTH);
+  const int simd_elems = numSIMDVecElements<SIMDFloat, SIMD_WIDTH>();
   // for variant:
   SIMDVec<SIMDFloat, SIMD_WIDTH> km1_v  = set1<SIMDFloat, SIMD_WIDTH>(1.0 - k),
                                  k_v    = set1<SIMDFloat, SIMD_WIDTH>(k),
@@ -2924,7 +2923,7 @@ SIMDInt countNonZero(
   SIMDVec<Type, SIMD_WIDTH> compare;
   // Extend compare vector to SIMDInt
   SIMDVec<SIMDInt, SIMD_WIDTH>
-    compare_extended[NUM_OUTPUT_SIMDVECS(SIMDInt, Type)];
+    compare_extended[numOutputSIMDVecs<SIMDInt, Type>()];
   // Iterate image rows (row-major order)
   for (int r = 0; r < image.h; ++r) {
     // Iterate images columns in steps of simd_elems
@@ -2937,7 +2936,7 @@ SIMDInt countNonZero(
       // Extend to SIMDInt
       convert(&compare, compare_extended);
       // Iterate over extended compare vector
-      for (unsigned int i = 0; i < NUM_OUTPUT_SIMDVECS(SIMDInt, Type); ++i)
+      for (unsigned int i = 0; i < numOutputSIMDVecs<SIMDInt, Type>(); ++i)
         // Accumulate in counter
         counter = adds(counter, compare_extended[i]);
     }
@@ -3343,7 +3342,7 @@ SumType pixelSum(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &image)
   SIMDVec<Type, SIMD_WIDTH> inVec;
   // Vector to hold input pixel block extended to SumType
   SIMDVec<SumType, SIMD_WIDTH>
-    inVecExtended[NUM_OUTPUT_SIMDVECS(SumType, Type)];
+    inVecExtended[numOutputSIMDVecs<SumType, Type>()];
   // Zero initialized vector for accumulating parts of sum
   SIMDVec<SumType, SIMD_WIDTH> sumVec = setzero<SumType, SIMD_WIDTH>();
   // Iterate image rows (row-major order)
@@ -3355,7 +3354,7 @@ SumType pixelSum(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &image)
       // Extend to SumType
       convert(&inVec, inVecExtended);
       // Iterate over extended input vector
-      for (unsigned int i = 0; i < NUM_OUTPUT_SIMDVECS(SumType, Type); ++i)
+      for (unsigned int i = 0; i < numOutputSIMDVecs<SumType, Type>(); ++i)
         // Accumulate in counter
         sumVec = adds(sumVec, inVecExtended[i]);
     }
@@ -3379,7 +3378,7 @@ SumType pixelSum(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &image,
   SIMDVec<Type, SIMD_WIDTH> inVec;
   // Vector to hold input pixel block extended to SumType
   SIMDVec<SumType, SIMD_WIDTH>
-    inVecExtended[NUM_OUTPUT_SIMDVECS(SumType, Type)];
+    inVecExtended[numOutputSIMDVecs<SumType, Type>()];
   // Zero initialized vector for accumulating parts of sum
   SIMDVec<SumType, SIMD_WIDTH> sumVec = setzero<SumType, SIMD_WIDTH>();
   // Zero initialized vector to compare the mask pixels to (zero pixel is
@@ -3399,7 +3398,7 @@ SumType pixelSum(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &image,
       // Extend to SumType
       convert(&inVec, inVecExtended);
       // Iterate over extended input vector
-      for (unsigned int i = 0; i < NUM_OUTPUT_SIMDVECS(SumType, Type); ++i)
+      for (unsigned int i = 0; i < numOutputSIMDVecs<SumType, Type>(); ++i)
         // Accumulate in counter
         sumVec = adds(sumVec, inVecExtended[i]);
     }
@@ -3531,7 +3530,7 @@ struct Map
 
 private:
   // Mapping represented as 2d vector
-  std::vector<std::vector<double> > map;
+  std::vector<std::vector<double>> map;
 };
 } // namespace Remap
 

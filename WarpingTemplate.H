@@ -75,7 +75,7 @@ public:
   // rho values
   std::vector<double> rhoTable;
   // template is a vector of vectors (may not be the fastest solution)
-  std::vector<std::vector<WarpingTemplateEntry> > tmplt;
+  std::vector<std::vector<WarpingTemplateEntry>> tmplt;
 
   WarpingTemplate(int width, int spsWidth,
                   const std::vector<double> &scaleFactors, double rhoMin,

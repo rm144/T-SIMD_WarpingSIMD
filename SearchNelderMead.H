@@ -74,7 +74,7 @@ class NelderMead
      * @brief Returns minimum value and the corresponding argument.
      * @return std::pair of {min,argmin}
      */
-    std::pair<Type, std::tuple<Types...> > min_argmin() const
+    std::pair<Type, std::tuple<Types...>> min_argmin() const
     {
       // Start searching for the minimum value at first vertex
       //  NOTE: This is necessary as the state might be in an

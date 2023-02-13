@@ -74,10 +74,10 @@ class MinWarpingFull_XPAY
     SPSType *const _stack    = sps.stack.data;
     const int simd_sps_elems = sps.param.simd_sps_elems;
     // numInVecs is always 1, see assertion above
-    const int numOutVecs = NUM_OUTPUT_SIMDVECS(MatchType, SPSType);
+    const int numOutVecs = numOutputSIMDVecs<MatchType, SPSType>();
     const int numOutVecElems =
       // numOutputSIMDVecElements<MatchType,SPSType,SIMD_WIDTH>();
-      NUM_SIMDVEC_ELEMENTS(MatchType, SIMD_WIDTH);
+      numSIMDVecElements<MatchType, SIMD_WIDTH>();
     // numElems is always simd_sps_elems, see assertion above
     const SPSType maxSPS = SIMDTypeInfo<SPSType>::max();
     // SIMDVec<SPSType,SIMD_WIDTH> zero = setzero<SPSType,SIMD_WIDTH>();
@@ -295,10 +295,10 @@ public:
     SPSType *const _stack      = sps.stack.data;
     const int simd_sps_elems   = sps.param.simd_sps_elems;
     // numInVecs is always 1, see assertion above
-    const int numOutVecs = NUM_OUTPUT_SIMDVECS(MatchType, SPSType);
+    const int numOutVecs = numOutputSIMDVecs<MatchType, SPSType>();
     const int numOutVecElems =
       // numOutputSIMDVecElements<MatchType,SPSType,SIMD_WIDTH>();
-      NUM_SIMDVEC_ELEMENTS(MatchType, SIMD_WIDTH);
+      numSIMDVecElements<MatchType, SIMD_WIDTH>();
     // numElems is always simd_sps_elems, see assertion above
     const SPSType maxSPS = SIMDTypeInfo<SPSType>::max();
     // faster if not defined inside loops

@@ -579,7 +579,7 @@ protected:
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> all;
 
   // array of images representing the individual planes
-  std::vector<SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn> > planes;
+  std::vector<SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn>> planes;
 
   void allocatePlanes(const AddOn &addOn)
   {

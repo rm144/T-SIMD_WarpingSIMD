@@ -48,7 +48,7 @@ namespace env_config {
  * @brief List tracking all (name,value,default) option triples
  * @note env_config::get inserts into this list
  */
-inline std::list<std::tuple<std::string, std::string, std::string> > options;
+inline std::list<std::tuple<std::string, std::string, std::string>> options;
 
 /**
  * @brief Prints all collected environment options to output stream
@@ -188,7 +188,7 @@ Type get(const std::string &name, const Type default_value)
  */
 #define ENV_VEC(Type, Name, ...)                                               \
   const std::vector<Type> Name =                                               \
-    env_config::get<std::vector<Type> >(#Name, {__VA_ARGS__})
+    env_config::get<std::vector<Type>>(#Name, {__VA_ARGS__})
 
 /**
  * @brief Creates a named bool environment variable configuration option

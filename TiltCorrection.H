@@ -343,7 +343,7 @@ class Correction;
  * @tparam SIMD_ALIGN Align of SIMD vectors of SIMDImage to be processed
  */
 template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
-class Correction<SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> >
+class Correction<SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama>>
 {
   // Shorter type names for images
   using Image = SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama>;
@@ -407,7 +407,7 @@ private:
  * @return Tilt correction function (polymorphic wrapper) operating on Image
  */
 template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
-Correction<SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> > make_correction(
+Correction<SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama>> make_correction(
   const Selector selector,
   SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> = {})
 {
