@@ -31,7 +31,7 @@
 #include "WarpingSPS.H"
 #include "WarpingTemplate.H"
 
-namespace ns_simd {
+namespace simd {
 
 // ===========================================================================
 // Warping full search algorithms
@@ -65,6 +65,6 @@ public:
     int jAlphaOff = 0, int jPsiOff = 0) = 0;
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

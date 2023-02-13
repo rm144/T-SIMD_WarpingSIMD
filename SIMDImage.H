@@ -38,7 +38,7 @@
 #define SIMD_IMAGE_DEBUG(ACTION)
 #endif
 
-namespace ns_simd {
+namespace simd {
 
 // ===========================================================================
 // checkWidth
@@ -606,6 +606,6 @@ protected:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

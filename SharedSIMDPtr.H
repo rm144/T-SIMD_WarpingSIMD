@@ -49,7 +49,7 @@
 // TODO: (alignment of desc needs to be considered!)
 // TODO: thread-safety (atomic counting, atomic pointer manipulation...)
 
-namespace ns_simd {
+namespace simd {
 
 // -------------------------------------------------------------------------
 // SharedSIMDPtrDesc
@@ -514,6 +514,6 @@ protected:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

@@ -33,7 +33,7 @@
 #include <stdio.h>
 #include <string.h>
 
-namespace ns_simd {
+namespace simd {
 
 // -------------------------------------------------------------------------
 // SymmetricScaleFactors
@@ -522,6 +522,6 @@ protected:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

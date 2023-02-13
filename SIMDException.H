@@ -29,7 +29,7 @@
 #include <exception>
 #include <string>
 
-namespace ns_simd {
+namespace simd {
 
 class SIMDException : public std::exception
 {
@@ -46,6 +46,6 @@ public:
   virtual const char *what() const throw() { return msg.c_str(); }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

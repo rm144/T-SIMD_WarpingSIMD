@@ -37,7 +37,7 @@
 #include <stdio.h>
 #include <vector>
 
-namespace ns_simd {
+namespace simd {
 
 // =========================================================================
 // data types for warping template
@@ -191,6 +191,6 @@ protected:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

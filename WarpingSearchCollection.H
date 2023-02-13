@@ -29,7 +29,7 @@
 #include "SIMDTypes.H"
 #include "WarpingSearch.H"
 
-namespace ns_simd {
+namespace simd {
 
 // ###########################################################################
 // full matching
@@ -301,6 +301,6 @@ public:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

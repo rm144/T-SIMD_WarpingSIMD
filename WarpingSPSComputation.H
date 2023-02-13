@@ -34,7 +34,7 @@
 #include <limits>
 #include <vector>
 
-namespace ns_simd {
+namespace simd {
 
 // ===========================================================================
 // WarpingSPSComputation
@@ -572,6 +572,6 @@ public:
   int numPreprocs() const { return NPREPROCS; }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

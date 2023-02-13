@@ -36,7 +36,7 @@
 #include <ostream>
 #include <vector>
 
-namespace ns_simd {
+namespace simd {
 
 template <typename ImgType, typename ProcType, typename MeasType,
           typename SPSType, typename MatchType, typename CompassType,
@@ -400,6 +400,6 @@ public:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

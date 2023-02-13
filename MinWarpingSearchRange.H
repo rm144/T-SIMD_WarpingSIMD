@@ -34,7 +34,7 @@
 // 20. Apr 18 (rm): thanks to Benedikt Volkmer
 #include "SIMDVecAll.H"
 
-namespace ns_simd {
+namespace simd {
 
 // ===========================================================================
 // MinWarping search range
@@ -241,6 +241,6 @@ protected:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

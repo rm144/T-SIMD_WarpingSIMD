@@ -34,7 +34,7 @@
 #include <limits>
 #include <vector>
 
-namespace ns_simd {
+namespace simd {
 
 // TODO: test if _mm_lddqu_si128 is faster than loadu
 // TODO: faster with different arrangement of SPS (more cache-efficient?)
@@ -400,6 +400,6 @@ public:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

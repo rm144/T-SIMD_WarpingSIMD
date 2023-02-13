@@ -42,7 +42,7 @@
 #include <cmath>
 #include <vector>
 
-namespace ns_simd {
+namespace simd {
 
 // TODO: - consistency check of parameters between SPS/match/template?
 
@@ -210,6 +210,6 @@ public:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

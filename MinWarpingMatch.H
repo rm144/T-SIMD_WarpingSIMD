@@ -33,7 +33,7 @@
 #include "SIMDTypes.H"
 #include "SIMDVecAll.H"
 
-namespace ns_simd {
+namespace simd {
 
 // ===========================================================================
 // MinWarpingMatch
@@ -235,6 +235,6 @@ public:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

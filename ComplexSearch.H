@@ -35,7 +35,7 @@
 
 #include <cmath>
 
-namespace ns_simd {
+namespace simd {
 
 class ComplexSearchSelector
 {
@@ -411,6 +411,6 @@ public:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

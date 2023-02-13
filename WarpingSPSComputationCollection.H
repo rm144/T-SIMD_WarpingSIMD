@@ -30,7 +30,7 @@
 // 18. Apr 18 (rm): added, thanks to Benedikt Volkmer
 #include "SIMDImageFunctions.H"
 
-namespace ns_simd {
+namespace simd {
 
 // TODO: there is some over-/underflow in the normalized measure if
 // TODO: pixelScale is too large, even though everything is in
@@ -1757,6 +1757,6 @@ public:
   virtual double measureMax() const { return 1.0; }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

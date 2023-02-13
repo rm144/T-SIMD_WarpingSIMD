@@ -33,7 +33,7 @@
 #include <algorithm>
 
 // WarpingSIMD / SIMDImage namespace
-namespace ns_simd {
+namespace simd {
 /**
  * @brief Type cast with saturation. This means: Values outside of the target
  * type range are clipped to the target type min or max value.
@@ -42,12 +42,12 @@ template <typename Tout, typename Tin>
 Tout saturate_cast(const Tin v)
 {
   // Target Type min value in input type
-  Tin min = (Tin) SIMDTypeInfo<Tout>::min();
+  Tin min = (Tin) TypeInfo<Tout>::min();
   // Target Type max value in input type
-  Tin max = (Tin) SIMDTypeInfo<Tout>::max();
+  Tin max = (Tin) TypeInfo<Tout>::max();
   // Clip value to [min,max] before casting to Tout
   return (Tout) std::min(std::max(v, min), max);
 }
-} // namespace ns_simd
+} // namespace simd
 
 #endif /*SATURATE_CAST_H*/

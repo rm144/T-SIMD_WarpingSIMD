@@ -31,7 +31,7 @@
 #include "SIMDImageFunctions.H"
 #include "WarpingSPSComputation.H"
 
-namespace ns_simd {
+namespace simd {
 namespace modular_sps_computation {
 
 template <bool B>
@@ -1359,6 +1359,6 @@ public:
 
 } // namespace modular_sps_computation
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

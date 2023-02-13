@@ -52,12 +52,12 @@
 #include "WarpingBundle.H"
 
 // Panoramic image tilt types and functions namespace
-namespace ns_simd::tilt {}
+namespace simd::tilt {}
 // Export a short, flat name to this namespace
 namespace tilt = ns_simd::tilt;
 
 // Panoramic image tilt types and functions namespace
-namespace ns_simd::tilt {
+namespace simd::tilt {
 /**
  * @brief Generic tilt search interface: Combines warping, tilt correction and
  * search strategy
@@ -242,6 +242,6 @@ public:
   // interface
   std::shared_ptr<Interface> ptr;
 };
-} // namespace ns_simd::tilt
+} // namespace simd::tilt
 
 #endif /*TILT_SEARCH_H*/

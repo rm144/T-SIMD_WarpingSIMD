@@ -37,7 +37,7 @@
 #include "WarpingSPSComputationCollectionModular.H"
 #include "WarpingSearchCollection.H"
 
-namespace ns_simd {
+namespace simd {
 
 // -------------------------------------------------------------------------
 // factory for WarpingSPSComputation
@@ -521,6 +521,6 @@ public:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

@@ -289,7 +289,7 @@ public:
 };
 
 // WarpingSIMD / SIMDImage namespace
-namespace ns_simd {
+namespace simd {
 /**
  * @brief Transforms raw input SIMDImage (camera image) to panoramic image
  * @note This include relevant masking operations to remove invalid regions from
@@ -392,6 +392,6 @@ void unroll(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
   // Blend in the mask image
   maskImage(dst, mask, dst);
 }
-} // namespace ns_simd
+} // namespace simd
 
 #endif /*OCAM_MODEL_H*/

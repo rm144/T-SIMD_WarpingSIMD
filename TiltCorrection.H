@@ -47,12 +47,12 @@
 #include "SIMDImageFunctions.H"
 
 // Panoramic image tilt types and functions namespace
-namespace ns_simd::tilt {}
+namespace simd::tilt {}
 // Export a short, flat name to this namespace
-namespace tilt = ns_simd::tilt;
+namespace tilt = simd::tilt;
 
 // Panoramic image tilt types and functions namespace
-namespace ns_simd::tilt {
+namespace simd::tilt {
 /**
  * @brief Exact tilt correction solution tag type (compile time selector)
  */
@@ -442,6 +442,6 @@ Correction<Image> make_correction(const Selector selector)
 {
   return make_correction(selector, Image {});
 }
-} // namespace ns_simd::tilt
+} // namespace simd::tilt
 
 #endif /*TILT_CORRECTION_H*/

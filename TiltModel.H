@@ -40,12 +40,12 @@
 #include "TransformMatrix.H"
 
 // Panoramic image tilt types and functions namespace
-namespace ns_simd::tilt {}
+namespace simd::tilt {}
 // Export a short, flat name to this namespace
-namespace tilt = ns_simd::tilt;
+namespace tilt = simd::tilt;
 
 // Panoramic image tilt types and functions namespace
-namespace ns_simd::tilt {
+namespace simd::tilt {
 /**
  * @brief Roll-Pitch representation tilt model (X-Y-Axis tilt)
  * @tparam Unit Angular unit of tilt angles
@@ -280,6 +280,6 @@ AxisAngle<Radian>::operator RollPitch<Radian>() const
     // Pitch angle delta_Y
     Angle<Radian>((double) phi * sin((double) theta_R))};
 }
-} // namespace ns_simd::tilt
+} // namespace simd::tilt
 
 #endif /*TILT_MODEL_H*/

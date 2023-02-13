@@ -49,7 +49,7 @@ enum class Interpolation : int {
   LINEAR = 1
 };
 
-namespace ns_simd {
+namespace simd {
 
 // ===========================================================================
 // NOTES:
@@ -3768,6 +3768,6 @@ void absoluteDifference(
     }
   }
 }
-} // namespace ns_simd
+} // namespace simd
 
 #endif

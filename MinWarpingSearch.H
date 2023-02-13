@@ -33,7 +33,7 @@
 
 #include <cmath>
 
-namespace ns_simd {
+namespace simd {
 
 // ===========================================================================
 // MinWarping full search algorithms
@@ -67,6 +67,6 @@ public:
     int jAlphaOff = 0, int jPsiOff = 0) = 0;
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif

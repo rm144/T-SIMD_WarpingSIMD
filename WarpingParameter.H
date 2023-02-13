@@ -38,7 +38,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-namespace ns_simd {
+namespace simd {
 
 // we need SPSType (type of scale-plane stack elements) and the vector
 // width in bytes (SIMD_WIDTH) since these influence the dimensions of
@@ -270,6 +270,6 @@ protected:
   }
 };
 
-} // namespace ns_simd
+} // namespace simd
 
 #endif
