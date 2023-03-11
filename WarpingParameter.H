@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _WARPING_PARAMETER_H_
-#define _WARPING_PARAMETER_H_
+#ifndef WARPING_PARAMETER_H_
+#define WARPING_PARAMETER_H_
 
 #include "SIMDException.H"
 #include "SIMDVecAll.H"

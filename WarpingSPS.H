@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _WARPING_SPS_H_
-#define _WARPING_SPS_H_
+#ifndef WARPING_SPS_H_
+#define WARPING_SPS_H_
 
 #include "SIMDImage.H"
 #include "SIMDVecAll.H"

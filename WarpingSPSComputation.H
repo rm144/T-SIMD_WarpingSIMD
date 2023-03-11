@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _WARPING_SPS_COMPUTATION_H_
-#define _WARPING_SPS_COMPUTATION_H_
+#ifndef WARPING_SPS_COMPUTATION_H_
+#define WARPING_SPS_COMPUTATION_H_
 
 #include "SIMDException.H"
 #include "SIMDImage.H"

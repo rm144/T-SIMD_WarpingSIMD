@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _MINWARPING_SEARCH_H_
-#define _MINWARPING_SEARCH_H_
+#ifndef MINWARPING_SEARCH_H_
+#define MINWARPING_SEARCH_H_
 
 #include "MinWarpingMatch.H"
 #include "MinWarpingSearchRange.H"

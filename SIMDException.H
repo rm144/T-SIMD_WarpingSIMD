@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _SIMD_EXCEPTION_H_
-#define _SIMD_EXCEPTION_H_
+#ifndef SIMD_EXCEPTION_H_
+#define SIMD_EXCEPTION_H_
 
 #include <exception>
 #include <string>

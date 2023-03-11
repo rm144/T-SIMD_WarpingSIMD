@@ -26,8 +26,8 @@
 // https://
 // en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Factory
 
-#ifndef _WARPING_FACTORIES_H_
-#define _WARPING_FACTORIES_H_
+#ifndef WARPING_FACTORIES_H_
+#define WARPING_FACTORIES_H_
 
 // 18. Apr 18 (rm): removed, not clear why this was needed
 // #include "WarpingCompound.H"

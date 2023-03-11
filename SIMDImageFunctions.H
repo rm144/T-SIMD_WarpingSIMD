@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _SIMD_IMAGE_FUNCTIONS_H_
-#define _SIMD_IMAGE_FUNCTIONS_H_
+#ifndef SIMD_IMAGE_FUNCTIONS_H_
+#define SIMD_IMAGE_FUNCTIONS_H_
 
 #include "SIMDImage.H"
 #include "SIMDVecAll.H"

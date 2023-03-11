@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _WARPING_SEARCH_COLLECTION_H_
-#define _WARPING_SEARCH_COLLECTION_H_
+#ifndef WARPING_SEARCH_COLLECTION_H_
+#define WARPING_SEARCH_COLLECTION_H_
 
 #include "SIMDTypes.H"
 #include "WarpingSearch.H"

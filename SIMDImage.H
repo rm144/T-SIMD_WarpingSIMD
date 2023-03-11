@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _SIMD_IMAGE_H_
-#define _SIMD_IMAGE_H_
+#ifndef SIMD_IMAGE_H_
+#define SIMD_IMAGE_H_
 
 #include "SIMDException.H"
 #include "SharedSIMDPtr.H"

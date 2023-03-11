@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _MINWARPING_SEARCH_COLLECTION_H_
-#define _MINWARPING_SEARCH_COLLECTION_H_
+#ifndef MINWARPING_SEARCH_COLLECTION_H_
+#define MINWARPING_SEARCH_COLLECTION_H_
 
 #include "MinWarpingSearch.H"
 #include "SIMDException.H"

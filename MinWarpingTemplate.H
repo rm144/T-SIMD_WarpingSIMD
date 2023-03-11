@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _MINWARPING_TEMPLATE_H_
-#define _MINWARPING_TEMPLATE_H_
+#ifndef MINWARPING_TEMPLATE_H_
+#define MINWARPING_TEMPLATE_H_
 
 #include <limits>
 #include <stdint.h>

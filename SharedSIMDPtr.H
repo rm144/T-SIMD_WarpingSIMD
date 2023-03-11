@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _SHARED_SIMD_PTR_H_
-#define _SHARED_SIMD_PTR_H_
+#ifndef SHARED_SIMD_PTR_H_
+#define SHARED_SIMD_PTR_H_
 
 #include "SIMDAlloc.H"
 #include "SIMDException.H"

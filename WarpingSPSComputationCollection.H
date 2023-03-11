@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _WARPING_SPS_COMPUTATION_COLLECTION_H_
-#define _WARPING_SPS_COMPUTATION_COLLECTION_H_
+#ifndef WARPING_SPS_COMPUTATION_COLLECTION_H_
+#define WARPING_SPS_COMPUTATION_COLLECTION_H_
 
 #include "WarpingSPSComputation.H"
 // 18. Apr 18 (rm): added, thanks to Benedikt Volkmer

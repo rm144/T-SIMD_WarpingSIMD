@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _COMPLEX_SEARCH_H_
-#define _COMPLEX_SEARCH_H_
+#ifndef COMPLEX_SEARCH_H_
+#define COMPLEX_SEARCH_H_
 
 #include "MinWarpingMatch.H"
 #include "MinWarpingSearchRange.H"

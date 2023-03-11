@@ -26,8 +26,8 @@
 // https://
 // en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Factory
 
-#ifndef _WARPING_BUNDLE_H_
-#define _WARPING_BUNDLE_H_
+#ifndef WARPING_BUNDLE_H_
+#define WARPING_BUNDLE_H_
 
 #include "TimeMeasurement.H"
 #include "WarpingCompound.H"

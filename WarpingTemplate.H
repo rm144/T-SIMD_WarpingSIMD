@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _WARPING_TEMPLATE_H_
-#define _WARPING_TEMPLATE_H_
+#ifndef WARPING_TEMPLATE_H_
+#define WARPING_TEMPLATE_H_
 
 #include "MinWarpingTemplate.H" // uses initializeScaleFactorsAndThresholds
 #include "SIMDDefs.H"

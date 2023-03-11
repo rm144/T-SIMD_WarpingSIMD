@@ -23,8 +23,8 @@
 //
 // ===========================================================================
 
-#ifndef _MINWARPING_SEARCHRANGE_H_
-#define _MINWARPING_SEARCHRANGE_H_
+#ifndef MINWARPING_SEARCHRANGE_H_
+#define MINWARPING_SEARCHRANGE_H_
 
 #include "SIMDImage.H"
 
