@@ -30,13 +30,13 @@
 
 #include <algorithm> // std::sort
 #include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <limits>
 #include <random>
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
 #include <type_traits>
 #include <vector> // std::vector
 
@@ -183,8 +183,8 @@ struct _PayloadSortIndex<KEYTYPE, true>
   template <typename ELEMENTTYPE>
   static INLINE void set(ELEMENTTYPE &e, SortIndex i)
   {
-    typedef typename KeyPayloadInfo<KEYTYPE, true>::UIntPayloadType PayloadType;
-    PayloadType p = PayloadType(i);
+    using PayloadType = typename KeyPayloadInfo<KEYTYPE, true>::UIntPayloadType;
+    PayloadType p     = PayloadType(i);
     setPayload<KEYTYPE>(e, p);
   }
 };
@@ -200,12 +200,12 @@ template <bool WithPayload, typename KEYTYPE,
 typename KeyPayloadInfo<KEYTYPE, WithPayload>::UIntElementType *generateData(
   int repeats, SortIndex num, bool noDuplicates, GENERATOR<KEYTYPE> &generator)
 {
-  typedef
-    typename KeyPayloadInfo<KEYTYPE, WithPayload>::UIntElementType ElemType;
+  using ElemType =
+    typename KeyPayloadInfo<KEYTYPE, WithPayload>::UIntElementType;
   // allocate contiguous data for multiple repeats
   ElemType *d =
     (ElemType *) simd_aligned_malloc(64, repeats * num * sizeof(ElemType));
-  if (d == NULL) {
+  if (d == nullptr) {
     fprintf(stderr, "failed to allocate memory (%s)\n", strerror(errno));
     exit(-1);
   }
@@ -297,8 +297,8 @@ struct CheckPayloads<KEYTYPE, true>
       sizeof(typename KeyPayloadInfo<KEYTYPE, true>::UIntPayloadType) ==
         sizeof(typename KeyPayloadInfo<KEYTYPE, true>::UIntKeyType),
       "CheckPayloads: size of key and payload have to be the same");
-    typedef
-      typename KeyPayloadInfo<KEYTYPE, true>::UIntPayloadType KeyAndPayloadType;
+    using KeyAndPayloadType =
+      typename KeyPayloadInfo<KEYTYPE, true>::UIntPayloadType;
     KeyAndPayloadType uIntKey, uIntPayload;
     KeyAndPayloadType invalid = std::numeric_limits<KeyAndPayloadType>::max();
     if (KeyAndPayloadType(num) >= invalid) {
@@ -340,7 +340,7 @@ struct CheckPayloads<KEYTYPE, true>
 template <typename KEYTYPE, bool WITHPAYLOAD>
 struct _Config
 {
-  typedef KEYTYPE KeyType;
+  using KeyType                     = KEYTYPE;
   static constexpr bool WithPayload = WITHPAYLOAD;
 };
 
@@ -420,7 +420,7 @@ int main(int argc, char *argv[])
   int rndMode       = atoi(argv[1]);
   unsigned int seed = (unsigned int) atol(argv[2]);
   if (seed == 0) {
-    seed = time(NULL);
+    seed = time(nullptr);
     printf("random seed %u\n", seed);
   }
   static_assert(sizeof(long) == 8, "long should have 8 bytes");
@@ -437,9 +437,9 @@ int main(int argc, char *argv[])
     printf("automatic nthreads = %u\n", nthreads);
   }
   // shorthands
-  typedef Config<RADIX_CONFIG>::KeyType KeyType;
+  using KeyType              = Config<RADIX_CONFIG>::KeyType;
   constexpr bool WithPayload = Config<RADIX_CONFIG>::WithPayload;
-  typedef typename KeyPayloadInfo<KeyType, WithPayload>::UIntElementType Data;
+  using Data = typename KeyPayloadInfo<KeyType, WithPayload>::UIntElementType;
   // print config
   printf("RADIX_CONFIG: %d, WithPayload %d, sizeof: Data %zu KeyType %zu\n",
          RADIX_CONFIG, WithPayload, sizeof(Data), sizeof(KeyType));
@@ -463,7 +463,7 @@ int main(int argc, char *argv[])
 #ifdef THREAD_STATS
   RadixThreadStats *threadStats = new RadixThreadStats(nthreads);
 #else
-  RadixThreadStats *threadStats = 0;
+  RadixThreadStats *threadStats = nullptr;
 #endif
   printf("sorting, %d repetitions\n", rep);
   fflush(stdout);

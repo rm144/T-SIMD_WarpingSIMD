@@ -38,8 +38,8 @@
 #ifndef SIMD_RADIX_SORT_GENERIC_H_
 #define SIMD_RADIX_SORT_GENERIC_H_
 
-#include <stdint.h>
-#include <stdio.h>
+#include <cstdint>
+#include <cstdio>
 #include <x86intrin.h>
 
 // std::swap
@@ -48,8 +48,8 @@
 #include <type_traits>
 
 // for insertion sort
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <sys/types.h>
 
 #if defined(__AVX512F__) && defined(__AVX512BW__) && defined(__AVX512DQ__)
@@ -66,7 +66,7 @@ namespace radix {
 #define INLINE inline __attribute__((always_inline))
 
 // we use signed to avoid problems with index arithmetics
-typedef int64_t SortIndex;
+using SortIndex = int64_t;
 
 // =========================================================================
 // unsigned int type with template parameter BYTES
@@ -77,7 +77,7 @@ struct uint128_t
 {
   uint64_t half[2];
 
-  uint128_t() {}
+  uint128_t() = default;
 
   uint128_t(int x)
   {
@@ -120,26 +120,26 @@ struct UInt;
 template <>
 struct UInt<8>
 {
-  typedef uint64_t T;
-  typedef uint128_t T2;
+  using T  = uint64_t;
+  using T2 = uint128_t;
 };
 template <>
 struct UInt<4>
 {
-  typedef uint32_t T;
-  typedef uint64_t T2;
+  using T  = uint32_t;
+  using T2 = uint64_t;
 };
 template <>
 struct UInt<2>
 {
-  typedef uint16_t T;
-  typedef uint32_t T2;
+  using T  = uint16_t;
+  using T2 = uint32_t;
 };
 template <>
 struct UInt<1>
 {
-  typedef uint8_t T;
-  typedef uint16_t T2;
+  using T  = uint8_t;
+  using T2 = uint16_t;
 };
 
 // =========================================================================
@@ -182,8 +182,8 @@ struct KeyPayloadInfo;
 template <typename KEYTYPE>
 struct KeyPayloadInfo<KEYTYPE, false>
 {
-  typedef typename UInt<sizeof(KEYTYPE)>::T UIntKeyType;
-  typedef typename UInt<sizeof(KEYTYPE)>::T UIntElementType;
+  using UIntKeyType     = typename UInt<sizeof(KEYTYPE)>::T;
+  using UIntElementType = typename UInt<sizeof(KEYTYPE)>::T;
 };
 
 // the element comprises a key and a payload
@@ -192,9 +192,9 @@ struct KeyPayloadInfo<KEYTYPE, false>
 template <typename KEYTYPE>
 struct KeyPayloadInfo<KEYTYPE, true>
 {
-  typedef typename UInt<sizeof(KEYTYPE)>::T UIntKeyType;
-  typedef typename UInt<sizeof(KEYTYPE)>::T UIntPayloadType;
-  typedef typename UInt<sizeof(KEYTYPE)>::T2 UIntElementType;
+  using UIntKeyType     = typename UInt<sizeof(KEYTYPE)>::T;
+  using UIntPayloadType = typename UInt<sizeof(KEYTYPE)>::T;
+  using UIntElementType = typename UInt<sizeof(KEYTYPE)>::T2;
 };
 
 // =========================================================================
@@ -272,9 +272,9 @@ static INLINE KEYTYPE getKey(const ELEMENTTYPE &element)
 template <typename T>
 struct SIMDVector
 {
-  typedef T Type;
+  using Type = T;
   __m512i zmm;
-  SIMDVector() {}
+  SIMDVector() = default;
   SIMDVector(const __m512i &x) { zmm = x; }
   SIMDVector &operator=(const __m512i &x)
   {
@@ -295,8 +295,8 @@ struct BitMask;
   template <>                                                                  \
   struct BitMask<TYPE>                                                         \
   {                                                                            \
-    typedef TYPE Type;                                                         \
-    typedef MASKTYPE MaskType;                                                 \
+    using Type     = TYPE;                                                     \
+    using MaskType = MASKTYPE;                                                 \
     MASKTYPE k;                                                                \
     BitMask()                                                                  \
     {}                                                                         \
@@ -514,7 +514,7 @@ struct SeqRadixBitSorter
     SortIndex l = left, r = right;
     T bitMask;
     setBitNo(bitMask, bitNo);
-    while (1) {
+    while (true) {
       // advance left index
       while ((l <= r) && TestCondition<UP>::isZero(d[l] & bitMask)) l++;
       // advance right index
@@ -544,7 +544,7 @@ struct SeqRadixBitSorter2
     SortIndex l = left, r = right;
     T bitMask, dl, dr;
     setBitNo(bitMask, bitNo);
-    while (1) {
+    while (true) {
       // advance left index
       while ((l <= r) && TestCondition<UP>::isZero((dl = d[l]) & bitMask)) l++;
       // advance right index
@@ -581,7 +581,7 @@ struct SeqRadixBitSorterRightLimit
     SortIndex l = left, r = right;
     T bitMask;
     setBitNo(bitMask, bitNo);
-    while (1) {
+    while (true) {
       // advance left index
       while ((l <= r) && TestCondition<UP>::isZero(d[l] & bitMask)) l++;
       // advance right index (but not below minRight)
