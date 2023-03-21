@@ -31,10 +31,14 @@ runWarpingSIMDTestVis.sh
 warpingSIMDSmallTest.C
 warpingSIMDTest.C
 catchment.tcl
-Compare2Type.H
+.clang-format
+generateSingleHeader.sh
+Doxyfile
+DoxygenGroupIndex.H
+DoxygenLayout.xml
 LICENSE
 LICENSE.doc
-README.SIMDMask
+README.md
 SIMDAlloc.H
 SIMDBackwardCompat.H
 SIMDDefs.H
@@ -77,6 +81,7 @@ simdvecautotestM.C
 simdvectest.C
 styleExamples.C
 tsimdtest.C
+compileAndTest.sh
 Angle.H
 Search.H
 SearchGrid.H
@@ -124,3 +129,5 @@ revision
 integrate
 svncopy
 homevectors.gp
+html/
+tsimd_sh.H

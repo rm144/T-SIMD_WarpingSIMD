@@ -1179,7 +1179,7 @@ void computeScalePlaneNormalizedAdd1Tilt(
     throw SIMDException("computeScalePlaneNormalizedAdd1Tilt",
                         "width must be multiple of numElems");
 
-  SIMDVec<T, SIMD_WIDTH> cvMeasxN, joint[numInVecs], sscvMeas[numInVecs];
+  SIMDVec<T, SIMD_WIDTH> joint[numInVecs], sscvMeas[numInVecs];
   SIMDVec<SPSType, SIMD_WIDTH> spsVal[numOutVecs];
   SIMDVec<T, SIMD_WIDTH> ones = setunity<T, SIMD_WIDTH>();
 
@@ -1577,10 +1577,9 @@ void magnifyAndScaleTilt(
 
   SIMDVec<Tin, SIMD_WIDTH> maxVecIn =
     set1<Tin, SIMD_WIDTH>(SIMDTypeInfo<Tin>::max());
-  SIMDVec<Tin, SIMD_WIDTH> cmpVec;
   SIMDVec<Tout, SIMD_WIDTH> maxVecOut =
     set1<Tout, SIMD_WIDTH>(SIMDTypeInfo<Tout>::max());
-  SIMDVec<Tout, SIMD_WIDTH> cmpVecOut, cmpVecsOut[numOutVecs];
+  SIMDVec<Tout, SIMD_WIDTH> cmpVecsOut[numOutVecs];
   SIMDVec<Tin, SIMD_WIDTH> cmpVecs[numInVecs];
 
   // addon parameters are changed according to magnifyAndScale above
@@ -1783,10 +1782,9 @@ void copyAndScaleTilt(
 
   SIMDVec<Tin, SIMD_WIDTH> maxVecIn =
     set1<Tin, SIMD_WIDTH>(SIMDTypeInfo<Tin>::max());
-  SIMDVec<Tin, SIMD_WIDTH> cmpVec;
   SIMDVec<Tout, SIMD_WIDTH> maxVecOut =
     set1<Tout, SIMD_WIDTH>(SIMDTypeInfo<Tout>::max());
-  SIMDVec<Tout, SIMD_WIDTH> cmpVecOut, cmpVecsOut[numOutVecs];
+  SIMDVec<Tout, SIMD_WIDTH> cmpVecsOut[numOutVecs];
   SIMDVec<Tin, SIMD_WIDTH> cmpVecs[numInVecs];
   SIMDVec<Tin, SIMD_WIDTH> inVecs[numInVecs];
   SIMDVec<Tout, SIMD_WIDTH> outVecs[numOutVecs];
@@ -2590,7 +2588,7 @@ void horizontalEdgeFilterCyclic2(
   const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   for (size_t row = 0; row < edge.size; row += w) {
     SIMDVec<T, SIMD_WIDTH> next_v, left_v, right_v, previousResult_v,
-      tmpResult_v, result_v;
+      tmpResult_v;
     // calculate last vector tmp result, which need first elements shifted in
     next_v  = load<SIMD_WIDTH>(orig.data + row);
     left_v  = load<SIMD_WIDTH>(orig.data + row + w - simd_elems);
@@ -2640,7 +2638,7 @@ void horizontalBinomialFilterCyclic(
   const int simd_elems = numSIMDVecElements<T, SIMD_WIDTH>();
   for (size_t row = 0; row < edge.size; row += w) {
     SIMDVec<T, SIMD_WIDTH> next_v, left_v, right_v, center_v, previousResult_v,
-      tmpResult_v, result_v;
+      tmpResult_v;
     // calculate last vector tmp result, which need first elements shifted in
     next_v   = load<SIMD_WIDTH>(orig.data + row);
     left_v   = load<SIMD_WIDTH>(orig.data + row + w - simd_elems);

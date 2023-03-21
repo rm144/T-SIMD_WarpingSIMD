@@ -1,10 +1,11 @@
+.clang-format
+generateSingleHeader.sh
 Doxyfile
 DoxygenGroupIndex.H
 DoxygenLayout.xml
 LICENSE
 LICENSE.doc
 README.md
-README.SIMDMask
 SIMDAlloc.H
 SIMDBackwardCompat.H
 SIMDDefs.H

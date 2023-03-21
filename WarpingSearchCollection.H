@@ -67,7 +67,7 @@ class WarpingFull_PARX
     const MatchType maxMatch = SIMDTypeInfo<MatchType>::max();
     // faster if not defined inside loops?
     SIMDVec<SPSType, SIMD_WIDTH> v;
-    SIMDVecs<NumSIMDVecs<MatchType, SPSType>::out, MatchType, SIMD_WIDTH> vM,
+    SIMDVecs<NumSIMDVecs<MatchType, SPSType>::out, MatchType, SIMD_WIDTH>
       minSum, sum;
 
     // we write simd_sps_elems results to match array in one go
@@ -220,7 +220,7 @@ public:
     // faster if not defined inside loops
     SIMDVec<SPSType, SIMD_WIDTH> v;
     SIMDVecs<NumSIMDVecs<MatchType, SPSType>::out, MatchType, SIMD_WIDTH> zero,
-      vM, minSum, sum;
+      minSum, sum;
 
     setzero(zero);
     // we write simd_sps_elems results to match array in one go

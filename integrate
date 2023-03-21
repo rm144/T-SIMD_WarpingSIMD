@@ -49,6 +49,7 @@ foreach destStubs (tsimd tsimdtest \
       if (! -e $fullDestFN) then
 	echo "\t$destFN did not exist, is copied"
 	/bin/cp $destFN $fullDestFN
+        svn add $fullDestFN
       else
 	if (`cmp $destFN $fullDestFN` != "") then
 	  echo "\t$destFN has changed, is replaced"

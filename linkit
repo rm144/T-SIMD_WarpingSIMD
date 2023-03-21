@@ -80,6 +80,8 @@ else if ($1 == "revision") then
    foreach extfile ($extlist_prefixed)
      svn info $extfile >>! revision
    end
+else if ($1 == "extras") then
+   make doc single-header
 else
   echo "invalid option: $1"
   exit

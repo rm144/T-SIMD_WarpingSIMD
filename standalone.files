@@ -1,8 +1,6 @@
 INSTALL
 MAINTAINER
 Makefile
-.clang-format
-generateSingleHeader.sh
 standalone.files
 standalone_tsimd.files
 tsimd.dir
@@ -23,3 +21,5 @@ revision
 integrate
 svncopy
 homevectors.gp
+html/
+tsimd_sh.H

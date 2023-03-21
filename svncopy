@@ -54,4 +54,6 @@ foreach svnDir ($svnDirList)
 	exit
     endif
     svn copy $oldDir $newDir
+    svn commit -m "added with svncopy script" $newDir
+    sed -i "s/${oldVersion}/${newVersion}/g" ${newDir}/version
 end

@@ -1,8 +1,6 @@
 INSTALL
 MAINTAINER
 Makefile
-.clang-format
-generateSingleHeader.sh
 standalone_tsimd.files
 tsimd.dir
 tsimd.files
@@ -12,3 +10,5 @@ linkit
 tsimd_tarfile.list
 revision
 integrate
+html/
+tsimd_sh.H
