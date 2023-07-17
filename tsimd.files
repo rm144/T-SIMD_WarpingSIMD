@@ -14,6 +14,7 @@ SIMDIntrinsIntel.H
 SIMDIntrinsNEON.H
 SIMDRadixSortGeneric.H
 SIMDRadixSortGenericThreads.H
+SIMDSSSE3Compat.H
 SIMDTypes.H
 SIMDVec.H
 SIMDVecAll.H
@@ -36,6 +37,5 @@ SIMDVecMaskImplEmu.H
 SIMDVecMaskImplIntel64.H
 SIMDVecMaskImplSandbox.H
 SIMDVecs.H
-ssse3_compat.H
 TimeMeasurement.H
 tsimd.H
