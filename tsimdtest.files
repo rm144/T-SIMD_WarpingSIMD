@@ -7,4 +7,5 @@ simdvecautotestM.C
 simdvectest.C
 styleExamples.C
 tsimdtest.C
+hacctest.C
 compileAndTest.sh
