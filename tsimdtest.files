@@ -9,3 +9,4 @@ styleExamples.C
 tsimdtest.C
 hacctest.C
 compileAndTest.sh
+autotest.py

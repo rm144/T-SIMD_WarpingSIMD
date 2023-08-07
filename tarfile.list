@@ -83,6 +83,7 @@ styleExamples.C
 tsimdtest.C
 hacctest.C
 compileAndTest.sh
+autotest.py
 Angle.H
 Search.H
 SearchGrid.H
