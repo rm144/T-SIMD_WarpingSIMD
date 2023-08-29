@@ -78,10 +78,13 @@ simdmasktest.C
 simdvecautotest0.C
 simdvecautotest1.C
 simdvecautotestM.C
+simdvecautotest_load_store.C
 simdvectest.C
 styleExamples.C
 tsimdtest.C
+hacctest.C
 compileAndTest.sh
+autotest.py
 Angle.H
 Search.H
 SearchGrid.H
