@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef MINWARPING_SEARCHRANGE_H_
 #define MINWARPING_SEARCHRANGE_H_
 

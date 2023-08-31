@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef MINWARPING_MATCH_H_
 #define MINWARPING_MATCH_H_
 

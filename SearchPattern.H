@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef SEARCH_PATTERN_H
 #define SEARCH_PATTERN_H
 

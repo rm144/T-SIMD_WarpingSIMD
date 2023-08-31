@@ -26,6 +26,7 @@
 // https://
 // en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns#Factory
 
+#pragma once
 #ifndef WARPING_FACTORIES_H_
 #define WARPING_FACTORIES_H_
 

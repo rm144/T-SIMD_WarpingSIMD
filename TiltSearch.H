@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef TILT_SEARCH_H
 #define TILT_SEARCH_H
 

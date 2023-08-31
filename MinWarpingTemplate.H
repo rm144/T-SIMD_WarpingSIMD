@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef MINWARPING_TEMPLATE_H_
 #define MINWARPING_TEMPLATE_H_
 

@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef SIMD_EXCEPTION_H_
 #define SIMD_EXCEPTION_H_
 

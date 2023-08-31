@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef WARPING_SEARCH_COLLECTION_H_
 #define WARPING_SEARCH_COLLECTION_H_
 

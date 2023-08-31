@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef WARPING_TEMPLATE_H_
 #define WARPING_TEMPLATE_H_
 

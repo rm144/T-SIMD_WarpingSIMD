@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef SEARCH_NELDER_MEAD_H
 #define SEARCH_NELDER_MEAD_H
 

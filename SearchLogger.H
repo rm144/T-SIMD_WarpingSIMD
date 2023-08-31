@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef SEARCH_LOGGER_H
 #define SEARCH_LOGGER_H
 
