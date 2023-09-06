@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef SEARCH_GRID_H
 #define SEARCH_GRID_H
 

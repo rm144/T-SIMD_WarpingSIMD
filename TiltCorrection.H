@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef TILT_CORRECTION_H
 #define TILT_CORRECTION_H
 

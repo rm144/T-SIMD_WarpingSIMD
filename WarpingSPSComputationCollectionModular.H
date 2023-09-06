@@ -25,6 +25,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef WARPING_SPS_COMPUTATION_COLLECTION_MODULAR_H_
 #define WARPING_SPS_COMPUTATION_COLLECTION_MODULAR_H_
 

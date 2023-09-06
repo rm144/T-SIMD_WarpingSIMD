@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef SHARED_SIMD_PTR_H_
 #define SHARED_SIMD_PTR_H_
 

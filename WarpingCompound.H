@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef WARPINGCOMPOUND_H_
 #define WARPINGCOMPOUND_H_
 

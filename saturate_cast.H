@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef SATURATE_CAST_H
 #define SATURATE_CAST_H
 

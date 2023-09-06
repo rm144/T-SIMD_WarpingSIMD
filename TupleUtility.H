@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef TUPLE_UTILITY_H
 #define TUPLE_UTILITY_H
 

@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef COMPLEX_SEARCH_H_
 #define COMPLEX_SEARCH_H_
 

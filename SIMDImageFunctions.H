@@ -23,6 +23,7 @@
 //
 // ===========================================================================
 
+#pragma once
 #ifndef SIMD_IMAGE_FUNCTIONS_H_
 #define SIMD_IMAGE_FUNCTIONS_H_
 
