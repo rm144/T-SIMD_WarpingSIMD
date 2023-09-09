@@ -1,9 +1,13 @@
-.vscode/
-COMPILE_AND_TEST/
-autotest*/
-build*/
-doc_html/
-latex/
+.git
+.vscode
+.clangd
+.gitignore
+.tarignore
+archive.sh
+COMPILE_AND_TEST
+autotest*
+build*
+latex
 *.tmp
 *.o
 *.ilk
@@ -31,5 +35,4 @@ Tilt
 TiltSearchDemo
 warpingSIMDSmallTest
 warpingSIMDTest
-tsimd_sh.H
 transpose_inplace_autogen_stat.txt
