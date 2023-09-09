@@ -10,5 +10,5 @@ linkit
 tsimd_tarfile.list
 revision
 integrate
-html/
+doc_html/
 tsimd_sh.H
