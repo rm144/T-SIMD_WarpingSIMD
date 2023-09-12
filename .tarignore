@@ -5,7 +5,7 @@
 .tarignore
 archive.sh
 COMPILE_AND_TEST
-autotest*
+autotest_*
 build*
 latex
 *.tmp
