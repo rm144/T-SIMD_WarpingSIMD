@@ -105,56 +105,56 @@ class MinWarpingFull_XPAY
     for (int jXbase = 0; jXbase < stepAlpha; jXbase++)
       for (int jX = jXbase; jX < w; jX += stepAlpha) {
 #endif
-    // get the template column
-    lp_min_templt_col_t tCol = minTemplate.minTemplateColumns[jX];
-    // we only do min search for non-empty template columns
-    // (otherwise we would obtain initial value of min!)
-    if (tCol->len != 0) {
-      // precompute part of shuffled (jX + jAlpha) % w
-      int *shuffleModuloPlusX = shuffleModulo + jX;
-      // pointer into match array (arranged in nPsi rows @ nAlpha cols)
-      MatchType *matchp = _match;
-      // go through all psi parameters
-      for (int iPsi = 0; iPsi < nPsi; iPsi++) {
-        // precompute part of (jY - jPsi) % w (times wSPS)
-        int *modulo2wpwMinusPsi = modulo2wpw - jPsiVec[iPsi];
-        // go through all alpha parameters
-        for (int iAlpha = 0; iAlpha < nAlpha; iAlpha += simd_sps_elems) {
-          // precompute scale-plane stack with column offset
-          // select word in scale-plane row, shuffled:
-          // jTheta = (jX + jAlpha) % w
-          // 30. Sep 14 (rm): array access instead of dereferentiation
-          SPSType *spsCol = _stack + shuffleModuloPlusX[jAlphaVec[iAlpha]];
-          // we search for a minimum, so we start with the highest
-          // positive value
-          minv = set1<SPSType, SIMD_WIDTH>(maxSPS);
-          // go through all elements in this template column
-          // 19. Jun 15 (rm): pointer-based loop is faster
-          const min_templt_col_entry_t *const start = tCol->entries();
-          const min_templt_col_entry_t *const end   = start + tCol->len;
-          for (const min_templt_col_entry_t *entry = start; entry < end;
-               entry++) {
-            // compute address of sps word
-            // 30. Sep 14 (rm): array access instead of dereferentiation
-            SPSType *vp =
-              // select scale plane
-              spsCol + entry->sp +
-              // select row in scale plane: jDelta=wSPS * [(jY - jPsi) % w]
-              modulo2wpwMinusPsi[entry->iy];
-            // we need to have an unaligned access
-            v = loadu<SIMD_WIDTH>(vp);
-            // update minimum (vpminub)
-            minv = min(minv, v);
+        // get the template column
+        lp_min_templt_col_t tCol = minTemplate.minTemplateColumns[jX];
+        // we only do min search for non-empty template columns
+        // (otherwise we would obtain initial value of min!)
+        if (tCol->len != 0) {
+          // precompute part of shuffled (jX + jAlpha) % w
+          int *shuffleModuloPlusX = shuffleModulo + jX;
+          // pointer into match array (arranged in nPsi rows @ nAlpha cols)
+          MatchType *matchp = _match;
+          // go through all psi parameters
+          for (int iPsi = 0; iPsi < nPsi; iPsi++) {
+            // precompute part of (jY - jPsi) % w (times wSPS)
+            int *modulo2wpwMinusPsi = modulo2wpw - jPsiVec[iPsi];
+            // go through all alpha parameters
+            for (int iAlpha = 0; iAlpha < nAlpha; iAlpha += simd_sps_elems) {
+              // precompute scale-plane stack with column offset
+              // select word in scale-plane row, shuffled:
+              // jTheta = (jX + jAlpha) % w
+              // 30. Sep 14 (rm): array access instead of dereferentiation
+              SPSType *spsCol = _stack + shuffleModuloPlusX[jAlphaVec[iAlpha]];
+              // we search for a minimum, so we start with the highest
+              // positive value
+              minv = set1<SPSType, SIMD_WIDTH>(maxSPS);
+              // go through all elements in this template column
+              // 19. Jun 15 (rm): pointer-based loop is faster
+              const min_templt_col_entry_t *const start = tCol->entries();
+              const min_templt_col_entry_t *const end   = start + tCol->len;
+              for (const min_templt_col_entry_t *entry = start; entry < end;
+                   entry++) {
+                // compute address of sps word
+                // 30. Sep 14 (rm): array access instead of dereferentiation
+                SPSType *vp =
+                  // select scale plane
+                  spsCol + entry->sp +
+                  // select row in scale plane: jDelta=wSPS * [(jY - jPsi) % w]
+                  modulo2wpwMinusPsi[entry->iy];
+                // we need to have an unaligned access
+                v = loadu<SIMD_WIDTH>(vp);
+                // update minimum (vpminub)
+                minv = min(minv, v);
+              }
+              // accumulate minima
+              extend(minv, minvM);
+              for (int vo = 0; vo < numOutVecs; vo++, matchp += numOutVecElems)
+                store(matchp, adds(load<SIMD_WIDTH>(matchp), minvM[vo]));
+            }
           }
-          // accumulate minima
-          extend(minv, minvM);
-          for (int vo = 0; vo < numOutVecs; vo++, matchp += numOutVecElems)
-            store(matchp, adds(load<SIMD_WIDTH>(matchp), minvM[vo]));
         }
       }
-    }
   }
-}
 };
 
 // ###########################################################################
