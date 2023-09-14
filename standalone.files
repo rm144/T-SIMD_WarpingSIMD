@@ -20,6 +20,7 @@ tarfile.list
 revision
 integrate
 svncopy
+update_dir
 homevectors.gp
 doc_html/
 tsimd_sh.H
