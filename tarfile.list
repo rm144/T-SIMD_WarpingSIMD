@@ -134,6 +134,7 @@ tarfile.list
 revision
 integrate
 svncopy
+update_dir
 homevectors.gp
-html/
+doc_html/
 tsimd_sh.H

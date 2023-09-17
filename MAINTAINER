@@ -87,10 +87,22 @@ One level above, the scripts
 create the tgz files of code and data, respectively. The code / data
 version to be tared has to be specified in the files.
 
-re-integrate files into PROG system: svncopy and integrate
+---
+
+re-integrate files into PROG system: svncopy, update_dir, integrate
+(at the moment probably only works for full distribution, not for T-SIMD alone)
+
+<olddir>, <newdir>: just version ids (e.g. 9-1)
+
+- tfvpn, mountPROG
+
 - run svncopy <olddir> <newdir> to automatically
   - create new PROG directories and
   - commit new directories to svn and
   - adjust version files in <newdir> directories
-- adjust .dir files in standalone dir to new target directory
+
+- run update_dir <olddir> <newdir> to automatically adjust .dir files
+  in standalone dir to new target directory
+  (<olddir> has to be the one in the *.dir files -> cat *.dir)
+  
 - run integrate |& tee integrate.log

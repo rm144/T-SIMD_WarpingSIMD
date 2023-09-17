@@ -10,5 +10,7 @@ linkit
 tsimd_tarfile.list
 revision
 integrate
-html/
+svn_copy
+update_dir
+doc_html/
 tsimd_sh.H

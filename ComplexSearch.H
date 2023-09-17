@@ -237,11 +237,11 @@ public:
   }
 
   template <template <typename, typename, int, int> class PartialSearcherClass>
-  MinWarpingMatch<MatchType, SIMD_WIDTH, SIMD_ALIGN>
-    *quantilCompassAcceleration(
-      PartialSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
-        &searchAlgorithm,
-      bool doubleSearch, double psiFraction, double quantilFraction)
+  MinWarpingMatch<MatchType, SIMD_WIDTH, SIMD_ALIGN> *
+  quantilCompassAcceleration(
+    PartialSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
+      &searchAlgorithm,
+    bool doubleSearch, double psiFraction, double quantilFraction)
   {
     SIMDImage<SPSType, SIMD_WIDTH, SIMD_ALIGN> compass;
     MinWarpingSearchRange<SPSType, SIMD_WIDTH, SIMD_ALIGN> range(param.nAlpha,

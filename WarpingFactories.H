@@ -101,10 +101,10 @@ class WarpingSPSComputationFactory : public WarpingSPSComputationSelector
 {
 public:
   static WarpingSPSComputation<ImgType, ProcType, MeasType, SPSType, SIMD_WIDTH,
-                               SIMD_ALIGN>
-    *create(int firstPhase, const HarrisParameter &harrisPar,
-            const std::vector<double> &sigmoidW,
-            const std::vector<double> &sigmoidW0)
+                               SIMD_ALIGN> *
+  create(int firstPhase, const HarrisParameter &harrisPar,
+         const std::vector<double> &sigmoidW,
+         const std::vector<double> &sigmoidW0)
   {
     switch (static_cast<FirstPhaseType>(firstPhase)) {
     case firstPhaseASC1:
