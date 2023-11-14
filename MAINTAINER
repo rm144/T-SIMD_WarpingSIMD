@@ -52,6 +52,10 @@ are listed in
    
 but no standalone.dir exists.
 
+Copy existing directory to new one:
+
+     cp -r CODEXXX CODEYYY
+
 To establish links to the external source directory, use
 
    ./linkit link
