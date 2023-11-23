@@ -52,7 +52,7 @@ class WarpingFull_PARX
     // we assume that sizeof(SPSType) <= sizeof(MatchType)
     // (since we add up SPSType elements in MatchType sum)
     // (just to provide the user with a clear compiler message)
-    SIMD_STATIC_ASSERT(sizeof(SPSType) <= sizeof(MatchType));
+    static_assert(sizeof(SPSType) <= sizeof(MatchType), "");
 
     // 30. Sep 14 (rm): local copies (somewhat faster, surprisingly)
     //  1. Jun 15 (rm): now const
@@ -204,7 +204,7 @@ public:
     // we assume that sizeof(SPSType) <= sizeof(MatchType)
     // (since we add up SPSType elements in MatchType sum)
     // (just to provide the user with a clear compiler message)
-    SIMD_STATIC_ASSERT(sizeof(SPSType) <= sizeof(MatchType));
+    static_assert(sizeof(SPSType) <= sizeof(MatchType), "");
 
     //  1. Oct 14 (rm): local copies (sometimes faster, not here though)
     //  3. Jun 15 (rm): now const

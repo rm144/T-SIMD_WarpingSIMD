@@ -735,7 +735,7 @@ public:
     SIMDImage<ProcType, SIMD_WIDTH, SIMD_ALIGN, Panorama> &out)
   {
     // code assumes that ProcType is larger or equal in size then ImgType
-    SIMD_STATIC_ASSERT(sizeof(ProcType) >= sizeof(ImgType));
+    static_assert(sizeof(ProcType) >= sizeof(ImgType), "");
 
     const int numElems = numSIMDVecsElements<ImgType, ProcType, SIMD_WIDTH>();
     const size_t size  = in.size;
