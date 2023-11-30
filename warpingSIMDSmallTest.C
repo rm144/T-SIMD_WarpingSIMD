@@ -37,6 +37,7 @@
 
 #include <assert.h>
 #include <cmath>
+#include <cstddef>
 #include <iostream>
 #include <malloc.h>
 #include <stdio.h>
@@ -81,7 +82,7 @@ using namespace ns_simd;
 
 template <typename ImgType, typename ProcType, typename MeasType,
           typename SPSType, typename MatchType, typename CompassType,
-          int SIMD_WIDTH, int SIMD_ALIGN>
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingExample
 {
 protected:

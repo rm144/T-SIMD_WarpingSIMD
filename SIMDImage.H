@@ -30,6 +30,7 @@
 #include "SIMDException.H"
 #include "SharedSIMDPtr.H"
 
+#include <cstddef>
 #include <stdio.h>
 #include <vector>
 
@@ -45,7 +46,7 @@ namespace simd {
 // checkWidth
 // ===========================================================================
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void checkWidth(int width)
 {
   SIMD_IMAGE_DEBUG(printf("checkWidth(%d)\n", width));
@@ -153,7 +154,7 @@ public:
 // of panoramic images)
 
 // simple image class template for single-band images
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AddOn = DefaultAddOn>
 class SIMDImage : public SharedSIMDPtr<T, SIMD_WIDTH, SIMD_ALIGN>
 {
@@ -207,7 +208,7 @@ public:
   // SIMDImage<char,16,16> ic;
   // SIMDImage<float,16,16> if = ic;
   // (copy constructor gets called, not operator=)
-  template <typename U, int OTHER_SIMD_WIDTH, int OTHER_SIMD_ALIGN,
+  template <typename U, size_t OTHER_SIMD_WIDTH, size_t OTHER_SIMD_ALIGN,
             class OtherAddOn>
   SIMDImage(
     const SIMDImage<U, OTHER_SIMD_WIDTH, OTHER_SIMD_ALIGN, OtherAddOn> &si)
@@ -292,7 +293,7 @@ public:
     return *this;
   }
 
-  template <typename U, int OTHER_SIMD_WIDTH, int OTHER_SIMD_ALIGN,
+  template <typename U, size_t OTHER_SIMD_WIDTH, size_t OTHER_SIMD_ALIGN,
             class OtherAddOn>
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn> &operator=(
     const SIMDImage<U, OTHER_SIMD_WIDTH, OTHER_SIMD_ALIGN, OtherAddOn> &si)
@@ -386,7 +387,7 @@ public:
 // TODO: - provide view for SIMDStack, may be difficult
 
 // template class for stack of images (of same size)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AddOn = DefaultAddOn>
 class SIMDStack : public SharedSIMDPtr<T, SIMD_WIDTH, SIMD_ALIGN>
 {
@@ -447,7 +448,7 @@ public:
     SharedSIMDPtr<T, SIMD_WIDTH, SIMD_ALIGN>::copyFrom(ss.data);
   }
 
-  template <typename U, int OTHER_SIMD_WIDTH, int OTHER_SIMD_ALIGN,
+  template <typename U, size_t OTHER_SIMD_WIDTH, size_t OTHER_SIMD_ALIGN,
             class OtherAddOn>
   SIMDStack(
     const SIMDStack<U, OTHER_SIMD_WIDTH, OTHER_SIMD_ALIGN, OtherAddOn> &ss)
@@ -483,7 +484,7 @@ public:
     return *this;
   }
 
-  template <typename U, int OTHER_SIMD_WIDTH, int OTHER_SIMD_ALIGN,
+  template <typename U, size_t OTHER_SIMD_WIDTH, size_t OTHER_SIMD_ALIGN,
             class OtherAddOn>
   SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN, AddOn> &operator=(
     const SIMDStack<U, OTHER_SIMD_WIDTH, OTHER_SIMD_ALIGN, OtherAddOn> &ss)
@@ -517,7 +518,7 @@ public:
   }
 
   // contributed by B. Volkmer
-  template <typename U, int OTHER_SIMD_WIDTH, int OTHER_SIMD_ALIGN,
+  template <typename U, size_t OTHER_SIMD_WIDTH, size_t OTHER_SIMD_ALIGN,
             class OtherAddOn>
   void resize(SIMDStack<U, OTHER_SIMD_WIDTH, OTHER_SIMD_ALIGN, OtherAddOn> o)
   {

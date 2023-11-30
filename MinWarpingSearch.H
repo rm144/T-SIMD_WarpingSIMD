@@ -33,6 +33,7 @@
 #include "WarpingSPS.H"
 
 #include <cmath>
+#include <cstddef>
 
 namespace simd {
 
@@ -40,7 +41,8 @@ namespace simd {
 // MinWarping full search algorithms
 // ===========================================================================
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class MinWarpingFull
 {
 public:
@@ -55,7 +57,8 @@ public:
 // MinWarping partial search algorithms
 // ===========================================================================
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class MinWarpingPartial
 {
 public:

@@ -32,6 +32,8 @@
 #include "SIMDImageFunctions.H"
 #include "WarpingSPSComputation.H"
 
+#include <cstddef>
+
 namespace simd {
 namespace modular_sps_computation {
 
@@ -98,7 +100,7 @@ struct ConsidersInvalid
 // TODO: example is outdated, please consult WarpingFactories.H
 #define SPS_COMPUTATION_TEMPLATE_PARAMETER                                     \
   typename ImgType, typename ProcType, typename MeasType, typename SPSType,    \
-    int SIMD_WIDTH, int SIMD_ALIGN
+    size_t SIMD_WIDTH, size_t SIMD_ALIGN
 #define SPS_COMPUTATION_TEMPLATE_ARGUMENTS                                     \
   ImgType, ProcType, MeasType, SPSType, SIMD_WIDTH, SIMD_ALIGN
 

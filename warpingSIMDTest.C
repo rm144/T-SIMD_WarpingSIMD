@@ -1176,7 +1176,7 @@ int main(int argc, char *argv[])
     // TODO: double&, int&, double&, double&, ns_simd::SIMDImage<MatchType,
     // TODO: 1, 1>&, bool) [with PartialSearcherClass =
     // TODO: ns_simd::MinWarpingPartial; SPSType = unsigned char; MatchType
-    // TODO: = short int; CompassType = int; int SIMD_WIDTH = 32; int
+    // TODO: = short int; CompassType = int; size_t SIMD_WIDTH = 32; int
     // TODO: SIMD_ALIGN = 32; SearchTemplateClass =
     // TODO: ns_simd::MinWarpingTemplate]: Assertion `_dMin !=
     // TODO: matchFineRes->invalid' failed.

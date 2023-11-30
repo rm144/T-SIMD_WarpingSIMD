@@ -28,12 +28,13 @@
 #define MINWARPING_SEARCHRANGE_H_
 
 #include "SIMDImage.H"
+// 20. Apr 18 (rm): thanks to Benedikt Volkmer
+#include "SIMDVecAll.H"
 
 #include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <vector>
-// 20. Apr 18 (rm): thanks to Benedikt Volkmer
-#include "SIMDVecAll.H"
 
 namespace simd {
 
@@ -41,7 +42,7 @@ namespace simd {
 // MinWarping search range
 // ===========================================================================
 
-template <typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class MinWarpingSearchRange
 {
 public:

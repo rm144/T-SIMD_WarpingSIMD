@@ -29,10 +29,12 @@
 
 #include "SIMDImage.H"
 
-#include <limits>
 // 20. Apr 18 (rm): thanks to Benedikt Volkmer
 #include "SIMDTypes.H"
 #include "SIMDVecAll.H"
+
+#include <cstddef>
+#include <limits>
 
 namespace simd {
 
@@ -40,7 +42,7 @@ namespace simd {
 // MinWarpingMatch
 // ===========================================================================
 
-template <typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename MatchType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class MinWarpingMatch
 {
 public:
@@ -50,8 +52,8 @@ public:
   int *modulo_na, *modulo_na_pna;
 
   MinWarpingMatch(int nAlpha, int nPsi,
-                  MatchType invalid = SIMDTypeInfo<MatchType>::max())
-    : nAlpha(nAlpha), nPsi(nPsi), invalid(invalid), match(nAlpha, nPsi),
+                  MatchType invalid_ = SIMDTypeInfo<MatchType>::max())
+    : nAlpha(nAlpha), nPsi(nPsi), invalid(invalid_), match(nAlpha, nPsi),
       modulo_na(0), modulo_na_pna(0)
   {
     // match = new SIMDImage<MatchType,SIMD_ALIGN>(nAlpha, nPsi);

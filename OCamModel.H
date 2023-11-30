@@ -35,6 +35,8 @@
 #include <string>
 // Standard library exception base class (to derive custom exception)
 #include <exception>
+// size_t
+#include <cstddef>
 
 // Transformation matrices
 #include "TransformMatrix.H"
@@ -317,7 +319,7 @@ namespace simd {
  * coordinates
  * @param border Border value to insert if a pixel is outside the image
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 void unroll(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
             SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &dst,
             const int width, const double start, const double depr,

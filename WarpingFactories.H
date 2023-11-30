@@ -38,6 +38,8 @@
 #include "WarpingSPSComputationCollectionModular.H"
 #include "WarpingSearchCollection.H"
 
+#include <cstddef>
+
 namespace simd {
 
 // -------------------------------------------------------------------------
@@ -96,7 +98,7 @@ public:
 };
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationFactory : public WarpingSPSComputationSelector
 {
 public:
@@ -437,7 +439,8 @@ public:
   enum SearchMethodType { searchMethodWarpingPARX };
 };
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class WarpingFullFactory : public WarpingSearchSelector
 {
 public:
@@ -455,7 +458,8 @@ public:
   }
 };
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class WarpingPartialFactory : public WarpingSearchSelector
 {
 public:
@@ -484,7 +488,8 @@ public:
   enum SearchMethodType { searchMethodMinWarpingXPAY };
 };
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class MinWarpingFullFactory : public MinWarpingSearchSelector
 {
 public:
@@ -503,7 +508,8 @@ public:
   }
 };
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class MinWarpingPartialFactory : public MinWarpingSearchSelector
 {
 public:

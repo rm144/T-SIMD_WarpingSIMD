@@ -41,6 +41,7 @@
 #include "WarpingTemplate.H"
 
 #include <cmath>
+#include <cstddef>
 #include <vector>
 
 namespace simd {
@@ -67,7 +68,7 @@ public:
 // scale-plane stack, shared match arrays, and shared parameters
 
 template <typename SPSType, typename MatchType, typename CompassType,
-          int SIMD_WIDTH, int SIMD_ALIGN>
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingCompound
   : public WarpingSearcherSelector
   , public ComplexSearchSelector

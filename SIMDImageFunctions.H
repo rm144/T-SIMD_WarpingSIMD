@@ -32,6 +32,7 @@
 #include "saturate_cast.H"
 
 #include <algorithm>
+#include <cstddef>
 #include <math.h>
 #include <vector>
 
@@ -66,7 +67,7 @@ namespace simd {
 // ---------------------------------------------------------------------------
 
 // images with same type could be identical (same data pointer)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn1,
           class AnyAddOn2>
 bool same(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &i1,
           const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &i2)
@@ -75,7 +76,7 @@ bool same(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &i1,
 }
 
 // images with different type can never be identical
-template <typename T, typename U, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename T, typename U, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AnyAddOn1, class AnyAddOn2>
 bool same(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &,
           const SIMDImage<U, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &)
@@ -84,7 +85,7 @@ bool same(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &,
 }
 
 // stacks with same type could be identical (same data pointer)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn1,
           class AnyAddOn2>
 bool same(const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &s1,
           const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &s2)
@@ -93,7 +94,7 @@ bool same(const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &s1,
 }
 
 // stacks with different type can never be identical
-template <typename T, typename U, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename T, typename U, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AnyAddOn1, class AnyAddOn2>
 bool same(const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &,
           const SIMDStack<U, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &)
@@ -102,7 +103,7 @@ bool same(const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &,
 }
 
 // sharedptrs with same element type can overlap (some data pointer)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 bool overlap(const SharedSIMDPtr<T, SIMD_WIDTH, SIMD_ALIGN> &i1,
              const SharedSIMDPtr<T, SIMD_WIDTH, SIMD_ALIGN> &i2)
 {
@@ -112,7 +113,7 @@ bool overlap(const SharedSIMDPtr<T, SIMD_WIDTH, SIMD_ALIGN> &i1,
 }
 
 // sharedptrs with different element types can never overlap
-template <typename T, typename U, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, typename U, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 bool overlap(const SharedSIMDPtr<T, SIMD_WIDTH, SIMD_ALIGN> &,
              const SharedSIMDPtr<U, SIMD_WIDTH, SIMD_ALIGN> &)
 {
@@ -124,7 +125,7 @@ bool overlap(const SharedSIMDPtr<T, SIMD_WIDTH, SIMD_ALIGN> &,
 // ---------------------------------------------------------------------------
 
 // sum of absolute values in all columns
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn1,
           class AnyAddOn2>
 void sumOfAbs(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
               SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &absSum)
@@ -170,7 +171,7 @@ void sumOfAbs(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
 // ---------------------------------------------------------------------------
 
 // match operator for NSAD
-template <typename T, int SIMD_WIDTH>
+template <typename T, size_t SIMD_WIDTH>
 struct MatchAbsDiff
 {
   static SIMD_INLINE SIMDVec<T, SIMD_WIDTH> match(
@@ -181,7 +182,7 @@ struct MatchAbsDiff
 };
 
 // match operator for ASC2
-template <typename T, int SIMD_WIDTH>
+template <typename T, size_t SIMD_WIDTH>
 struct MatchAsc2
 {
   static SIMD_INLINE SIMDVec<T, SIMD_WIDTH> match(
@@ -194,7 +195,7 @@ struct MatchAsc2
 
 // match operator for ASC without inversion
 // (slow, for tests only, effect: addition of 1 only in denominator)
-template <typename T, int SIMD_WIDTH>
+template <typename T, size_t SIMD_WIDTH>
 struct MatchAscDirect
 {
   static SIMD_INLINE SIMDVec<T, SIMD_WIDTH> match(
@@ -206,7 +207,7 @@ struct MatchAscDirect
 };
 
 // match operator for NSADA
-template <typename T, int SIMD_WIDTH>
+template <typename T, size_t SIMD_WIDTH>
 struct MatchAbsDiffAbs
 {
   static SIMD_INLINE SIMDVec<T, SIMD_WIDTH> match(
@@ -217,7 +218,7 @@ struct MatchAbsDiffAbs
 };
 
 // match operator for NSAD-NSADA mix
-template <typename T, int SIMD_WIDTH>
+template <typename T, size_t SIMD_WIDTH>
 struct MatchAvgAbsDiffAbsDiffAbs
 {
   static SIMD_INLINE SIMDVec<T, SIMD_WIDTH> match(
@@ -241,7 +242,7 @@ struct MatchAvgAbsDiffAbsDiffAbs
 // it was a bit slower)
 
 // 2x Panorama -> DefaultAddOn
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class MatchOperator>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class MatchOperator>
 void columnPairMatching1(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2,
@@ -326,7 +327,7 @@ void columnPairMatching1(
 }
 
 // NSAD term
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void normSumAbsDiffTerm1(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2,
@@ -337,7 +338,7 @@ void normSumAbsDiffTerm1(
 }
 
 // ASC+ term (in second version using min/max)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void asc2Term1(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
                const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2,
                SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &dir)
@@ -358,7 +359,7 @@ void asc2Term1(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
 }
 
 // NSADA term
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void normSumAbsDiffAbsTerm1(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2,
@@ -369,7 +370,7 @@ void normSumAbsDiffAbsTerm1(
 }
 
 // NSAD-NSADA mix term
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void normSumAvgAbsDiffAbsDiffAbsTerm1(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2,
@@ -390,7 +391,7 @@ void normSumAvgAbsDiffAbsDiffAbsTerm1(
 // (colMeasRaw1, colMeasRaw2) - here the corresponding value has to be picked
 // in colMeasure1 and colMeasure2 the used colMeasRaw-values are saved
 // (for normalization step)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class MatchOperator>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class MatchOperator>
 void columnPairMatchingTilt1(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2,
@@ -546,7 +547,7 @@ void columnPairMatchingTilt1(
 #define CPM2_ORDER_VH 0
 
 // 2xPanorama -> DefaultAddOn
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class MatchOperator>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class MatchOperator>
 void columnPairMatching2(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgV,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &imgH, int w, int wSPS,
@@ -674,7 +675,7 @@ void columnPairMatching2(
 }
 
 // NSAD term
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void normSumAbsDiffTerm2(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2, int w, int wSPS,
@@ -686,7 +687,7 @@ void normSumAbsDiffTerm2(
 }
 
 // ASC+ term (in second version using min/max)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void asc2Term2(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
                const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2, int w,
                int wSPS, int step, int n, int blkSize, const int *const modn,
@@ -708,7 +709,7 @@ void asc2Term2(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
 }
 
 // ASC direct term (slow, for tests only)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void ascDirectTerm(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
                    const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2,
                    int w, int wSPS, int step, int n, int blkSize,
@@ -720,7 +721,7 @@ void ascDirectTerm(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
 }
 
 // NSADA term
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void normSumAbsDiffAbsTerm2(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2, int w, int wSPS,
@@ -733,7 +734,7 @@ void normSumAbsDiffAbsTerm2(
 }
 
 // NSAD-NSADA mix term
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void normSumAvgAbsDiffAbsDiffAbsTerm2(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l1,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &l2, int w, int wSPS,
@@ -750,8 +751,8 @@ void normSumAvgAbsDiffAbsDiffAbsTerm2(
 // ---------------------------------------------------------------------------
 
 // normalized distance measure where denominator terms are added
-template <int invertJointMeasure, typename SPSType, typename T, int SIMD_WIDTH,
-          int SIMD_ALIGN>
+template <int invertJointMeasure, typename SPSType, typename T,
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void computeScalePlaneNormalizedAdd1(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &ssMeasure,
@@ -854,7 +855,7 @@ void computeScalePlaneNormalizedAdd1(
 
 // normalized distance measure where denominator terms are added
 template <int invertJointMeasure, int NPREPROCS, typename SPSType, typename T,
-          int SIMD_WIDTH, int SIMD_ALIGN>
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void computeScalePlaneSigmoidNormalizedAdd1(
   const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN> &jointMeasureStk,
   const SIMDStack<T, SIMD_WIDTH, SIMD_ALIGN> &ssMeasureStk,
@@ -985,8 +986,8 @@ void computeScalePlaneSigmoidNormalizedAdd1(
 #define CSPNA2_LOOP_AS_IN_CPM2 0
 
 // normalized distance measure where denominator terms are added
-template <int invertJointMeasure, typename SPSType, typename T, int SIMD_WIDTH,
-          int SIMD_ALIGN>
+template <int invertJointMeasure, typename SPSType, typename T,
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void computeScalePlaneNormalizedAdd2(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &ssMeasure,
@@ -1148,8 +1149,8 @@ void computeScalePlaneNormalizedAdd2(
 // ---------------------------------------------------------------------------
 
 // normalized distance measure where denominator terms are added
-template <int invertJointMeasure, typename SPSType, typename T, int SIMD_WIDTH,
-          int SIMD_ALIGN>
+template <int invertJointMeasure, typename SPSType, typename T,
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void computeScalePlaneNormalizedAdd1Tilt(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &jointMeasure,
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN> &sscvMeasure, int wSPS,
@@ -1241,7 +1242,7 @@ void computeScalePlaneNormalizedAdd1Tilt(
 
 // vertical edge filter in columns
 // Panorama -> Panorama
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class OutAddOn>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class OutAddOn>
 void verticalEdgeFilter(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &orig,
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, OutAddOn> &edge)
@@ -1304,7 +1305,7 @@ void verticalEdgeFilter(
 
 // vertical edge filter in columns
 // Panorama -> Panorama
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class OutAddOn>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class OutAddOn>
 void verticalEdgeFilterTilt(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, Panorama> &orig,
   SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, OutAddOn> &edge)
@@ -1383,7 +1384,7 @@ void verticalEdgeFilterTilt(
 // vertical magnification around horizon with transformation from Tin to Tout
 // 27. Feb 18 (rm): verticalResolution and horizon taken from input image,
 // not passed as parameters
-template <typename Tout, typename Tin, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename Tout, typename Tin, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class OutAddOn>
 void magnifyAndScale(
   const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
@@ -1537,7 +1538,7 @@ void magnifyAndScale(
 // TODO: linear interpolation (interpolation=1) is not implemented yet,
 // TODO: is difficult since invalid values should not be considered
 // vertical magnification around horizon with transformation from Tin to Tout
-template <typename Tout, typename Tin, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename Tout, typename Tin, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class OutAddOn>
 void magnifyAndScaleTilt(
   const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, Panorama> &img,
@@ -1661,7 +1662,7 @@ void magnifyAndScaleTilt(
 // ---------------------------------------------------------------------------
 
 // copy with transformation from Tin to Tout
-template <typename Tout, typename Tin, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename Tout, typename Tin, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AnyAddOn1, class AnyAddOn2>
 void copy(const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
           SIMDImage<Tout, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &outImg)
@@ -1700,7 +1701,7 @@ void copy(const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
 // ---------------------------------------------------------------------------
 
 // copy and scale with transformation from Tin to Tout
-template <typename Tout, typename Tin, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename Tout, typename Tin, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AnyAddOn1, class AnyAddOn2>
 void copyAndScale(const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
                   double multiplyScale,
@@ -1737,7 +1738,7 @@ void copyAndScale(const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
 
 // each plane in stack has its own multiplyScale, so
 // mulitplyScale[stk->numPlanes] is assumed
-template <typename Tout, typename Tin, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename Tout, typename Tin, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AnyAddOn1, class AnyAddOn2>
 void copyAndScale(const SIMDStack<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &stk,
                   const std::vector<double> &multiplyScale,
@@ -1760,7 +1761,7 @@ void copyAndScale(const SIMDStack<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &stk,
 // ---------------------------------------------------------------------------
 
 // copy and scale with transformation from Tin to Tout
-template <typename Tout, typename Tin, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename Tout, typename Tin, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AnyAddOn1, class AnyAddOn2>
 void copyAndScaleTilt(
   const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img,
@@ -1820,7 +1821,7 @@ void copyAndScaleTilt(
 // ---------------------------------------------------------------------------
 
 // shift and scale with transformation from Tin to Tout
-template <typename Tout, typename Tin, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename Tout, typename Tin, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AnyAddOn1, class AnyAddOn2>
 void copyShiftAndScale(
   const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img, double shift,
@@ -1861,7 +1862,7 @@ void copyShiftAndScale(
 // ---------------------------------------------------------------------------
 
 // shift and scale with transformation from Tin to Tout
-template <typename Tout, typename Tin, int SIMD_WIDTH, int SIMD_ALIGN,
+template <typename Tout, typename Tin, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AnyAddOn1, class AnyAddOn2>
 void copyScaleAndShift(
   const SIMDImage<Tin, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &img, double scale,
@@ -1901,7 +1902,7 @@ void copyScaleAndShift(
 // insert
 // ---------------------------------------------------------------------------
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnySrcAddOn,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnySrcAddOn,
           class AnyDstAddOn>
 void insert(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnySrcAddOn> &src,
             int x0, int y0,
@@ -1917,7 +1918,7 @@ void insert(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnySrcAddOn> &src,
 // minimum / maximum
 // ---------------------------------------------------------------------------
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn>
 T max(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
   SIMDVec<T, SIMD_WIDTH> maxv = set1<T, SIMD_WIDTH>(SIMDTypeInfo<T>::min());
@@ -1927,7 +1928,7 @@ T max(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
   return hmax(maxv);
 }
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn>
 T maxExcept(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img,
             T exceptVal)
 {
@@ -1946,7 +1947,7 @@ T maxExcept(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img,
   return maxs;
 }
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn>
 T min(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
   SIMDVec<T, SIMD_WIDTH> minv = set1<T, SIMD_WIDTH>(SIMDTypeInfo<T>::max());
@@ -1956,7 +1957,7 @@ T min(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
   return hmin(minv);
 }
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn>
 T maxAbs(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
   SIMDVec<T, SIMD_WIDTH> maxv = set1<T, SIMD_WIDTH>(SIMDTypeInfo<T>::min());
@@ -1970,7 +1971,7 @@ T maxAbs(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 // replace pixels oldVal with newVal
 // ---------------------------------------------------------------------------
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn>
 void replace(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img,
              T oldVal, T newVal,
              SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &res)
@@ -1991,7 +1992,7 @@ void replace(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img,
 
 // load from FILE*
 // cannot handle comments in PGM headers (complicated)
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 bool loadPGM(FILE *f, SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AddOn> &img,
              const AddOn &addOn = AddOn())
 {
@@ -2019,7 +2020,7 @@ bool loadPGM(FILE *f, SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AddOn> &img,
 }
 
 // load from filename (char*)
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 bool loadPGM(const char *filename,
              SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AddOn> &img,
              const AddOn &addOn = AddOn())
@@ -2032,7 +2033,7 @@ bool loadPGM(const char *filename,
 }
 
 // load from filename (std::string)
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 bool loadPGM(const std::string &filename,
              SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AddOn> &img,
              const AddOn &addOn = AddOn())
@@ -2042,7 +2043,8 @@ bool loadPGM(const std::string &filename,
 
 // save to FILE*
 // the user has to guarantee that the pixels of img fit into a SIMDByte
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn>
 bool savePGM(FILE *f,
              const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
@@ -2056,7 +2058,8 @@ bool savePGM(FILE *f,
 }
 
 // save to filename (char*)
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn>
 bool savePGM(const char *filename,
              const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
@@ -2068,7 +2071,8 @@ bool savePGM(const char *filename,
 }
 
 // save to filename (std::string)
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn>
 bool savePGM(const std::string &filename,
              const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn> &img)
 {
@@ -2079,8 +2083,8 @@ bool savePGM(const std::string &filename,
 // rotateHor: rotate horizontally (cyclic)
 // ---------------------------------------------------------------------------
 
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
-          class AnyAddOn2>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn1, class AnyAddOn2>
 void rotateHor(
   const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg, int shift,
   SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &outImg)
@@ -2104,8 +2108,8 @@ void rotateHor(
 // swizzle (cyclic)
 // ---------------------------------------------------------------------------
 
-template <int N, typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
-          class AnyAddOn2>
+template <int N, typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn1, class AnyAddOn2>
 void swizzleCyclic(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
                    int nAuxVecCols,
                    SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &outImg)
@@ -2152,7 +2156,7 @@ void swizzleCyclic(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
   }
 }
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn1,
           class AnyAddOn2>
 void swizzleCyclic(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
                    int n, int nAuxVecCols,
@@ -2174,7 +2178,7 @@ void swizzleCyclic(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
 // unSwizzleCyclic (serial, slow)
 // ---------------------------------------------------------------------------
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AnyAddOn1,
           class AnyAddOn2>
 void unSwizzleCyclic(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg, int n,
@@ -2202,8 +2206,8 @@ void unSwizzleCyclic(
 // ---------------------------------------------------------------------------
 
 // saturated add of a constant
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
-          class AnyAddOn2>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn1, class AnyAddOn2>
 void adds(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
           ImgType val,
           SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &outImg)
@@ -2221,8 +2225,8 @@ void adds(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
 }
 
 // saturated sub of a constant
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
-          class AnyAddOn2>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn1, class AnyAddOn2>
 void subs(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
           ImgType val,
           SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &outImg)
@@ -2240,8 +2244,8 @@ void subs(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
 }
 
 // multiplication by a constant (only for ImgType which provides mul)
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
-          class AnyAddOn2>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn1, class AnyAddOn2>
 void mul(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
          ImgType val,
          SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &outImg)
@@ -2260,7 +2264,7 @@ void mul(const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
 
 // pixel-wise multiplication (only for ImgType which provides mul)
 // contributed by Benedikt Volkmer (modified from operator*)
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 void mul(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn> &a,
          const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn> &b,
          SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn> &c)
@@ -2289,8 +2293,8 @@ void mul(const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn> &a,
 // center:    |  0  1  2  3  |  4  5  6  7  |  8  9 10 11 |
 // right:     |  1  2  3  4  |  5  6  7  8  |  9 10 11  0 |
 
-template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN, class AnyAddOn1,
-          class AnyAddOn2>
+template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          class AnyAddOn1, class AnyAddOn2>
 void binomialHorCyclic(
   const SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn1> &inImg,
   SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN, AnyAddOn2> &outImg)
@@ -2348,7 +2352,7 @@ void binomialHorCyclic(
 // of the current type
 // imageIn and imageOut are in IMGType format (SIMDFloat)
 // imgMask is in SIMDFloat format
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AddOnIn,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOnIn,
           class AddOnOut>
 void combineImageWithMask(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOnIn> &imgIn,
@@ -2415,7 +2419,7 @@ void combineImageWithMask(
 // row 1: sum of absolute values of first row,
 // row h: sum of absolute values of all rows
 // absSum has to be of size w x h
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn1,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn1,
           class AddOn2>
 void sumOfAbsAccuInvalid(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, AddOn1> &img,
@@ -2472,7 +2476,7 @@ void sumOfAbsAccuInvalid(
 // contributed by Benedikt Volkmer
 // ---------------------------------------------------------------------------
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class InAddOn,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class InAddOn,
           class OutAddOn>
 void verticalEdgeFilter2(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, InAddOn> &orig,
@@ -2523,7 +2527,7 @@ void verticalEdgeFilter2(
 // contributed by Benedikt Volkmer
 // ---------------------------------------------------------------------------
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class InAddOn,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class InAddOn,
           class OutAddOn>
 void verticalBinomialFilter(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, InAddOn> &orig,
@@ -2573,7 +2577,7 @@ void verticalBinomialFilter(
 // contributed by Benedikt Volkmer
 // ---------------------------------------------------------------------------
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class InAddOn,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class InAddOn,
           class OutAddOn>
 void horizontalEdgeFilterCyclic2(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, InAddOn> &orig,
@@ -2623,7 +2627,7 @@ void horizontalEdgeFilterCyclic2(
 // contributed by Benedikt Volkmer
 // ---------------------------------------------------------------------------
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN, class InAddOn,
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class InAddOn,
           class OutAddOn>
 void horizontalBinomialFilterCyclic(
   const SIMDImage<T, SIMD_WIDTH, SIMD_ALIGN, InAddOn> &orig,
@@ -2682,7 +2686,7 @@ void horizontalBinomialFilterCyclic(
 // contributed by Benedikt Volkmer (modified: SIMDFloat only)
 // ---------------------------------------------------------------------------
 
-template <int NORMALIZE, bool VARIANT, int SIMD_WIDTH, int SIMD_ALIGN,
+template <int NORMALIZE, bool VARIANT, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class InAddOn, class OutAddOn>
 void harrisFilterCyclic(
   const SIMDImage<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, InAddOn> &orig,
@@ -2805,8 +2809,8 @@ typedef uint8_t HarrisOutputSelector;
                       "Index does not exists for not selected ouputs");
 }
 
-template <int NORMALIZE, bool VARIANT, HarrisOutputSelector HOS, int SIMD_WIDTH,
-          int SIMD_ALIGN, class InAddOn, class OutAddOn>
+template <int NORMALIZE, bool VARIANT, HarrisOutputSelector HOS,
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN, class InAddOn, class OutAddOn>
 void harrisFilterCyclic(
   const SIMDImage<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, InAddOn> &orig,
   SIMDStack<SIMDFloat, SIMD_WIDTH, SIMD_ALIGN, OutAddOn> &output,
@@ -2906,7 +2910,7 @@ void harrisFilterCyclic(
 /**
  * @brief Count non zero pixels in SIMDImage
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 SIMDInt countNonZero(
   const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &image)
 {
@@ -2953,7 +2957,7 @@ SIMDInt countNonZero(
 /**
  * @brief Creates a view to cropped (at top/bottom) portion of a SIMDImage.
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN,
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AddOn = DefaultAddOn>
 void croppedView(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
                  const int upper, const int lower,
@@ -2971,7 +2975,7 @@ void croppedView(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
  * @brief Creates a view to cropped (at top/bottom) portion of a SIMDImage with
  * Panorama addon.
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void croppedView(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &src,
                  const int upper, const int lower,
                  SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &dst)
@@ -3001,7 +3005,7 @@ void croppedView(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &src,
  * @param dst Destination SIMDImage of same type as src
  * @param mask Mask SIMDImage of same type as src
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 void equalizeHist(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
                   SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &dst,
                   const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &mask)
@@ -3029,7 +3033,7 @@ void equalizeHist(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
  * @param dst Destination SIMDImage of same type as src
  * @param mask Mask SIMDImage of same type as src
  */
-template <int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 void equalizeHist(
   const SIMDImage<SIMDByte, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
   SIMDImage<SIMDByte, SIMD_WIDTH, SIMD_ALIGN, AddOn> &dst,
@@ -3078,7 +3082,7 @@ void equalizeHist(
  * @param src Source SIMDImage of arbitrary type
  * @param dst Destination SIMDImage of same type as src
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 void equalizeHist(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
                   SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &dst)
 {
@@ -3103,7 +3107,7 @@ void equalizeHist(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
  * @param src Source SIMDImage of arbitrary type
  * @param dst Destination SIMDImage of same type as src
  */
-template <int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 void equalizeHist(const SIMDImage<SIMDByte, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
                   SIMDImage<SIMDByte, SIMD_WIDTH, SIMD_ALIGN, AddOn> &dst)
 {
@@ -3154,7 +3158,7 @@ static inline long fast_round(const double x)
  * @param border Border value to return if the pixel is outside the image
  * @return Interpolated pixel value at (i,j) of src value Type.
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn>
 static SIMD_INLINE Type
 interpolate(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src, double i,
             double j, const Interpolation method = Interpolation::NEAREST,
@@ -3213,7 +3217,7 @@ interpolate(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src, double i,
 
 // Specialization for SIMDImage with Panorama addon (allows horizontal wrap
 // around)
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 static SIMD_INLINE Type interpolate(
   const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, ns_simd::Panorama> &src,
   double i, double j, const Interpolation method = Interpolation::NEAREST,
@@ -3291,7 +3295,7 @@ static SIMD_INLINE Type interpolate(
  * @param mask Mask with zero pixels indicating invalid (to be masked) pixels
  * @param dst Destination image (masked image is written here)
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN,
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AddOn = DefaultAddOn>
 void maskImage(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
                const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &mask,
@@ -3331,8 +3335,8 @@ void maskImage(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
 /**
  * @brief Sums all pixel values over an image
  */
-template <class SumType = SIMDInt, class Type, int SIMD_WIDTH, int SIMD_ALIGN,
-          class AddOn   = DefaultAddOn>
+template <class SumType = SIMDInt, class Type, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN, class AddOn = DefaultAddOn>
 SumType pixelSum(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &image)
 {
   // Number of elements in SIMD vector of given width and type
@@ -3366,8 +3370,8 @@ SumType pixelSum(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &image)
 /**
  * @brief Sums all pixel values over an image considering a mask image
  */
-template <class SumType = SIMDInt, class Type, int SIMD_WIDTH, int SIMD_ALIGN,
-          class AddOn   = DefaultAddOn>
+template <class SumType = SIMDInt, class Type, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN, class AddOn = DefaultAddOn>
 SumType pixelSum(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &image,
                  const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &mask)
 {
@@ -3448,7 +3452,7 @@ SumType normalizedPixelSum(const Image &image, const Image &mask)
  * @param valueOut Value used to substitute
  * @param dst Destination image (processed image is written here)
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN,
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AddOn = DefaultAddOn>
 void substituteValue(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src,
                      const Type valueIn, const Type valueOut,
@@ -3548,7 +3552,7 @@ private:
  * coordinates
  * @param border Border value to insert if a pixel is outside the image
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn1,
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn1,
           class AddOn2>
 void remap(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn1> &src,
            SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn2> &dst,
@@ -3672,7 +3676,7 @@ private:
  * coordinates
  * @param border Border value to insert if a pixel is outside the image
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn1,
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn1,
           class AddOn2>
 void shift(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn1> &src,
            SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn2> &dst,
@@ -3713,7 +3717,7 @@ void shift(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn1> &src,
  * coordinates
  * @param border Border value to insert if a pixel is outside the image
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN, class AddOn1,
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN, class AddOn1,
           class AddOn2>
 void shift(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn1> &src,
            SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn2> &dst,
@@ -3743,7 +3747,7 @@ void shift(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn1> &src,
 /**
  * @brief Computes pixel-wise absolute difference of SIMDImages
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN,
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
           class AddOn = DefaultAddOn>
 void absoluteDifference(
   const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, AddOn> &src1,

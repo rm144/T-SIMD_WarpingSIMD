@@ -27,16 +27,17 @@
 #ifndef MINWARPING_TEMPLATE_H_
 #define MINWARPING_TEMPLATE_H_
 
-#include <limits>
-#include <stdint.h>
-#include <stdio.h>
-#include <vector>
 // 20. Apr 18 (rm): thanks to Benedikt Volkmer
 #include "SIMDDefs.H"
 #include "SIMDException.H"
 #include "SIMDImage.H"
 
 #include <cmath>
+#include <cstddef>
+#include <limits>
+#include <stdint.h>
+#include <stdio.h>
+#include <vector>
 
 // 20. Sep 22 (Jonas Keller): on Windows M_PI is not defined, so we
 // define it here
@@ -136,7 +137,7 @@ public:
 
   virtual ~MinWarpingTemplate() { destroyMinTemplate(); }
 
-  template <typename ImgType, int SIMD_WIDTH, int SIMD_ALIGN>
+  template <typename ImgType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
   void getImage(SIMDImage<ImgType, SIMD_WIDTH, SIMD_ALIGN> &img, ImgType undef,
                 double scale = 1.0, double shift = 0.0) const
   {

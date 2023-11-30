@@ -32,6 +32,7 @@
 #include "SIMDTypes.H"
 #include "SIMDVecAll.H"
 
+#include <cstddef>
 #include <limits>
 #include <vector>
 
@@ -50,7 +51,8 @@ namespace simd {
 // ===========================================================================
 
 // XPAY denotes the search order: x, psi, alpha, y
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class MinWarpingFull_XPAY
   : public MinWarpingFull<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
 {
@@ -162,7 +164,8 @@ class MinWarpingFull_XPAY
 // ###########################################################################
 
 // 23. Feb 18 (rm): added jYVec
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 void minWarpingCurve(const MinWarpingTemplate &minTemplate,
                      const WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps,
                      int iAlpha, int iPsi,
@@ -267,7 +270,8 @@ void minWarpingCurve(const MinWarpingTemplate &minTemplate,
 // ===========================================================================
 
 // XPAY denotes the search order: x, psi, alpha, y
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class MinWarpingPartial_XPAY
   : public MinWarpingPartial<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
 {

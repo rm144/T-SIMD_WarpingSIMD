@@ -32,6 +32,7 @@
 #include "SIMDVecAll.H"
 #include "WarpingSPS.H"
 
+#include <cstddef>
 #include <limits>
 #include <vector>
 
@@ -53,7 +54,7 @@ namespace simd {
 // TODO: for normalized measures with sum-of-abs in the denominator
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputation
 {
 public:
@@ -156,7 +157,7 @@ public:
 // preprocessed image (typically vertically edge-filtered)
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationSingle
   : public WarpingSPSComputation<ImgType, ProcType, MeasType, SPSType,
                                  SIMD_WIDTH, SIMD_ALIGN>
@@ -362,7 +363,7 @@ public:
 // preprocessed image (typically vertically edge-filtered)
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int NPREPROCS, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, int NPREPROCS, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationStack
   : public WarpingSPSComputation<ImgType, ProcType, MeasType, SPSType,
                                  SIMD_WIDTH, SIMD_ALIGN>

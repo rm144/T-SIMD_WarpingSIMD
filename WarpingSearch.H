@@ -32,13 +32,16 @@
 #include "WarpingSPS.H"
 #include "WarpingTemplate.H"
 
+#include <cstddef>
+
 namespace simd {
 
 // ===========================================================================
 // Warping full search algorithms
 // ===========================================================================
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class WarpingFull
 {
 public:
@@ -53,7 +56,8 @@ public:
 // Warping partial search algorithms
 // ===========================================================================
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class WarpingPartial
 {
 public:

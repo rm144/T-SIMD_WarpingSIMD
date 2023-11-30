@@ -34,6 +34,7 @@
 #include "WarpingCompound.H"
 #include "WarpingFactories.H"
 
+#include <cstddef>
 #include <ostream>
 #include <vector>
 
@@ -41,7 +42,7 @@ namespace simd {
 
 template <typename ImgType, typename ProcType, typename MeasType,
           typename SPSType, typename MatchType, typename CompassType,
-          int SIMD_WIDTH, int SIMD_ALIGN>
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingBundle
   : public WarpingSearcherSelector
   , public ComplexSearchSelector

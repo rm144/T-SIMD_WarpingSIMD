@@ -35,6 +35,7 @@
 #include "WarpingSPS.H"
 
 #include <cmath>
+#include <cstddef>
 
 namespace simd {
 
@@ -63,7 +64,7 @@ public:
 // FullSearchClass or PartialSearcherClass
 
 template <typename SPSType, typename MatchType, typename CompassType,
-          int SIMD_WIDTH, int SIMD_ALIGN, class SearchTemplateClass>
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN, class SearchTemplateClass>
 class ComplexSearch : public ComplexSearchSelector
 {
 protected:
@@ -138,7 +139,8 @@ public:
   // full and partial search (using fullSearcher and partialSearcher)
   // =========================================================================
 
-  template <template <typename, typename, int, int> class FullSearcherClass>
+  template <template <typename, typename, size_t, size_t>
+            class FullSearcherClass>
   MinWarpingMatch<MatchType, SIMD_WIDTH, SIMD_ALIGN> *full(
     FullSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
       &searchAlgorithm,
@@ -156,7 +158,8 @@ public:
     return invertAndAverage();
   }
 
-  template <template <typename, typename, int, int> class PartialSearcherClass>
+  template <template <typename, typename, size_t, size_t>
+            class PartialSearcherClass>
   MinWarpingMatch<MatchType, SIMD_WIDTH, SIMD_ALIGN> *partial(
     PartialSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
       &searchAlgorithm,
@@ -184,7 +187,8 @@ public:
   }
 
   // for tests only: uses partial searcher but performs a full-range search
-  template <template <typename, typename, int, int> class PartialSearcherClass>
+  template <template <typename, typename, size_t, size_t>
+            class PartialSearcherClass>
   MinWarpingMatch<MatchType, SIMD_WIDTH, SIMD_ALIGN> *partialFull(
     PartialSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
       &searchAlgorithm,
@@ -211,7 +215,8 @@ public:
   // TODO:   index whereas the compass array is indexed by the param
   // TODO:   index; at the moment we therefore invert the SPS and
   // TODO:   compute the compass again
-  template <template <typename, typename, int, int> class PartialSearcherClass>
+  template <template <typename, typename, size_t, size_t>
+            class PartialSearcherClass>
   MinWarpingMatch<MatchType, SIMD_WIDTH, SIMD_ALIGN> *compassAcceleration(
     PartialSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
       &searchAlgorithm,
@@ -236,7 +241,8 @@ public:
     return invertAndAverage();
   }
 
-  template <template <typename, typename, int, int> class PartialSearcherClass>
+  template <template <typename, typename, size_t, size_t>
+            class PartialSearcherClass>
   MinWarpingMatch<MatchType, SIMD_WIDTH, SIMD_ALIGN> *
   quantilCompassAcceleration(
     PartialSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
@@ -263,7 +269,8 @@ public:
   }
 
   // for tests: only inverse search
-  template <template <typename, typename, int, int> class FullSearcherClass>
+  template <template <typename, typename, size_t, size_t>
+            class FullSearcherClass>
   MinWarpingMatch<MatchType, SIMD_WIDTH, SIMD_ALIGN> *fullInverse(
     FullSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
       &searchAlgorithm)
@@ -277,7 +284,8 @@ public:
   }
 
   // fine search
-  template <template <typename, typename, int, int> class PartialSearcherClass>
+  template <template <typename, typename, size_t, size_t>
+            class PartialSearcherClass>
   void fine(PartialSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
               &searchAlgorithm,
             bool doubleSearch, int iAlpha, int iPsi, int &jAlphaOffBest,
@@ -365,8 +373,9 @@ public:
   // specifically useful for tests with different parameter
   // combinations, otherwise one could better pick a specific search
   // mode from the functions above
-  template <template <typename, typename, int, int> class FullSearcherClass,
-            template <typename, typename, int, int> class PartialSearcherClass>
+  template <
+    template <typename, typename, size_t, size_t> class FullSearcherClass,
+    template <typename, typename, size_t, size_t> class PartialSearcherClass>
   void search(FullSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
                 &fullSearchAlgorithm,
               PartialSearcherClass<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>

@@ -31,6 +31,8 @@
 // 18. Apr 18 (rm): added, thanks to Benedikt Volkmer
 #include "SIMDImageFunctions.H"
 
+#include <cstddef>
+
 namespace simd {
 
 // TODO: there is some over-/underflow in the normalized measure if
@@ -99,7 +101,7 @@ namespace simd {
 
 // only defines method computeSPS
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputation1
   : public WarpingSPSComputationSingle<ImgType, ProcType, MeasType, SPSType,
                                        SIMD_WIDTH, SIMD_ALIGN>
@@ -228,7 +230,7 @@ public:
 
 // defines convertImage, magnifyImage, copyImage
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputation2
   : public WarpingSPSComputation1<ImgType, ProcType, MeasType, SPSType,
                                   SIMD_WIDTH, SIMD_ALIGN>
@@ -272,7 +274,7 @@ public:
 // only defines methods preprocessing, columnMeasure,
 // maxDenom
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeAbs
   : public WarpingSPSComputation2<ImgType, ProcType, MeasType, SPSType,
                                   SIMD_WIDTH, SIMD_ALIGN>
@@ -315,7 +317,7 @@ public:
 // ===========================================================================
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN, int INVERT>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN, int INVERT>
 class WarpingSPSComputationEdgeAbs1
   : public WarpingSPSComputationEdgeAbs<ImgType, ProcType, MeasType, SPSType,
                                         SIMD_WIDTH, SIMD_ALIGN>
@@ -342,7 +344,7 @@ public:
 // ===========================================================================
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeNSAD1
   : public WarpingSPSComputationEdgeAbs1<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, false>
@@ -376,7 +378,7 @@ public:
 // ===========================================================================
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeASC1
   : public WarpingSPSComputationEdgeAbs1<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, true>
@@ -410,7 +412,7 @@ public:
 // ===========================================================================
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeNSADA1
   : public WarpingSPSComputationEdgeAbs1<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, false>
@@ -444,7 +446,7 @@ public:
 // ===========================================================================
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeNSADNSADA1
   : public WarpingSPSComputationEdgeAbs1<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, false>
@@ -479,7 +481,7 @@ public:
 
 // with reArrange
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN, int INVERT>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN, int INVERT>
 class WarpingSPSComputationEdgeAbs2
   : public WarpingSPSComputationEdgeAbs<ImgType, ProcType, MeasType, SPSType,
                                         SIMD_WIDTH, SIMD_ALIGN>
@@ -527,7 +529,7 @@ public:
 
 // with reArrange
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeNSAD2
   : public WarpingSPSComputationEdgeAbs2<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, false>
@@ -570,7 +572,7 @@ public:
 
 // with reArrange
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeASC2
   : public WarpingSPSComputationEdgeAbs2<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, true>
@@ -606,7 +608,7 @@ public:
 
 // with reArrange
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeASCDirect2
   : public WarpingSPSComputationEdgeAbs2<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, false>
@@ -641,7 +643,7 @@ public:
 
 // with reArrange
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeNSADA2
   : public WarpingSPSComputationEdgeAbs2<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, false>
@@ -678,7 +680,7 @@ public:
 
 // with reArrange
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeNSADNSADA2
   : public WarpingSPSComputationEdgeAbs2<ImgType, ProcType, MeasType, SPSType,
                                          SIMD_WIDTH, SIMD_ALIGN, false>
@@ -717,7 +719,7 @@ public:
 // adapted functions to compute converted, magnified and scaled
 // image with invalid values!
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationTilt
   : public WarpingSPSComputation1<ImgType, ProcType, MeasType, SPSType,
                                   SIMD_WIDTH, SIMD_ALIGN>
@@ -796,7 +798,7 @@ public:
 // ===========================================================================
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationAbsTilt
   : public WarpingSPSComputationTilt<ImgType, ProcType, MeasType, SPSType,
                                      SIMD_WIDTH, SIMD_ALIGN>
@@ -845,7 +847,7 @@ public:
 // NSAD with edge filter on tilted image, which include invalid pixels
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationNSADTilt
   : public WarpingSPSComputationAbsTilt<ImgType, ProcType, MeasType, SPSType,
                                         SIMD_WIDTH, SIMD_ALIGN>
@@ -909,8 +911,8 @@ public:
 
 // only defines method computeSPS
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN, bool MAGNIFY_FIRST,
-          bool SCALE_MAGNIFY>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          bool MAGNIFY_FIRST, bool SCALE_MAGNIFY>
 class WarpingSPSComputation1Alt
   : public WarpingSPSComputationSingle<ImgType, ProcType, MeasType, SPSType,
                                        SIMD_WIDTH, SIMD_ALIGN>
@@ -1054,8 +1056,8 @@ public:
 
 // defines convertImage, magnifyImage, copyImage
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN, bool MAGNIFY_FIRST,
-          bool SCALE_MAGNIFY>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          bool MAGNIFY_FIRST, bool SCALE_MAGNIFY>
 class WarpingSPSComputation2Alt
   : public WarpingSPSComputation1Alt<ImgType, ProcType, MeasType, SPSType,
                                      SIMD_WIDTH, SIMD_ALIGN, MAGNIFY_FIRST,
@@ -1101,9 +1103,9 @@ public:
 // maxDenom
 
 // ProcType==SIMDFloat (omitted)
-template <typename ImgType, typename MeasType, typename SPSType, int SIMD_WIDTH,
-          int SIMD_ALIGN, bool MAGNIFY_FIRST, bool SCALE_MAGNIFY, int NORMALIZE,
-          bool VARIANT>
+template <typename ImgType, typename MeasType, typename SPSType,
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN, bool MAGNIFY_FIRST,
+          bool SCALE_MAGNIFY, int NORMALIZE, bool VARIANT>
 class WarpingSPSComputationCornerAbs
   : public WarpingSPSComputation2Alt<ImgType, SIMDFloat, MeasType, SPSType,
                                      SIMD_WIDTH, SIMD_ALIGN, MAGNIFY_FIRST,
@@ -1160,9 +1162,9 @@ private:
 
 // with reArrange
 // ProcType==SIMDFloat (omitted)
-template <typename ImgType, typename MeasType, typename SPSType, int SIMD_WIDTH,
-          int SIMD_ALIGN, int INVERT, bool MAGNIFY_FIRST, bool SCALE_MAGNIFY,
-          int NORMALIZE, bool VARIANT>
+template <typename ImgType, typename MeasType, typename SPSType,
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN, int INVERT, bool MAGNIFY_FIRST,
+          bool SCALE_MAGNIFY, int NORMALIZE, bool VARIANT>
 class WarpingSPSComputationCornerAbs2
   : public WarpingSPSComputationCornerAbs<ImgType, MeasType, SPSType,
                                           SIMD_WIDTH, SIMD_ALIGN, MAGNIFY_FIRST,
@@ -1220,9 +1222,9 @@ public:
 
 // with reArrange
 // ProcType==SIMDFloat (omitted)
-template <typename ImgType, typename MeasType, typename SPSType, int SIMD_WIDTH,
-          int SIMD_ALIGN, bool MAGNIFY_FIRST, bool SCALE_MAGNIFY, int NORMALIZE,
-          bool VARIANT>
+template <typename ImgType, typename MeasType, typename SPSType,
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN, bool MAGNIFY_FIRST,
+          bool SCALE_MAGNIFY, int NORMALIZE, bool VARIANT>
 class WarpingSPSComputationCornerNSAD2
   : public WarpingSPSComputationCornerAbs2<
       ImgType, MeasType, SPSType, SIMD_WIDTH, SIMD_ALIGN,
@@ -1276,8 +1278,8 @@ public:
 // only defines methods preprocessing, columnMeasure,
 // maxDenom
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN, bool MAGNIFY_FIRST,
-          bool SCALE_MAGNIFY>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          bool MAGNIFY_FIRST, bool SCALE_MAGNIFY>
 class WarpingSPSComputationEdgeAbsAlt
   : public WarpingSPSComputation2Alt<ImgType, ProcType, MeasType, SPSType,
                                      SIMD_WIDTH, SIMD_ALIGN, MAGNIFY_FIRST,
@@ -1323,7 +1325,7 @@ public:
 
 // with reArrange
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN, int INVERT,
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN, int INVERT,
           bool MAGNIFY_FIRST, bool SCALE_MAGNIFY>
 class WarpingSPSComputationEdgeAbs2Alt
   : public WarpingSPSComputationEdgeAbsAlt<ImgType, ProcType, MeasType, SPSType,
@@ -1364,8 +1366,8 @@ public:
 
 // with reArrange
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN, bool MAGNIFY_FIRST,
-          bool SCALE_MAGNIFY>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN,
+          bool MAGNIFY_FIRST, bool SCALE_MAGNIFY>
 class WarpingSPSComputationEdgeNSAD2Alt
   : public WarpingSPSComputationEdgeAbs2Alt<ImgType, ProcType, MeasType,
                                             SPSType, SIMD_WIDTH, SIMD_ALIGN,
@@ -1409,7 +1411,7 @@ public:
 //===========================================================================
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN, int NPREPROCS>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN, int NPREPROCS>
 class WarpingSPSComputationSNSAD
   : public WarpingSPSComputationStack<ImgType, ProcType, MeasType, SPSType,
                                       NPREPROCS, SIMD_WIDTH, SIMD_ALIGN>
@@ -1623,8 +1625,9 @@ private:
   std::vector<double> sigmoidW, sigmoidW0;
 };
 
-template <typename ImgType, typename MeasType, typename SPSType, int SIMD_WIDTH,
-          int SIMD_ALIGN, HarrisOutputSelector HOS, int OUTPUT_COUNT>
+template <typename ImgType, typename MeasType, typename SPSType,
+          size_t SIMD_WIDTH, size_t SIMD_ALIGN, HarrisOutputSelector HOS,
+          int OUTPUT_COUNT>
 class WarpingSPSComputationSNSADHarris
   : public WarpingSPSComputationSNSAD<ImgType, SIMDFloat, MeasType, SPSType,
                                       SIMD_WIDTH, SIMD_ALIGN, OUTPUT_COUNT>
@@ -1677,7 +1680,7 @@ private:
 //===========================================================================
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeAbsTilt
   : public WarpingSPSComputationTilt<ImgType, ProcType, MeasType, SPSType,
                                      SIMD_WIDTH, SIMD_ALIGN>
@@ -1716,7 +1719,7 @@ public:
 };
 
 template <typename ImgType, typename ProcType, typename MeasType,
-          typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+          typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPSComputationEdgeNSADTilt
   : public WarpingSPSComputationEdgeAbsTilt<ImgType, ProcType, MeasType,
                                             SPSType, SIMD_WIDTH, SIMD_ALIGN>

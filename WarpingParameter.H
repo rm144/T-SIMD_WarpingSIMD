@@ -31,6 +31,7 @@
 #include "SIMDVecAll.H"
 
 #include <cmath>
+#include <cstddef>
 #include <string.h>
 
 // 20. Sep 22 (Jonas Keller): on Windows M_PI is not defined, so we
@@ -44,7 +45,7 @@ namespace simd {
 // we need SPSType (type of scale-plane stack elements) and the vector
 // width in bytes (SIMD_WIDTH) since these influence the dimensions of
 // the SPS which are stored in WarpingParameter
-template <typename SPSType, int SIMD_WIDTH>
+template <typename SPSType, size_t SIMD_WIDTH>
 class WarpingParameter
 {
 public:

@@ -31,6 +31,7 @@
 #include "SIMDException.H"
 
 #include <assert.h>
+#include <cstddef>
 #include <cstdint>
 #include <stdio.h>
 #include <stdlib.h>
@@ -140,7 +141,7 @@ public:
 };
 #endif
 
-template <typename T, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename T, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class SharedSIMDPtr
 #ifdef SHARED_SIMD_PTR_HEAP_COUNT
   : public SharedSIMDPtrBase

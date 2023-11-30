@@ -30,6 +30,8 @@
 #include "SIMDTypes.H"
 #include "WarpingSearch.H"
 
+#include <cstddef>
+
 namespace simd {
 
 // ###########################################################################
@@ -41,7 +43,8 @@ namespace simd {
 // ===========================================================================
 
 // PARX denotes search order: psi, alpha, rho, x
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class WarpingFull_PARX
   : public WarpingFull<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
 {
@@ -122,7 +125,8 @@ class WarpingFull_PARX
 // warping curve (structure taken from full-PARX, but no SIMD code)
 // ###########################################################################
 
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 void warpingCurve(const WarpingTemplate &warpTemplate,
                   const WarpingSPS<SPSType, SIMD_WIDTH, SIMD_ALIGN> &sps,
                   int iAlpha, int iPsi, std::vector<int> &jDeltaVec,
@@ -189,7 +193,8 @@ void warpingCurve(const WarpingTemplate &warpTemplate,
 // ===========================================================================
 
 // PARX denotes search order: psi, alpha, rho, x
-template <typename SPSType, typename MatchType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, typename MatchType, size_t SIMD_WIDTH,
+          size_t SIMD_ALIGN>
 class WarpingPartial_PARX
   : public WarpingPartial<SPSType, MatchType, SIMD_WIDTH, SIMD_ALIGN>
 {

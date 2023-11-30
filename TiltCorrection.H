@@ -33,6 +33,8 @@
 #include <functional>
 // operator>>
 #include <istream>
+// size_t
+#include <cstddef>
 
 // Strong type angular units
 #include "Angle.H"
@@ -105,7 +107,7 @@ std::istream &operator>>(std::istream &lhs, Selector &rhs)
  * coordinates
  * @param border Border value to insert if a pixel is outside the image
  */
-template <class Solution, class Type, int SIMD_WIDTH, int SIMD_ALIGN>
+template <class Solution, class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void correct(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &src,
              SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &dst,
              const tilt::AxisAngle<Radian> &tilt,
@@ -128,7 +130,7 @@ void correct(const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &src,
  * coordinates
  * @param border Border value to insert if a pixel is outside the image
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void correct(Exact, // Tag dispatch
              const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &src,
              SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &dst,
@@ -210,7 +212,7 @@ void correct(Exact, // Tag dispatch
  * coordinates
  * @param border Border value to insert if a pixel is outside the image
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void correct(Approximate, // Tag dispatch
              const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &src,
              SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &dst,
@@ -295,7 +297,7 @@ void correct(Approximate, // Tag dispatch
  * coordinates
  * @param border Border value to insert if a pixel is outside the image
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 void correct(Vertical, // Tag dispatch
              const SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &src,
              SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> &dst,
@@ -343,7 +345,7 @@ class Correction;
  * @tparam SIMD_WIDTH Width of SIMD vectors of SIMDImage to be processed
  * @tparam SIMD_ALIGN Align of SIMD vectors of SIMDImage to be processed
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class Correction<SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama>>
 {
   // Shorter type names for images
@@ -407,7 +409,7 @@ private:
  * @param selector Tilt correction solution selector
  * @return Tilt correction function (polymorphic wrapper) operating on Image
  */
-template <class Type, int SIMD_WIDTH, int SIMD_ALIGN>
+template <class Type, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 Correction<SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama>> make_correction(
   const Selector selector,
   SIMDImage<Type, SIMD_WIDTH, SIMD_ALIGN, Panorama> = {})

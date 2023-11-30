@@ -31,6 +31,7 @@
 #include "SIMDVecAll.H"
 #include "WarpingParameter.H"
 
+#include <cstddef>
 #include <stdio.h>
 #include <string.h>
 
@@ -97,7 +98,7 @@ public:
 // parallel in the SPS by a SIMD vector extension;
 // SIMD_ALIGN is the alignment requirement of the SIMD vector
 // extension (in bytes)
-template <typename SPSType, int SIMD_WIDTH, int SIMD_ALIGN>
+template <typename SPSType, size_t SIMD_WIDTH, size_t SIMD_ALIGN>
 class WarpingSPS
 {
 public:
