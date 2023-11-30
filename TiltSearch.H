@@ -95,6 +95,8 @@ class Search
     virtual std::pair<Result, Model> run(Image &, Image &, const Parameters &,
                                          Preprocess, Interpolation,
                                          ImageType) = 0;
+    // Virtual destructor
+    virtual ~Interface() = default;
   };
 
   // Implementation of (optionally constrained) tilt search given a
