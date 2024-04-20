@@ -11,3 +11,5 @@ tsimdtest.C
 hacctest.C
 compileAndTest.sh
 autotest.py
+transposeTestAutoGen.C
+verticalBitonicSortTest.C
