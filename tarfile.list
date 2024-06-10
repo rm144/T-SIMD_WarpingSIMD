@@ -118,6 +118,7 @@ idealscale.sh
 INSTALL
 MAINTAINER
 Makefile
+formatAllHC
 standalone.files
 standalone_tsimd.files
 tsimd.dir

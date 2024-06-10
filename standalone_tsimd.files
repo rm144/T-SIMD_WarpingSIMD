@@ -1,6 +1,7 @@
 INSTALL
 MAINTAINER
 Makefile
+formatAllHC
 standalone_tsimd.files
 tsimd.dir
 tsimd.files

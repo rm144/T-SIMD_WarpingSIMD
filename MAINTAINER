@@ -83,6 +83,10 @@ To remember which svn revisions the external source files have, run
 
 which generates a file revision containing information from svn info.
 
+To generate documenation and single-header file:
+
+   ./linkit extras
+
 One level above, the scripts
 
     tar_code
@@ -100,13 +104,18 @@ re-integrate files into PROG system: svncopy, update_dir, integrate
 
 - tfvpn, mountPROG
 
-- run svncopy <olddir> <newdir> to automatically
+- run
+  svncopy <olddir> <newdir>
+  to automatically
   - create new PROG directories and
   - commit new directories to svn and
   - adjust version files in <newdir> directories
 
-- run update_dir <olddir> <newdir> to automatically adjust .dir files
+- run
+  update_dir <olddir> <newdir>
+  to automatically adjust .dir files
   in standalone dir to new target directory
   (<olddir> has to be the one in the *.dir files -> cat *.dir)
   
-- run integrate |& tee integrate.log
+- run
+  integrate |& tee integrate.log
