@@ -81,11 +81,14 @@ To remember which svn revisions the external source files have, run
 
    ./linkit revision
 
-which generates a file revision containing information from svn info.
+which generates a file revision containing information from svn
+info. Done by tar_code.
 
-To generate documenation and single-header file:
+To generate documenation and single-header file, run:
 
    ./linkit extras
+
+Done by tar_code.
 
 One level above, the scripts
 
@@ -94,6 +97,12 @@ One level above, the scripts
 
 create the tgz files of code and data, respectively. The code / data
 version to be tared has to be specified in the files.
+
+---
+
+make format
+
+Format all *.C and *.H text files using clang-format.
 
 ---
 
