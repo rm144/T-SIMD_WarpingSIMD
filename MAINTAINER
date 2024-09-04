@@ -98,6 +98,9 @@ One level above, the scripts
 create the tgz files of code and data, respectively. The code / data
 version to be tared has to be specified in the files.
 
+tar_code invokes linkit extras (generates doc and single-header) and
+linkit revision.
+
 ---
 
 make format
